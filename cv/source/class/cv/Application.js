@@ -9,11 +9,11 @@
 ************************************************************************ */
 
 /**
- * This is the main application class of your custom application "qx_cv"
+ * This is the main application class of your custom application "cv"
  *
- * @asset(qx_cv/*)
+ * @asset(cv/*)
  */
-qx.Class.define("qx_cv.Application",
+qx.Class.define("cv.Application",
 {
   extend : qx.application.Standalone,
 
@@ -47,6 +47,11 @@ qx.Class.define("qx_cv.Application",
         qx.log.appender.Console;
       }
 
+      var bus = qx.event.message.Bus.getInstance();
+      bus.subscribe("*", function(msg) {
+        console.log("new bus message %o", msg);
+      }, this);
+      
       /*
       -------------------------------------------------------------------------
         Below is your actual application code...
@@ -54,7 +59,7 @@ qx.Class.define("qx_cv.Application",
       */
 
       // Create a button
-      var button1 = new qx.ui.form.Button("First Button", "qx_cv/test.png");
+      var button1 = new qx.ui.form.Button("First Button", "cv/test.png");
 
       // Document is the application root
       var doc = this.getRoot();
@@ -66,6 +71,23 @@ qx.Class.define("qx_cv.Application",
       button1.addListener("execute", function(e) {
         alert("Hello World!");
       });
+      
+      // init Model
+      var light = new cv.model.item.String("Light_FF_Living");
+      var present = new cv.model.item.String("Present");
+      var workday = new cv.model.item.String("Workday");
+      
+      var model = cv.Model.getInstance();
+      
+      model.addItem(light);
+      model.addItem(present);
+      model.addItem(workday);
+      
+      
+      var client = cv.client.Cometvisu.getInstance();
+      client.init("openhab");
+      console.log(model.getAddresses());
+      client.subscribe(model.getAddresses());      
     }
   }
 });

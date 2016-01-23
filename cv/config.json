@@ -1,5 +1,5 @@
 {
-  "name"    : "qx_cv",
+  "name"    : "cv",
 
   "include" :
   [
@@ -40,9 +40,9 @@
 
   "let" :
   {
-    "APPLICATION"  : "qx_cv",
+    "APPLICATION"  : "cv",
     "QOOXDOO_PATH" : "../lib/qooxdoo",
-    "QXTHEME"      : "qx_cv.theme.Theme",
+    "QXTHEME"      : "cv.theme.Theme",
     "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
     "LOCALES"      : [ "en" ],
     "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",

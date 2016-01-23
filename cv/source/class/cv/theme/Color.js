@@ -8,7 +8,7 @@
 
 ************************************************************************ */
 
-qx.Theme.define("qx_cv.theme.Color",
+qx.Theme.define("cv.theme.Color",
 {
   extend : qx.theme.modern.Color,
 

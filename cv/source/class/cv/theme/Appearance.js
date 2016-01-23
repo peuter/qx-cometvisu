@@ -8,11 +8,11 @@
 
 ************************************************************************ */
 
-qx.Theme.define("qx_cv.theme.Decoration",
+qx.Theme.define("cv.theme.Appearance",
 {
-  extend : qx.theme.modern.Decoration,
+  extend : qx.theme.modern.Appearance,
 
-  decorations :
+  appearances :
   {
   }
 });

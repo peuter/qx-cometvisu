@@ -8,11 +8,14 @@
 
 ************************************************************************ */
 
-qx.Theme.define("qx_cv.theme.Font",
+qx.Theme.define("cv.theme.Theme",
 {
-  extend : qx.theme.modern.Font,
-
-  fonts :
+  meta :
   {
+    color : cv.theme.Color,
+    decoration : cv.theme.Decoration,
+    font : cv.theme.Font,
+    icon : qx.theme.icon.Tango,
+    appearance : cv.theme.Appearance
   }
 });
