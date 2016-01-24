@@ -1,3 +1,6 @@
 [submodule "external/icons"]
 	path = external/icons
 	url = https://github.com/OpenAutomationProject/knx-uf-iconset.git
+[submodule "external/qooxdoo"]
+	path = external/qooxdoo
+	url = git@github.com:peuter/qooxdoo.git
