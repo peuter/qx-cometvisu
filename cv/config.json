@@ -41,7 +41,7 @@
   "let" :
   {
     "APPLICATION"  : "cv",
-    "QOOXDOO_PATH" : "../lib/qooxdoo",
+    "QOOXDOO_PATH" : "../external/qooxdoo",
     "QXTHEME"      : "cv.theme.Theme",
     "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
     "LOCALES"      : [ "en" ],

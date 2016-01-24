@@ -21,3 +21,4 @@ TODO:
 	* ggf. CSS Einbinden
 * Plugin-Kompabilität???
 * Plugins in Parts/Module packen, damit sie bei Bedarf nachgeladen werden können
+* Replay/Logging für User-Aktionen (Debugging)

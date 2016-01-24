@@ -9,7 +9,7 @@
 ************************************************************************ */
 
 /**
- * 
+ * Icon loaded from webfont
  *
  */
 qx.Class.define("cv.ui.core.Icon",
