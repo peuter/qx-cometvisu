@@ -85,5 +85,14 @@
       }
     }
     */
+   
+   "source-script" : {
+    "add-css" : [
+    	{
+    		"uri" : "resource/cv/font/knx-uf-icons.css"
+    	} 
+    ],
+   	"include" : [ "cv.structure.pure.*" ]
+   }
   }
 }

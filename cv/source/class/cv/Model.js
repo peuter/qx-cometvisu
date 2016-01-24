@@ -17,6 +17,11 @@ qx.Class.define("cv.Model",
   extend : qx.core.Object,
   type : "singleton",
 
+  /*
+   *****************************************************************************
+      CONSTRUCTOR
+   *****************************************************************************
+   */
   construct : function() {
     this.base(arguments);
     this._items = new qx.data.Array();
@@ -28,6 +33,11 @@ qx.Class.define("cv.Model",
     
   },
 
+  /*
+   *****************************************************************************
+      Properties
+   *****************************************************************************
+   */
   properties : {
   },
 
@@ -36,7 +46,6 @@ qx.Class.define("cv.Model",
      MEMBERS
   *****************************************************************************
   */
-
   members :
   {
     _addresses : null, // cached address list of all items in model

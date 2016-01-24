@@ -47,6 +47,8 @@ qx.Class.define("cv.Application",
         qx.log.appender.Console;
       }
 
+      cv.Config.init();
+
       var bus = qx.event.message.Bus.getInstance();
       bus.subscribe("*", function(msg) {
         console.log("new bus message %o", msg);
@@ -57,20 +59,7 @@ qx.Class.define("cv.Application",
         Below is your actual application code...
       -------------------------------------------------------------------------
       */
-
-      // Create a button
-      var button1 = new qx.ui.form.Button("First Button", "cv/test.png");
-
-      // Document is the application root
-      var doc = this.getRoot();
-
-      // Add button to document at fixed coordinates
-      doc.add(button1, {left: 100, top: 50});
-
-      // Add an event listener
-      button1.addListener("execute", function(e) {
-        alert("Hello World!");
-      });
+     
       
       // init Model
       var light = new cv.model.item.String("Light_FF_Living");
@@ -86,8 +75,22 @@ qx.Class.define("cv.Application",
       
       var client = cv.client.Cometvisu.getInstance();
       client.init("openhab");
-      console.log(model.getAddresses());
-      client.subscribe(model.getAddresses());      
+      
+      var engine = cv.ui.Templateengine.getInstance();
+     
+      var doc = this.getRoot();
+      doc.add(engine);
+      
+      
+      if (engine.isReady()) {
+        engine.loadConfig();
+      } else {
+        engine.addListenerOnce("changeReady", function(e) {
+          if (e.getData() === true) {
+            engine.loadConfig();
+          }
+        }, this);
+      }
     }
   }
 });
