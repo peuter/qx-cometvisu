@@ -12,16 +12,15 @@
  * 
  *
  */
-qx.Class.define("cv.util.Transform",
+qx.Mixin.define("cv.util.MTransform",
 {
-  type : "static",
 
   /*
   *****************************************************************************
-     STATICS
+     MEMBERS
   *****************************************************************************
   */
-  statics : {
+  members : {
     
      transformUndefined : function(value) {
       if (value === undefined) {

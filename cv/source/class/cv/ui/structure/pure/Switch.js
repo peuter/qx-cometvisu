@@ -12,9 +12,17 @@
  * 
  *
  */
-qx.Class.define("cv.ui.PageHandler",
+qx.Class.define("cv.ui.structure.pure.Switch",
 {
-  extend : qx.ui.container.Stack,
+  extend : cv.ui.structure.pure.Base,
+  
+  include : [
+    cv.mixin.Label,
+    cv.mixin.Layout,
+    cv.mixin.Address,
+    cv.mixin.Align,
+    cv.mixin.Flavour
+  ],
 
   /*
    *****************************************************************************
@@ -22,6 +30,15 @@ qx.Class.define("cv.ui.PageHandler",
    *****************************************************************************
    */
   properties : {
+    styling : {},
+    mapping : {},
+    on_value : {},
+    off_value : {},
+    bind_click_to_widget : {
+      check : "Boolean",
+      transform : "cv.util.Transform.stringToBool",
+      init : false
+    }
   },
 
   /*
@@ -31,32 +48,7 @@ qx.Class.define("cv.ui.PageHandler",
   */
   members :
   {
-    
-    setCurrentPage : function(selector) {
-      var page = null;
-      if (qx.lang.Type.isString(selector)) {
-        var children = this.getChildren();
-        for (var i=children.length-1; i >= 0; i--) {
-          if (children[i].getPath() === selector) {
-            page = children[i];
-            break;
-          }
-        }
-      } else {
-        // page object
-        page = selector;
-      }
-      if (page) {
-        this.setSelection([page]);
-        if (cv.Config.rememberLastPage) {
-          qx.module.Storage.setLocalItem('lastpage', page.getPath());
-        }
-      }
-    },
-    
-    getCurrentPage : function() {
-      return this.getSelection()[0];
-    }
+   
   },
   
   /*
@@ -65,5 +57,6 @@ qx.Class.define("cv.ui.PageHandler",
    *****************************************************************************
    */
   destruct : function() {
+    
   }
 });

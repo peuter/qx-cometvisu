@@ -12,27 +12,16 @@
  * 
  *
  */
-qx.Class.define("cv.structure.pure.Switch",
+qx.Class.define("cv.ui.structure.pure.Text",
 {
-  extend : cv.structure.pure.Base,
+  extend : cv.ui.structure.pure.Base,
   
   include : [
     cv.mixin.Label,
     cv.mixin.Layout,
-    cv.mixin.Address,
     cv.mixin.Align,
     cv.mixin.Flavour
   ],
-
-  /*
-   *****************************************************************************
-      CONSTRUCTOR
-   *****************************************************************************
-   */
-  construct : function() {
-    this.base(arguments);
-   
-  },
 
   /*
    *****************************************************************************
@@ -40,15 +29,7 @@ qx.Class.define("cv.structure.pure.Switch",
    *****************************************************************************
    */
   properties : {
-    styling : {},
-    mapping : {},
-    on_value : {},
-    off_value : {},
-    bind_click_to_widget : {
-      check : "Boolean",
-      transform : "cv.util.Transform.stringToBool",
-      init : false
-    }
+    "class" : {}
   },
 
   /*
@@ -67,6 +48,5 @@ qx.Class.define("cv.structure.pure.Switch",
    *****************************************************************************
    */
   destruct : function() {
-    
   }
 });

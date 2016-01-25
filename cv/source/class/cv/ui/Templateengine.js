@@ -34,11 +34,12 @@ qx.Class.define("cv.ui.Templateengine",
     var iconHandler = new cv.config.IconHandler();
     this.setIconHandler(iconHandler);
     
-    this.setPageHandler(new cv.ui.PageHandler());
     this.setMappings(new qx.data.Array());
     this.setStylings(new qx.data.Array());
     
+    this._createChildControl("page-handler");
     this._createChildControl("footer");
+    
     this.setReady(true);
   },
 
@@ -48,6 +49,11 @@ qx.Class.define("cv.ui.Templateengine",
    *****************************************************************************
    */
   properties : {
+    appearance : {
+      init : "main-template",
+      refine : true
+    },
+    
     ready : {
       check : "Boolean",
       init : false,
@@ -127,11 +133,6 @@ qx.Class.define("cv.ui.Templateengine",
       init : null
     },
     
-    pageHandler : {
-      check : "cv.ui.PageHandler",
-      init : null
-    },
-    
     mappings : {
       check : "qx.data.Array",
       init : null
@@ -160,7 +161,7 @@ qx.Class.define("cv.ui.Templateengine",
         if (!this._screensaveTimer) {
           this._screensaveTimer = new qx.event.Timer(value * 1000);
           this._screensaveTimer.addListener("interval", function() {
-            this._engine.scrollToPage();
+            this.scrollToPage();
           }, this);
           
           // add global click listener to reset screensave timer
@@ -193,6 +194,10 @@ qx.Class.define("cv.ui.Templateengine",
         case "footer":
           control = new cv.ui.parts.Footer();
           this._add(control);
+          break;
+        case "page-handler":
+          control = new cv.ui.PageHandler();
+          this._add(control, { flex: 1});
           break;
       }
       if (!control) {
@@ -310,14 +315,6 @@ qx.Class.define("cv.ui.Templateengine",
       
       con.send();
       
-      var icon = new cv.ui.core.Icon("audio_audio");
-      icon.set({
-        flavour : "orange",
-        size : 64
-      });
-      console.log(icon);
-      this._add(icon);
-      
     },
     
     initBackendClient : function() {
@@ -328,7 +325,6 @@ qx.Class.define("cv.ui.Templateengine",
      * @param item {cv.config.meta.Mapping} Mapping to add
      */
     addMapping : function(item) {
-      console.log("adding mapping %O", item);
       this.getMappings().push(item); 
     },
     
@@ -336,7 +332,6 @@ qx.Class.define("cv.ui.Templateengine",
      * @param item {cv.config.meta.Styling} Styling to add
      */
     addStyling : function(item) {
-      console.log("adding Styling %O", item);
       this.getStylings().push(item); 
     },
     
@@ -348,9 +343,9 @@ qx.Class.define("cv.ui.Templateengine",
       
     },
     
-    // wrapper function for backwards compabilität
+    // wrapper function for backwards compabilität  
     scrollToPage : function(pageId, scrollTime, skipHistory) {
-      this.getPageHandler().setCurrentPageId(pageId);
+      this.getChildControl("page-handler").setCurrentPage(pageId);
     }
   },
   

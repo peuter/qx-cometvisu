@@ -37,7 +37,7 @@ qx.Class.define("cv.Application",
     {
       // Call super class
       this.base(arguments);
-
+      
       // Enable logging in debug variant
       if (qx.core.Environment.get("qx.debug"))
       {
@@ -79,7 +79,7 @@ qx.Class.define("cv.Application",
       var engine = cv.ui.Templateengine.getInstance();
      
       var doc = this.getRoot();
-      doc.add(engine);
+      doc.add(engine, {edge: 0});
       
       
       if (engine.isReady()) {

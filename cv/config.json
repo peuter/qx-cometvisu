@@ -92,7 +92,7 @@
     		"uri" : "resource/cv/font/knx-uf-icons.css"
     	} 
     ],
-   	"include" : [ "cv.structure.pure.*" ]
+   	"include" : [ "cv.ui.structure.pure.*" ]
    }
   }
 }

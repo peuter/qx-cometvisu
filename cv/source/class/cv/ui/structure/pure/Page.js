@@ -12,9 +12,9 @@
  * 
  *
  */
-qx.Class.define("cv.structure.pure.Page",
+qx.Class.define("cv.ui.structure.pure.Page",
 {
-  extend : cv.structure.pure.Base,
+  extend : cv.ui.structure.pure.Base,
   
   include : [
     cv.mixin.Layout,
@@ -24,23 +24,19 @@ qx.Class.define("cv.structure.pure.Page",
 
   /*
    *****************************************************************************
-      CONSTRUCTOR
-   *****************************************************************************
-   */
-  construct : function() {
-    this.base(arguments);
-  },
-
-  /*
-   *****************************************************************************
       PROPERTIES
    *****************************************************************************
    */
   properties : {
+    
+    /**
+     * Attributes
+     */
     name : {},
     ga : {},
     visible : {
       check : "Boolean",
+      init : true,
       transform : "cv.util.Transform.stringToBool"
     },
     type : {
@@ -86,6 +82,14 @@ qx.Class.define("cv.structure.pure.Page",
     shownavbar : {
       group : ["shownavbarTop", "shownavbarRight", "shownavbarBottom", "shownavbarLeft"],
       mode : "shorthand"
+    },
+    
+    /**
+     * Children
+     */
+    pages : {
+      check : "qx.data.Array",
+      init : new qx.data.Array()
     }
   },
 

@@ -231,7 +231,7 @@ qx.Class.define("cv.config.Parser",
         }
       }
 
-      this._engine.getPageHandler().setCurrentPageId(startpage);
+      this._engine.getChildControl("page-handler").setCurrentPage(startpage);
       
       // this._engine.adjustColumns();
       // this._engine.applyColumnWidths();
@@ -305,32 +305,7 @@ qx.Class.define("cv.config.Parser",
      * @param type {String} type of the page
      */
     createPages : function(page, path, flavour, type) {
-      var creator = cv.structure.Factory.createWidget(page.nodeName);
-      if (creator) {
-        creator.create(page, path, flavour, type);
-    
-        // if( undefined === retval )
-          // return;
-        
-        // var data = this._engine.widgetDataGet( path );
-        // data.type = page.nodeName;
-        // if( 'string' === typeof retval )
-        // {
-          // return '<div class="widget_container '
-          // + (data.rowspanClass ? data.rowspanClass : '')
-          // + (data.containerClass ? data.containerClass : '')
-          // + ('break' === data.type ? 'break_container' : '') // special case for break widget
-          // + '" id="'+path+'" data-type="'+data.type+'">' + retval + '</div>';
-        // } else {
-          // return jQuery(
-          // '<div class="widget_container '
-          // + (data.rowspanClass ? data.rowspanClass : '')
-          // + (data.containerClass ? data.containerClass : '')
-          // + '" id="'+path+'" data-type="'+data.type+'"/>').append(retval);
-        // }
-      } else {
-        console.log("no widget found for "+page.nodeName);
-      }
+      var rootPage = cv.ui.structure.Factory.createWidget(page, path);
     }
   },
   

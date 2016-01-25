@@ -12,9 +12,9 @@
  * 
  *
  */
-qx.Class.define("cv.structure.pure.Text",
+qx.Class.define("cv.ui.structure.pure.Navbar",
 {
-  extend : cv.structure.pure.Base,
+  extend : cv.ui.structure.pure.Base,
   
   include : [
     cv.mixin.Label,
@@ -25,20 +25,21 @@ qx.Class.define("cv.structure.pure.Text",
 
   /*
    *****************************************************************************
-      CONSTRUCTOR
-   *****************************************************************************
-   */
-  construct : function() {
-    this.base(arguments);
-  },
-
-  /*
-   *****************************************************************************
       PROPERTIES
    *****************************************************************************
    */
   properties : {
-    "class" : {}
+    position : {
+      check : [ "top", "left", "bottom", "right"],
+      init : "left",
+      apply : "_applyPosition",
+      themeable : true
+    },
+    
+    dynamic : {
+      check : "Boolean",
+      transform : "stringToBool"
+    }
   },
 
   /*
@@ -47,8 +48,14 @@ qx.Class.define("cv.structure.pure.Text",
   *****************************************************************************
   */
   members :
-  {
-   
+  {       
+    _draw : function() {
+      
+    },
+    
+    _applyPosition : function(value) {
+      
+    }
   },
   
   /*

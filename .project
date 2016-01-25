@@ -20,4 +20,15 @@
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>com.aptana.ruby.core.rubynature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>1453741593629</id>
+			<name>cv/node_modules</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-node_modules</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

@@ -12,9 +12,9 @@
  * 
  *
  */
-qx.Class.define("cv.structure.pure.Designtoggle",
+qx.Class.define("cv.ui.structure.pure.Designtoggle",
 {
-  extend : cv.structure.pure.Base,
+  extend : cv.ui.structure.pure.Base,
   
   include : [
     cv.mixin.Label,
