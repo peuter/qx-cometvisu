@@ -21,6 +21,17 @@ qx.Class.define("cv.ui.structure.pure.Page",
     cv.mixin.Align,
     cv.mixin.Flavour
   ],
+  
+    /*
+   *****************************************************************************
+      CONSTRUCTOR
+   *****************************************************************************
+   */
+  construct : function(node, path) {
+    this.base(arguments, node, path);
+    this._setLayout(new qx.ui.layout.Flow());
+  },
+  
 
   /*
    *****************************************************************************

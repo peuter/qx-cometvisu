@@ -1,5 +1,5 @@
 {
-  "name"    : "cv",
+  "name"    : "CometVisu",
 
   "include" :
   [
@@ -44,11 +44,14 @@
     "QOOXDOO_PATH" : "../external/qooxdoo",
     "QXTHEME"      : "cv.theme.Theme",
     "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
-    "LOCALES"      : [ "en" ],
+    "LOCALES"      : [ "de", "en" ],
     "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
     "ROOT"         : "."
   },
-
+  "config-warnings" :
+  {
+    "job-shadowing" : ["libraries", "common", "build-script", "source-script", "build", "source", "distclean"]
+  },
   // You only need to edit the remainder of this file, if you want to customize
   // specific jobs, or add own job definitions.
 
@@ -67,8 +70,40 @@
           "manifest" : "contrib://SkeletonApplication/trunk/Manifest.json"
         }
       ]
-    }
-    */
+    }*/
+    "parts-config":
+	{
+	  "packages" :
+	  {
+	  	"verifier-bombs-on-error" : false,
+	    "parts"  :
+	    {
+	      "boot"     :
+	      {
+	        "include" : [ "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Application", "${QXTHEME}" ],
+	      }
+	    }
+	  }
+	},
+	
+	"common" :
+	{
+	  "add-css" : [
+    	{
+    		"uri" : "resource/cv/font/knx-uf-icons.css"
+    	} 
+	  ]
+	},
+	
+	"source" :
+	{
+	  "extend" : [ "parts-config" ]
+	},
+	
+	"build" :
+	{
+	  "extend" : [ "my-parts-config" ]
+	}
 
     // If you want to tweak a job setting, see the following sample where
     // the "format" feature of the "build-script" job is overridden.
@@ -83,16 +118,10 @@
           "format" : false
         }
       }
+    }*/
+    
+    ,"source-script" : {
+      "include": ["${APPLICATION}.ui.structure.pure.*"]
     }
-    */
-   
-   "source-script" : {
-    "add-css" : [
-    	{
-    		"uri" : "resource/cv/font/knx-uf-icons.css"
-    	} 
-    ],
-   	"include" : [ "cv.ui.structure.pure.*" ]
-   }
   }
 }

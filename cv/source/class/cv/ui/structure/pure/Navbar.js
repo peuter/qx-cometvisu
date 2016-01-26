@@ -53,6 +53,15 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
       
     },
     
+    //overridden
+    getLayoutOptions : function() {
+      if (this.getPosition() === "top" || this.getPosition() === "bottom") {
+        return { edge : 0 };
+      } else {
+        return null;
+      }
+    },
+    
     _applyPosition : function(value) {
       
     }

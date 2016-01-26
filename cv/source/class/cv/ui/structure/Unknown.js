@@ -15,6 +15,18 @@
 qx.Class.define("cv.ui.structure.Unknown",
 {
   extend : qx.ui.core.Widget,
+  implement : cv.ui.structure.IWidget,
+  
+  /*
+   *****************************************************************************
+      CONSTRUCTOR
+   *****************************************************************************
+   */
+  construct : function(node, path) {
+    this.base(arguments);
+    this._path = path;
+  },
+
   
   /*
    *****************************************************************************
@@ -35,8 +47,18 @@ qx.Class.define("cv.ui.structure.Unknown",
   */
   members :
   {
+    _path : null,
+    
+    getPath : function() {
+      return this._path;
+    },
+    
     getDataType : function() {
       return "unknown";
+    },
+    
+    getLayoutOptions : function() {
+      
     },
     
     //overridden

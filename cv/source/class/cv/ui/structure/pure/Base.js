@@ -15,6 +15,7 @@
 qx.Class.define("cv.ui.structure.pure.Base",
 {
   extend : qx.ui.core.Widget,
+  implement : cv.ui.structure.IWidget,
   include : [
     cv.util.MTransform
   ],
@@ -49,6 +50,11 @@ qx.Class.define("cv.ui.structure.pure.Base",
    *****************************************************************************
    */
   properties : {
+    appearance : {
+      init : "cv-widget",
+      refine : true
+    },
+    
     path : {
       check : "String",
       init : "id_"
@@ -92,6 +98,15 @@ qx.Class.define("cv.ui.structure.pure.Base",
     _initLayout : function() {
       this._setLayout(new qx.ui.layout.HBox);
     },
+    
+    /**
+     * returns the layout options which should be applied when this item gets added to its parent
+     * 
+     * @returns {Object|null}
+     */
+    getLayoutOptions : function() { 
+       return null; 
+     },
     
     /**
      * Sometimes we have to transform the property values before applying them
@@ -144,8 +159,15 @@ qx.Class.define("cv.ui.structure.pure.Base",
         this.getChildren().push(childWidget);
         
         if (childWidget instanceof qx.ui.core.Widget) {
+          if (childWidget.getDataType() === "navbar") {
+            // add navbar widgets to according navbars
+            var bar = cv.ui.Templateengine.getInstance().getChildControl("navbar-"+childWidget.getPosition());
+            if (bar) {
+              bar.addWidget(childWidget);
+            }
+          }
           if (childWidget.getDataType() !== "page") {
-            this._add(childWidget);
+            this._add(childWidget, childWidget.getLayoutOptions());
           } else if (childWidget.isVisible()) {
             // only add a button that links to this page
             var button = new qx.ui.basic.Atom(childWidget.getName());

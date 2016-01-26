@@ -203,7 +203,7 @@ qx.Class.define("cv.config.IconHandler",
         else {
           styling = ' style="' + styling + '"';
         }
-        var classes = 'icon'
+        var classes = 'icon';
         var iconclass = arguments[5];
         if( iconclass !== undefined) {
           classes = classes + ' custom_' + iconclass;
@@ -248,7 +248,7 @@ qx.Class.define("cv.config.IconHandler",
         else {
           styling = ' style="' + styling + '"';
         }
-        var classes = 'icon'
+        var classes = 'icon';
         var iconclass = arguments[5];
         if( iconclass !== undefined) {
           classes = classes + ' custom_' + iconclass;

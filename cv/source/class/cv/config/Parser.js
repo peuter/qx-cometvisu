@@ -81,7 +81,7 @@ qx.Class.define("cv.config.Parser",
       
       // design by url
       if (cv.Config.clientDesign) {
-        pageAttributes.clientDesign = cv.Config.clientDesign;
+        pageAttributes.design = cv.Config.clientDesign;
       }
       // selection dialog
       else if (!pageAttributes.clientDesign) {
@@ -195,7 +195,7 @@ qx.Class.define("cv.config.Parser",
           text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
           break;
         }
-        this._engine.getChildControl("footer").appendContent(text);
+        this._engine.getChildControl("status-bar").appendContent(text);
       }, this);
 
       //delete loadReady.page;

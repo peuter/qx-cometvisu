@@ -29,16 +29,26 @@ qx.Class.define("cv.ui.Templateengine",
     
     this.setConfigSuffix(cv.Config.configSuffix);
     this.setForceReload(cv.Config.forceReload);
-    
-    
+        
     var iconHandler = new cv.config.IconHandler();
     this.setIconHandler(iconHandler);
     
     this.setMappings(new qx.data.Array());
     this.setStylings(new qx.data.Array());
     
+    // make sure that the child controls are added in the right order
+    // header
+    this._createChildControl("breadcrumb");
+    this._createChildControl("navbar-top");
+    
+    // content
+    this._createChildControl("navbar-left");
     this._createChildControl("page-handler");
-    this._createChildControl("footer");
+    this._createChildControl("navbar-right");
+    
+    // footer
+    this._createChildControl("navbar-bottom");
+    this._createChildControl("status-bar");
     
     this.setReady(true);
   },
@@ -93,7 +103,8 @@ qx.Class.define("cv.ui.Templateengine",
     
     design : {
       check : "String",
-      init : "pure"
+      init : null,
+      apply : "_applyDesign"
     },
     
     defaultColumns : {
@@ -155,6 +166,15 @@ qx.Class.define("cv.ui.Templateengine",
     _pageHandler : null,
     _screensaveTimer : null,
     
+    /**
+     * Load Design
+     */
+    _applyDesign : function(value, old) {
+      if (value && value !== old) {
+        cv.util.DesignLoader.load(value);
+      }
+    },
+    
     //property apply
     _applyScreenSaveTime : function(value) {
       if (value > 0) {
@@ -188,16 +208,79 @@ qx.Class.define("cv.ui.Templateengine",
       return value;
     },
     
+    
+    // overridden
     _createChildControlImpl : function(id) {
       var control = null;
       switch(id) {
-        case "footer":
-          control = new cv.ui.parts.Footer();
+        
+        case "breadcrumb":
+          control = new cv.ui.parts.Breadcrumbs();
+          control.getContentElement().addClass("nav_path");
+          control.exclude();
+          this.getChildControl("header").add(control);
+          break;
+          
+        case "navbar-top":
+          control = new cv.ui.parts.Navbar("top");
+          control.getContentElement().setAttribute("id", "navbarTop");
+          control.exclude();
+          this.getChildControl("header").add(control);
+          break;
+          
+        case "navbar-left":
+          control = new cv.ui.parts.Navbar("left");
+          control.getContentElement().setAttribute("id", "navbarLeft");
+          control.exclude();
+          this.getChildControl("main").add(control);
+          break;
+          
+        case "main": 
+          control = new qx.ui.container.Composite();
+          control.getContentElement().setAttribute("id", "centerContainer");
+          control.setLayout(new qx.ui.layout.HBox()); 
+          this._add(control, {flex: 1});
+          break;
+          
+        case "navbar-right":
+          control = new cv.ui.parts.Navbar("right");
+          control.getContentElement().setAttribute("id", "navbarRight");
+          control.exclude();
+          this.getChildControl("main").add(control);
+          break;
+          
+        case "header":
+          control = new qx.ui.container.Composite();
+          control.getContentElement().setAttribute("id", "top");
+          control.setLayout(new qx.ui.layout.VBox());          
           this._add(control);
           break;
+        
+        case "status-bar": 
+          control = new cv.ui.parts.Statusbar();
+          control.getContentElement().addClass("footer");
+          control.exclude();
+          this.getChildControl("footer").add(control);
+          break;
+          
+        case "navbar-bottom":
+          control = new cv.ui.parts.Navbar("bottom");
+          control.getContentElement().setAttribute("id", "navbarBottom");
+          control.exclude();
+          this.getChildControl("footer").add(control);
+          break;
+        
+        case "footer":
+          control = new qx.ui.container.Composite();
+          control.getContentElement().setAttribute("id", "bottom");
+          control.setLayout(new qx.ui.layout.VBox());
+          this._add(control);
+          break;
+        
         case "page-handler":
           control = new cv.ui.PageHandler();
-          this._add(control, { flex: 1});
+          control.getContentElement().setAttribute("id", "pages");
+          this.getChildControl("main").add(control, {flex:1});
           break;
       }
       if (!control) {

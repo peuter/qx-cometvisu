@@ -9,10 +9,9 @@
 ************************************************************************ */
 
 /**
- * 
- *
+ * Breadcrumb navigation on top 
  */
-qx.Class.define("cv.ui.parts.Footer",
+qx.Class.define("cv.ui.parts.Breadcrumbs",
 {
   extend : qx.ui.core.Widget,
 
@@ -24,10 +23,7 @@ qx.Class.define("cv.ui.parts.Footer",
   construct : function() {
     this.base(arguments);
     this._setLayout(new qx.ui.layout.HBox());
-    this._html = new qx.ui.embed.Html();
-    this._add(this._html, {flex: 1});
-    
-    this.bind("content", this._html, "html");
+    this.setPath(new qx.data.Array());
   },
 
   /*
@@ -36,10 +32,9 @@ qx.Class.define("cv.ui.parts.Footer",
    *****************************************************************************
    */
   properties : {
-    content :  {
-      check : "String",
-      init : "",
-      event : "changeContent"
+    path :  {
+      check : "qx.data.Array",
+      init : null
     }
   },
 
@@ -50,9 +45,7 @@ qx.Class.define("cv.ui.parts.Footer",
   */
   members :
   {
-    appendContent : function(html) {
-      this.setContent(this.getContent() + html);
-    }
+    
   },
   
   /*
