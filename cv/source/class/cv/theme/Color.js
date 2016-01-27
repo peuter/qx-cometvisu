@@ -10,7 +10,7 @@
 
 qx.Theme.define("cv.theme.Color",
 {
-  extend : qx.theme.modern.Color,
+  //extend : qx.theme.modern.Color,
 
   colors :
   {

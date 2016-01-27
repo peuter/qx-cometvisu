@@ -17,12 +17,19 @@
 
 
 /**
- * Mixin for label property
- * 
- * Note: all classes that include this mixin must have a childcontrol named 'label'
+ * Line widget
  */
-qx.Mixin.define("cv.mixin.Label",
+qx.Class.define("cv.ui.structure.pure.Line",
 {
+  extend : cv.ui.structure.pure.Base,
+  
+  properties :{
+    appearance : {
+      init : "line",
+      refine : true
+    }
+  },
+
   /*
   *****************************************************************************
      MEMBERS
@@ -30,25 +37,27 @@ qx.Mixin.define("cv.mixin.Label",
   */
   members :
   {
-    /**
-     * Parse the label node
-     * @param node {Element} label xml node
-     * @param childControl {String} name of the childcontrol to work with 
-     */
-    _parseLabel : function(node) {
-      if (qx.core.Environment.get("qx.debug")) {
-        qx.core.Assert.assertEquals(node.nodeName, "label", "node name must be label but is "+node.nodeName);
-      }
-      if (node.nodeName === "label") {
-        var label = this.getChildControl("label");
-        if (label) {
-          label.setLabel(node.textContent);
-          if (node.children.length === 1) {
-            // icon set
-            label.setIcon(node.children[0].getAttribute("name"));
-          }
-        }
-      } 
+    //overridden
+    getLayoutOptions : function() {
+      return { lineBreak: true, stretch: true }; 
+    },
+    
+    //overridden
+    _draw : function() {
+      this.setHeight(5);
+      this.getContentElement().setStyle("width", Math.round(12 / this.getLayout().getColspan() * 100)+"%");
+      // add hr element
+      var hr = new qx.ui.core.Widget();
+      hr.getContentElement().setNodeName("hr");
+      this._add(hr, {flex:1});
     }
+  },
+  
+  /*
+   *****************************************************************************
+      DESTRUCTOR
+   *****************************************************************************
+   */
+  destruct : function() {
   }
 });

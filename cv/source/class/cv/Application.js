@@ -48,6 +48,7 @@ qx.Class.define("cv.Application",
       }
 
       cv.Config.init();
+      cv.Utils.init();
 
       var bus = qx.event.message.Bus.getInstance();
       bus.subscribe("*", function(msg) {

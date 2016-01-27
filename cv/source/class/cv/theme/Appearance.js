@@ -10,7 +10,7 @@
 
 qx.Theme.define("cv.theme.Appearance",
 {
-  extend : qx.theme.simple.Appearance,
+  //extend : qx.theme.simple.Appearance,
 
   appearances :
   {

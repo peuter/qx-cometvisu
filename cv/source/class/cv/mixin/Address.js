@@ -23,7 +23,7 @@ qx.Mixin.define("cv.mixin.Address",
     address : {
       check : "String",
       init : "",
-      event : "changeLayout"
+      apply : "_applyAddress"
     }
   },
 
@@ -34,6 +34,8 @@ qx.Mixin.define("cv.mixin.Address",
   */
   members :
   {
-    
+    _applyAddress : function(value, old) {
+      
+    }
   }
 });

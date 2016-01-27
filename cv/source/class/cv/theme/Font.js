@@ -10,7 +10,7 @@
 
 qx.Theme.define("cv.theme.Font",
 {
-  extend : qx.theme.modern.Font,
+  //extend : qx.theme.modern.Font,
 
   fonts :
   {

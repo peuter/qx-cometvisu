@@ -80,7 +80,7 @@
 	    {
 	      "boot"     :
 	      {
-	        "include" : [ "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Application", "${QXTHEME}" ],
+	        "include" : [ "${QXTHEME}", "${APPLICATION}.Application", "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ],
 	      }
 	    }
 	  }
@@ -92,7 +92,11 @@
     	{
     		"uri" : "resource/cv/font/knx-uf-icons.css"
     	} 
-	  ]
+	  ],
+	  "copy-files" :
+	  {
+	  	"files" : ["config/visu_config.xml", "config/demo/visu_config_demo.xml"]
+	  }
 	},
 	
 	"source" :
@@ -102,26 +106,20 @@
 	
 	"build" :
 	{
-	  "extend" : [ "my-parts-config" ]
+	  "extend" : [ "parts-config" ]
 	}
 
     // If you want to tweak a job setting, see the following sample where
     // the "format" feature of the "build-script" job is overridden.
     // To see a list of available jobs, invoke 'generate.py x'.
-    /*
+    
     ,"build-script" :
     {
-      "compile-options" :
-      {
-        "code" :
-        {
-          "format" : false
-        }
-      }
-    }*/
+      "include": ["${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ]
+    }
     
     ,"source-script" : {
-      "include": ["${APPLICATION}.ui.structure.pure.*"]
+      "include": ["${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ]
     }
   }
 }

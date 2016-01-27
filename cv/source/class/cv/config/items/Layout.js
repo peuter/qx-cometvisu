@@ -17,10 +17,12 @@
 
 
 /**
- * Mixin for align property
+ * 
+ *
  */
-qx.Mixin.define("cv.mixin.Align",
+qx.Class.define("cv.config.items.Layout",
 {
+  extend : qx.core.Object,
 
   /*
    *****************************************************************************
@@ -28,32 +30,29 @@ qx.Mixin.define("cv.mixin.Align",
    *****************************************************************************
    */
   properties : {
-    align : {
+    colspan : {
+      check : "Number",
+      init : 12
+    },
+    rowspan : {
+      check : "Number",
+      init : 1
+    },
+    x : {
       check : "String",
-      init : "",
-      event : "changeAlign",
-      apply : "_applyAlign"
-    }
-  },
-
-  /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
-  members :
-  {   
-    /**
-     * Add align settings as css class
-     */
-    //property apply
-    _applyAlign : function(value, old) {
-      if (old) {
-        this.getContentElement().removeClass(old);
-      }
-      if (value) {
-        this.getContentElement().addClass(value);
-      }
+      init : null
+    },
+    y : {
+      check : "String",
+      init : null
+    },
+    z : {
+      check : "String",
+      init : null
+    },
+    width : {
+      check : "Number",
+      init : null
     }
   }
 });
