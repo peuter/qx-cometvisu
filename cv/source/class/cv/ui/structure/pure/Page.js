@@ -111,7 +111,7 @@ qx.Class.define("cv.ui.structure.pure.Page",
   {
    _initLayout : function() {
       this._setLayout(new qx.ui.layout.Flow());
-    },
+    }
   },
   
   /*
