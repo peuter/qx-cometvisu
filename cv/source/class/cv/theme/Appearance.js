@@ -32,8 +32,7 @@ qx.Theme.define("cv.theme.Appearance",
         return {
           margin : 5,
           padding : 5,
-          decorator : "widget",
-          minHeight : 25
+          decorator : "widget"
         };
       }
     },
@@ -61,7 +60,9 @@ qx.Theme.define("cv.theme.Appearance",
         return {
           marginLeft : 15,
           padding : 3,
-          maxWidth : 100,
+          minWidth : 100,
+          maxWidth : 200,
+          allowGrowY : false,
           center : true,
           show : "label",
           decorator : states.pressed ? "switch-pressed" : "switch"

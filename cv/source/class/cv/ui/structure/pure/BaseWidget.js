@@ -15,48 +15,48 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
-
 /**
+ * BaseWidget is the superclass for all common widgets e.g. switch, trigger, ...
  * 
- *
+ * @abstract
  */
-qx.Class.define("cv.ui.structure.pure.Designtoggle",
+qx.Class.define("cv.ui.structure.pure.BaseWidget",
 {
   extend : cv.ui.structure.pure.Base,
+  type : "abstract",
   
   include : [
     cv.mixin.Label,
-    cv.mixin.Layout,
+    cv.mixin.Address,
+    cv.mixin.Align,
+    cv.mixin.Flavour,
     cv.mixin.MBaseWidget
   ],
-  
+
+  /*
+   *****************************************************************************
+      PROPERTIES
+   *****************************************************************************
+   */
+  properties : {
+    styling : {},
+    mapping : {},
+    on_value : {},
+    off_value : {},
+    bind_click_to_widget : {
+      check : "Boolean",
+      transform : "stringToBool",
+      init : false
+    }
+  },
+
   /*
   *****************************************************************************
      MEMBERS
   *****************************************************************************
   */
   members :
-  {
-   
-    // overridden
-    _draw : function() {
-      cv.Utils.configurator.bind("design", this.getChildControl("actor"), "label");
-      this.getChildControl("actor").addListener("tap", this._onTap, this);
-      console.log(this);
-    },
-
-    /**
-     * Handle tap event on actor
-     * @protected
-     */
-    _onTap : function() {
-      var dialog = new cv.ui.dialog.DesignSelector(qx.locale.Manager.tr("Please select a design"));
-      dialog.addListener("designSelected", function(e) {
-        bj.Utils.configurator.setDesign(e.getData());
-      }, this);
-      dialog.open();
-    },
-    
+  {    
     // overridden
     _createChildControlImpl : function(id, hash)
     {
@@ -65,15 +65,6 @@ qx.Class.define("cv.ui.structure.pure.Designtoggle",
         control = this._getMixinChildControl(id);
       }
       return control || this.base(arguments, id);
-    },
-
-    /*
-     *****************************************************************************
-     DESTRUCTOR
-     *****************************************************************************
-     */
-    destruct: function () {
-      this.getChildControl("actor").removeListener("tap", this._onTap, this);
     }
   }
 });
