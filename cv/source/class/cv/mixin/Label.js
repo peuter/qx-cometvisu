@@ -16,13 +16,25 @@
  */
 
 
+//noinspection JSUnusedGlobalSymbols
 /**
  * Mixin for label property
  * 
- * Note: all classes that include this mixin must have a childcontrol named 'label'
+ * Note: all classes that include this mixin must have childcontrols named 'label' and optional 'icon' 
  */
 qx.Mixin.define("cv.mixin.Label",
 {
+  construct : function() {
+    if (qx.core.Environment.get("qx.debug")) {
+      // check for widget
+      qx.core.Assert.assertQxWidget(this, "the label mixin can only by included in subclasses fo qx.ui.core.Widget");
+      
+      // check childcontrols
+      // qx.core.Assert.assertTrue(this.hasChildControl("label"), "no childcontrol 'label' available");
+      // qx.core.Assert.assertTrue(this.hasChildControl("icon"), "no childcontrol 'icon' available");
+    }
+  },
+  
   /*
   *****************************************************************************
      MEMBERS
@@ -32,8 +44,8 @@ qx.Mixin.define("cv.mixin.Label",
   {
     /**
      * Parse the label node
-     * @param node {Element} label xml node
-     * @param childControl {String} name of the childcontrol to work with 
+     * 
+     * @param node {Element} label xml node 
      */
     _parseLabel : function(node) {
       if (qx.core.Environment.get("qx.debug")) {
@@ -41,13 +53,25 @@ qx.Mixin.define("cv.mixin.Label",
       }
       if (node.nodeName === "label") {
         var label = this.getChildControl("label");
+        
         if (label) {
-          label.setLabel(node.textContent);
-          if (node.children.length === 1) {
-            // icon set
-            label.setIcon(node.children[0].getAttribute("name"));
+          if (label instanceof qx.ui.basic.Label) {
+            label.setValue(node.textContent);
+            if (node.children.length === 1) {
+              var icon = this.getChildControl("icon");
+              // icon set
+              icon.setName(node.children[0].getAttribute("name"));
+            }
+          } else if (label instanceof qx.ui.basic.Atom) {
+            label.setLabel(node.textContent);
+            if (node.children.length === 1) {
+              // icon set
+              label.setIcon(node.children[0].getAttribute("name"));
+            }
           }
         }
+        
+        
       } 
     }
   }

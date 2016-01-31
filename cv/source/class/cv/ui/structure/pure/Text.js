@@ -16,6 +16,7 @@
  */
 
 
+//noinspection JSUnusedGlobalSymbols
 /**
  * Text widget
  */
@@ -35,6 +36,11 @@ qx.Class.define("cv.ui.structure.pure.Text",
    *****************************************************************************
    */
   properties : {
+    appearance : {
+      init : "text",
+      refine : true
+    },
+    
     "class" : {}
   },
 
@@ -45,18 +51,13 @@ qx.Class.define("cv.ui.structure.pure.Text",
   */
   members :
   {
-   //overridden
-    getLayoutOptions : function() {
-      if (this.getWidthPercent() === 100) {
-        return { lineBreak: true, stretch: true };
-      } else {
-        return null;
-      }
+   
+    _initLayout : function() {
+      this._setLayout(new qx.ui.layout.Grow());
     },
     
     // overridden
     _draw : function() {
-      this.setHeight(50);
     },
     
     // overridden
@@ -71,20 +72,24 @@ qx.Class.define("cv.ui.structure.pure.Text",
           control.setLayout(new qx.ui.layout.HBox());
           control.getContentElement().addClass("widget");
           control.getContentElement().addClass(this.getDataType());
-          if (this.getAlign()) {
-            control.getContentElement().addClass(this.getAlign());
-          }
+          
           if (this.getFlavour()) {
             control.getContentElement().addClass(this.getFlavour());
           }
-          this._addAt(control);
+          this._add(control);
           break;
           
         case "label":
-          control = new cv.ui.basic.Atom();
-          control.getContentElement().addClass("label");
-          this.getChildControl("widget").addAt(control, 0);
+          control = this.base(arguments, id);
+          if (this.getAlign && this.getAlign() === "center") {
+            control.setCenter(true);
+          }
           break;
+//           
+        // case "icon":
+          // control = new cv.ui.core.Icon();
+          // this.getChildControl("widget").addAt(control, 0);
+          // break;
       }
 
       return control || this.base(arguments, id);

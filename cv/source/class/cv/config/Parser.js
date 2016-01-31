@@ -176,13 +176,14 @@ qx.Class.define("cv.config.Parser",
           return;
         }
         var text = node.textContent;
+        var search;
         switch (extend) {
         case 'all': // append all parameters
-          var search = window.location.search.replace(/\$/g, '$$$$');
+          search = window.location.search.replace(/\$/g, '$$$$');
           text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
           break;
         case 'config': // append config file info
-          var search = window.location.search.replace(/\$/g, '$$$$');
+          search = window.location.search.replace(/\$/g, '$$$$');
           search = search.replace(/.*(config=[^&]*).*|.*/, '$1');
 
           var middle = text.replace(/.*href="([^"]*)".*/g, '{$1}');
@@ -258,16 +259,6 @@ qx.Class.define("cv.config.Parser",
         // this._engine.main_scroll.seekTo($(this).text());
       // });
   
-      // reaction on browser back button
-      window.onpopstate = function(e) {
-        // where do we come frome?
-        var lastpage = e.state;
-        if (lastpage) {
-          // browser back button takes back to the last page
-          this._engine.scrollToPage(lastpage, 0, true);
-        }
-      };
-  
       // run the Trick-O-Matic scripts for great SVG backdrops
       //$('embed').each(function() { this.onload =  Trick_O_Matic });
       
@@ -305,7 +296,8 @@ qx.Class.define("cv.config.Parser",
      * @param type {String} type of the page
      */
     createPages : function(page, path, flavour, type) {
-      var rootPage = cv.ui.structure.Factory.createWidget(page, path);
+      // create root page
+      cv.ui.structure.Factory.createWidget(page, path, true);
     }
   },
   

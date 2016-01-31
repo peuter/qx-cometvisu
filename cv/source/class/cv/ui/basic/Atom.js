@@ -23,7 +23,8 @@ qx.Class.define("cv.ui.basic.Atom",
    */
   construct : function(label, icon) {
     this.base(arguments, label, null);
-    
+    this.addListener("pointerdown", this._onPointerDown, this);
+    this.addListener("pointerup", this._onPointerUp, this);
   },
 
   /*
@@ -32,6 +33,11 @@ qx.Class.define("cv.ui.basic.Atom",
    *****************************************************************************
    */
   properties : {
+    wrap : {
+      check : "Boolean",
+      init : false,
+      apply : "_applyWrap"
+    }
   },
 
   /*
@@ -41,6 +47,13 @@ qx.Class.define("cv.ui.basic.Atom",
   */
   members :
   {
+    _applyWrap : function(value) {
+      var label = this.getChildControl("label");
+      if (label) {
+        label.setWrap(value);
+      }
+    },
+    
    // overridden
     _createChildControlImpl : function(id, hash)
     {
@@ -56,9 +69,22 @@ qx.Class.define("cv.ui.basic.Atom",
             control.exclude();
           }
           break;
+          
+        case "label":
+          control = this.base(arguments, id);
+          control.setWrap(this.getWrap());
+          break;
       }
 
       return control || this.base(arguments, id);
+    },
+    
+    // Event handling
+    _onPointerDown : function() {
+      this.addState("pressed");
+    },
+    _onPointerUp : function() {
+      this.removeState("pressed");
     }
   },
   
@@ -68,5 +94,7 @@ qx.Class.define("cv.ui.basic.Atom",
    *****************************************************************************
    */
   destruct : function() {
+    this.removeListener("pointerdown", this._onPointerDown, this);
+    this.removeListener("pointerup", this._onPointerUp, this);
   }
 });

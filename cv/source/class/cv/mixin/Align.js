@@ -29,10 +29,10 @@ qx.Mixin.define("cv.mixin.Align",
    */
   properties : {
     align : {
-      check : "String",
-      init : "",
+      check : ["left", "right", "center"],
+      nullable : true,
       event : "changeAlign",
-      apply : "_applyAlign"
+      apply : "_applyAlignIn"
     }
   },
 
@@ -43,17 +43,10 @@ qx.Mixin.define("cv.mixin.Align",
   */
   members :
   {   
-    /**
-     * Add align settings as css class
-     */
     //property apply
-    _applyAlign : function(value, old) {
-      if (old) {
-        this.getContentElement().removeClass(old);
-      }
-      if (value) {
-        this.getContentElement().addClass(value);
-      }
+    _applyAlignIn : function(value) {
+      this.setAlignX(value);
+      console.trace(this);
     }
   }
 });

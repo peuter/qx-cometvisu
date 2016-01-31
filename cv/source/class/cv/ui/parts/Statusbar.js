@@ -25,8 +25,8 @@ qx.Class.define("cv.ui.parts.Statusbar",
     this.base(arguments);
     this._setLayout(new qx.ui.layout.HBox());
     this._html = new qx.ui.embed.Html();
+    this.setHeight(null);
     this._add(this._html, {flex: 1});
-    
     this.bind("content", this._html, "html");
   },
 

@@ -16,6 +16,9 @@ qx.Class.define("cv.ui.structure.Unknown",
 {
   extend : qx.ui.core.Widget,
   implement : cv.ui.structure.IWidget,
+  include : [
+    cv.mixin.Layout
+  ],
   
   /*
    *****************************************************************************
@@ -37,6 +40,14 @@ qx.Class.define("cv.ui.structure.Unknown",
     name : { 
       check : "String", 
       init : ""
+    },
+     /**
+     * The parent page this page belongs to
+     */
+    parentPage : {
+      check : "cv.ui.structure.pure.Page",
+      init : null,
+      nullable : true
     }
   },
 
@@ -57,8 +68,13 @@ qx.Class.define("cv.ui.structure.Unknown",
       return "unknown";
     },
     
-    getLayoutOptions : function() {
-      
+    getLayoutOptions : function(map) {
+      if (this.getAlign) {
+        if (map && !map.alignX) {
+          map.alignX = this.getAlign();
+        }
+      }
+      return map; 
     },
     
     //overridden

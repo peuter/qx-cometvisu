@@ -1,12 +1,19 @@
-/* ************************************************************************
-
-   Copyright:
-
-   License:
-
-   Authors:
-
-************************************************************************ */
+/* cometvisu.js (c) 2010 by Christian Mayer [CometVisu at ChristianMayer dot de]
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+ */
 
 /**
  * This is the main model class for all items
@@ -51,10 +58,43 @@ qx.Class.define("cv.Model",
     _addresses : null, // cached address list of all items in model
     _items : null,
     
+    /**
+     * Get all items from model
+     * 
+     * @returns {qx.data.Array<cv.model.AbstractItem>}
+     */
     getItems : function() {
       return this._items;
     },
     
+    /**
+     * Find an item in the model with the given address. Creates a new one if not found.
+     * 
+     * @param address {String} address to search for
+     * @returns {cv.model.AbstractItem}
+     */
+    getItemByAddress : function(address) {
+      var found = null;
+      this._items.some(function(item) {
+        if (item.getAddress() === address) {
+          found = item;
+          return true;
+        }
+      }, this);
+      
+      // create new item if not found in model
+      if (!found) {
+        found = new cv.model.item.Item(address);
+        this.addItem(found);
+      }
+      return found;
+    },
+    
+    /**
+     * Add item to model
+     * 
+     * @param item {cv.model.AbstractItem}
+     */
     addItem : function(item) {
       if (!this._items.contains(item)) {
         // subscribe to updates
@@ -63,6 +103,11 @@ qx.Class.define("cv.Model",
       }
     },
     
+    /**
+     * Remove item from model
+     * 
+     * @param item {cv.model.AbstractItem}
+     */
     removeItem : function(item) {
       if (this._items.contains(item)) {
         // subscribe to updates
@@ -71,6 +116,11 @@ qx.Class.define("cv.Model",
       }
     },
     
+    /**
+     * Get addresses from all items in model
+     *
+     * @returns {qx.data.Array} String array of addresses
+     */
     getAddresses : function() {
       if (!this._addresses) {
         this._addresses = this._items.map(function(item) {
@@ -81,6 +131,11 @@ qx.Class.define("cv.Model",
     }
   },
   
+  /*
+  *****************************************************************************
+     DESTRUCTOR
+  *****************************************************************************
+  */
   destruct : function() {
     this._disposeArray("_addresses", "_items");
   }

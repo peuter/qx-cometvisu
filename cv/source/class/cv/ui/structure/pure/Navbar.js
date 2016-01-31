@@ -33,6 +33,17 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
 
   /*
    *****************************************************************************
+      STATICS
+   *****************************************************************************
+   */
+  statics : {
+    // propertyMapping : {
+      // width : "definedWidth"
+    // } 
+  },
+
+  /*
+   *****************************************************************************
       PROPERTIES
    *****************************************************************************
    */
@@ -56,11 +67,7 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
   *****************************************************************************
   */
   members :
-  {       
-    _draw : function() {
-      
-    },
-    
+  {      
     //overridden
     getLayoutOptions : function() {
       if (this.getPosition() === "top" || this.getPosition() === "bottom") {
@@ -70,8 +77,43 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
       }
     },
     
+    //property apply
     _applyPosition : function(value) {
-      
+      switch (value) {
+        case "left":
+        case "right":
+          this._setLayout(new qx.ui.layout.VBox());
+          break;
+        case "top":
+        case "bottom":
+          this._setLayout(new qx.ui.layout.HBox());
+          break;
+      }
+    },
+    
+    // overridden
+    _createChildControlImpl : function(id, hash)
+    {
+      var control;
+
+      switch(id)
+      {
+        case "label":
+          control = new qx.ui.basic.Label().set({
+            rich : true,
+            wrap : true
+          });
+          control.getContentElement().addClass("label");
+          this.add(control);
+          break;
+          
+        case "icon":
+          control = new cv.ui.core.Icon();
+          this.add(control);
+          break;
+      }
+
+      return control || this.base(arguments, id);
     }
   },
   

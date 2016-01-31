@@ -21,31 +21,7 @@
  */
 qx.Class.define("cv.ui.structure.pure.Switch",
 {
-  extend : cv.ui.structure.pure.Base,
-  
-  include : [
-    cv.mixin.Label,
-    cv.mixin.Address,
-    cv.mixin.Align,
-    cv.mixin.Flavour
-  ],
-
-  /*
-   *****************************************************************************
-      PROPERTIES
-   *****************************************************************************
-   */
-  properties : {
-    styling : {},
-    mapping : {},
-    on_value : {},
-    off_value : {},
-    bind_click_to_widget : {
-      check : "Boolean",
-      transform : "cv.util.Transform.stringToBool",
-      init : false
-    }
-  },
+  extend : cv.ui.structure.pure.BaseWidget,
 
   /*
   *****************************************************************************
@@ -54,69 +30,6 @@ qx.Class.define("cv.ui.structure.pure.Switch",
   */
   members :
   {    
-    // overridden
-    _createChildControlImpl : function(id, hash)
-    {
-      var control;
-
-      switch(id)
-      {
-        case "widget":
-          control = new qx.ui.container.Composite();
-          control.setLayout(new qx.ui.layout.HBox());
-          control.getContentElement().addClass("widget");
-          control.getContentElement().addClass(this.getDataType());
-          if (this.getAlign()) {
-            control.getContentElement().addClass(this.getAlign());
-          }
-          if (this.getFlavour()) {
-            control.getContentElement().addClass(this.getFlavour());
-          }
-          this._addAt(control);
-          break;
-         
-        case "actor":
-          control = new qx.ui.container.Composite();
-          control.getContentElement().addClass("actor");
-          control.getContentElement().addClass("switchUnpressed");
-          control.setLayout(new qx.ui.layout.Grow());
-          this.getChildControl("widget").addAt(control, 1);
-          break;
-          
-        case "status":
-          control = new qx.ui.basic.Label(this.getAddress());
-          control.getContentElement().addClass("value");
-          this.getChildControl("actor").add(control);
-          break;
-          
-        case "label":
-          control = new cv.ui.basic.Atom();
-          control.getContentElement().addClass("label");
-          this.getChildControl("widget").addAt(control, 0);
-          break;
-      }
-
-      return control || this.base(arguments, id);
-    },
-    
-    //overridden
-    getChildrenContainer : function() {
-      return this.getChildControl("widget");
-    },
-    
-    
-    _draw : function() {
-      this.getChildControl("actor");
-      this.getChildControl("status");
-    }
-  },
-  
-  /*
-   *****************************************************************************
-      DESTRUCTOR
-   *****************************************************************************
-   */
-  destruct : function() {
     
   }
 });

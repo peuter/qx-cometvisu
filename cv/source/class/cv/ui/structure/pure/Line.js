@@ -28,36 +28,5 @@ qx.Class.define("cv.ui.structure.pure.Line",
       init : "line",
       refine : true
     }
-  },
-
-  /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
-  members :
-  {
-    //overridden
-    getLayoutOptions : function() {
-      return { lineBreak: true, stretch: true }; 
-    },
-    
-    //overridden
-    _draw : function() {
-      this.setHeight(5);
-      this.getContentElement().setStyle("width", Math.round(12 / this.getLayout().getColspan() * 100)+"%");
-      // add hr element
-      var hr = new qx.ui.core.Widget();
-      hr.getContentElement().setNodeName("hr");
-      this._add(hr, {flex:1});
-    }
-  },
-  
-  /*
-   *****************************************************************************
-      DESTRUCTOR
-   *****************************************************************************
-   */
-  destruct : function() {
   }
 });

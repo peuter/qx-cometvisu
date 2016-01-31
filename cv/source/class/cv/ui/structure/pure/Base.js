@@ -34,13 +34,10 @@ qx.Class.define("cv.ui.structure.pure.Base",
       CONSTRUCTOR
    *****************************************************************************
    */
-  construct : function(node, path) {
+  construct : function(node, path, root) {
     this.base(arguments);
-    
+    this.setRoot(!!root);
     this._initLayout();
-    
-    // init properties
-    this.setChildren(new qx.data.Array());
     
     this.setPath(path);
     
@@ -61,6 +58,14 @@ qx.Class.define("cv.ui.structure.pure.Base",
     appearance : {
       init : "cv-widget",
       refine : true
+    },
+    
+    /**
+     * Flag for the root page (note: only one page can be root)
+     */
+    root : {
+      check : "Boolean",
+      init : false
     },
     
     path : {
@@ -90,11 +95,6 @@ qx.Class.define("cv.ui.structure.pure.Base",
     },
     id : { check : "String", init : ""},
     
-    children : {
-      check : "qx.data.Array",
-      init : null
-    },
-    
     /**
      * Text content of this item
      */
@@ -102,6 +102,20 @@ qx.Class.define("cv.ui.structure.pure.Base",
       check : "String",
       init : null,
       apply : "_applyText"
+    },
+    
+     /**
+     * The parent page this page belongs to
+     */
+    parentPage : {
+      check : "cv.ui.structure.pure.Page",
+      nullable : true
+    },
+    
+    parentNavbar : {
+      check : "cv.ui.structure.pure.Navbar",
+      nullable : true,
+      apply : "_applyNavbar"
     }
   },
 
@@ -112,12 +126,31 @@ qx.Class.define("cv.ui.structure.pure.Base",
   */
   members :
   {
+    _currentPage : null, // used during parsing of xml structure to remember the current page
+    
+    _forwardStates : {
+      navbarLeft : true,
+      navbarRight : true,
+      navbarTop : true,
+      navbarBottom : true
+    },
+    
     _initLayout : function() {
       this._setLayout(new qx.ui.layout.HBox());
     },
     
+    //property apply
     _applyText : function(value) {
       this.getChildControl("main").setValue(value);
+    },
+    
+    //property apply
+    _applyNavbar : function(value, old) {
+      if (value) {
+        this.addState("navbar"+qx.lang.String.firstUp(value.getPosition()));
+      } else if (old) {
+        this.removeState("navbar"+qx.lang.String.firstUp(old.getPosition()));        
+      }
     },
     
     // overridden
@@ -128,10 +161,18 @@ qx.Class.define("cv.ui.structure.pure.Base",
       switch(id)
       {
         case "main":
-          control = qx.ui.basic.Label();
+          control = new qx.ui.basic.Label();
           this._add(control);
           break;
-        
+          
+        case "label":
+          control = new cv.ui.basic.Atom().set({
+            rich : true, // allow HTML conten
+            wrap : true // allow line wrapping
+          });
+          control.getContentElement().addClass("label");
+          this._add(control);
+          break;
       }
 
       return control || this.base(arguments, id);
@@ -149,8 +190,13 @@ qx.Class.define("cv.ui.structure.pure.Base",
      * 
      * @returns {Object|null}
      */
-    getLayoutOptions : function() { 
-       return null; 
+    getLayoutOptions : function(map) {
+      if (this.getAlign) {
+        if (map && !map.alignX) {
+          map.alignX = this.getAlign();
+        }
+      }
+      return map; 
      },
     
     /**
@@ -162,7 +208,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
       switch (name) {
         case "width":
         case "height":
-          return parseInt(value);
+          return this.cssSizeToNumber(value);
         break;
       }
       return value;
@@ -178,13 +224,103 @@ qx.Class.define("cv.ui.structure.pure.Base",
       var props = {};
       for (var i=0; i < node.attributes.length; i++) {
           var attr = node.attributes[i];
-          if (qx.Class.hasProperty(this.constructor, attr.name)) {
-            props[attr.name] = this._transformIncomingValue(attr.name, attr.value);
+          var name = attr.name;
+          if (self.hasOwnProperty("propertyMapping") && self.propertyMapping.hasOwnProperty("name")) {
+            name = self.propertyMapping[name];
+            // this.debug("map "+attr.name+" to "+name+" for "+node.nodeName);
+          }
+          if (qx.Class.hasProperty(this.constructor, name)) {
+            props[attr.name] = this._transformIncomingValue(name, attr.value);
           } else {
-            this.error("class "+this.classname+" has no property named "+attr.name);
+            this.error("class "+this.classname+" has no property named "+name);
           }
       }
       this.set(props);
+    },
+    
+    /**
+     * Parse children of this node
+     * 
+     * @param node {Element} node to parse
+     */
+    _mapChildren : function(node) {
+      // match children
+      var children = node.children;
+      for(var i=0; i < children.length; i++) {
+        var childNode = children[i];
+        
+        // check if this classe has a mixin that can parse the childNode
+        var mixin = qx.Mixin.getByName("cv.mixin."+qx.lang.String.firstUp(childNode.nodeName));
+        if (mixin && qx.Class.hasMixin(this.constructor, mixin)) {
+          // parse this node with the appropiate method
+          // this.debug("calling "+node.nodeName+"._parse"+qx.lang.String.firstUp(childNode.nodeName));
+          this["_parse"+qx.lang.String.firstUp(childNode.nodeName)](childNode, childNode.nodeName);
+          // this.debug(this);
+          // childNode has been parsed by mixin -> we can jump to the next chilt
+          continue;
+        } else if (mixin) {
+          this.debug(this.constructor+ " has no mixin "+mixin);
+        }
+        
+        // create instance
+        var childWidget = cv.ui.structure.Factory.createWidget(childNode, this.getPath()+"_"+i);
+        
+        
+        if (childWidget instanceof qx.ui.core.Widget) {
+          //this.getChildren().push(childWidget);
+                      
+          // parse layout child if available as it is needed before the widget is added
+          if (childNode.getElementsByTagName("layout").length === 1) {
+            childWidget._parseLayout(childNode.getElementsByTagName("layout")[0]);
+          }
+          
+          // tell the widget on which page it is set
+          childWidget.setParentPage(this._currentPage);
+          
+          // special handling for some data-types
+          if (childWidget.getDataType() === "navbar") {
+            // add navbar widgets to according navbars
+            var bar = cv.ui.Templateengine.getInstance().getChildControl("navbar-"+childWidget.getPosition());
+            if (bar) {
+              bar.addWidget(childWidget);
+            }
+          } else if (childWidget.getDataType() !== "page") {
+            // all widgets that are no pages or navbars
+            
+            if (this.getDataType() === "navbar") {
+              // adding child to navbar -> tell the child to which navbar it has been added
+              childWidget.setParentNavbar(this);
+            }
+            try {
+              this._add(childWidget, childWidget.getLayoutOptions());
+            } catch (ex) {
+              // omit layout properties
+              this._add(childWidget);
+            }
+          } else {
+            // handle pages
+            
+            // add to childPages if available
+            if (qx.Class.hasMixin(this.constructor, cv.mixin.MPages)) {
+              this.addChildPage(childWidget);
+            }
+            
+            if (childWidget.isShowPageJump()) {
+              // only add a button that links to this page
+              var button = new qx.ui.form.Button(childWidget.getName());
+              this._add(button);
+              button.addListener("execute", function() {
+                cv.ui.Templateengine.getInstance().getChildControl("page-handler").setCurrentPage(this);
+              }, childWidget);
+            }
+          }
+        }
+        
+        // bind flavour property to children
+        if (qx.Class.hasMixin(this.constructor, cv.mixin.Flavour) && qx.Class.hasMixin(childWidget.constructor, cv.mixin.Flavour)) { 
+          this.bind("flavour", childWidget, "flavour");
+        }
+      }
     },
     
     /**
@@ -196,68 +332,14 @@ qx.Class.define("cv.ui.structure.pure.Base",
       this.setDataType(node.nodeName);  
       if (this.getDataType() === "page") {
         cv.ui.Templateengine.getInstance().getChildControl("page-handler").add(this);
+        this._currentPage = this;
       }
       if (qx.core.Environment.get("qx.debug")) {
         qx.core.Assert.assertNotNull(node, "node must not be null");
       }
       
       this._mapProperties(node);
-      
-      // match children
-      var children = node.children;
-      for(var i=0; i < children.length; i++) {
-        var childNode = children[i];
-        
-        if (childNode.nodeName !== "layout" || this.getLayout() === null) {
-          var mixin = qx.Mixin.getByName("cv.mixin."+qx.lang.String.firstUp(childNode.nodeName));
-          
-          if (mixin && qx.Class.hasMixin(this.constructor, mixin)) {
-            // parse this node with the appropiate method
-            console.log("calling "+node.nodeName+"._parse"+qx.lang.String.firstUp(childNode.nodeName));
-            this["_parse"+qx.lang.String.firstUp(childNode.nodeName)](childNode, childNode.nodeName);
-            console.log(this);
-            continue;
-          } else if (mixin) {
-            console.log(this.constructor+ " has no mixin "+mixin);
-          }
-        }
-        
-        // create instance
-        var childWidget = cv.ui.structure.Factory.createWidget(childNode, this.getPath()+"_"+i);
-        this.getChildren().push(childWidget);
-        
-        if (childWidget instanceof qx.ui.core.Widget) {
-          if (childWidget.getDataType() === "navbar") {
-            // add navbar widgets to according navbars
-            var bar = cv.ui.Templateengine.getInstance().getChildControl("navbar-"+childWidget.getPosition());
-            if (bar) {
-              bar.addWidget(childWidget);
-            }
-          }
-          console.log(node);
-          console.log(childNode);
-          console.log(childNode.getElementsByTagName("layout"));
-          // parse layout child if available as it is needed before the widget is added
-          if (childNode.getElementsByTagName("layout").length === 1) {
-            childWidget._parseLayout(childNode.getElementsByTagName("layout")[0]);
-          }
-          if (childWidget.getDataType() !== "page") {
-            this._add(childWidget, childWidget.getLayoutOptions());
-          } else if (childWidget.isVisible()) {
-            // only add a button that links to this page
-            var button = new qx.ui.form.Button(childWidget.getName());
-            this._add(button);
-            button.addListener("execute", function() {
-              cv.ui.Templateengine.getInstance().getChildControl("page-handler").setCurrentPage(childWidget);
-            }, this);
-          }
-        }
-        
-        // bind flavour property to children
-        if (qx.Class.hasMixin(this.constructor, cv.mixin.Flavour) && qx.Class.hasMixin(childWidget.constructor, cv.mixin.Flavour)) { 
-          this.bind("flavour", childWidget, "flavour");
-        }
-      }
+      this._mapChildren(node);
     },
     
     

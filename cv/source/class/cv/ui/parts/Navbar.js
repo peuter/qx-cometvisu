@@ -68,6 +68,9 @@ qx.Class.define("cv.ui.parts.Navbar",
         this.show();
       }
       this._add(widget);
+      
+      // bind navbar visibility to its parent pages visibility
+      widget.getParentPage().bind("visibility", widget, "visibility");
     }
   },
   

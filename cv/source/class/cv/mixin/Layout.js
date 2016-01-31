@@ -69,18 +69,6 @@ qx.Mixin.define("cv.mixin.Layout",
       }
       layout.set(props);
       this.setLayout(layout);
-    },
-    
-    /**
-     * Calculate the absolute width if this widget in percent
-     * 
-     * @returns {Integer} 0-100
-     */
-    getWidthPercent : function() {
-      if (!this.getLayout()) {
-        return 100;
-      }
-      return cv.Utils.engine.getDefaultColumns() / this.getLayout().getColspan() * 100;
     }
   }
 });

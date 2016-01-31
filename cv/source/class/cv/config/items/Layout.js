@@ -32,7 +32,7 @@ qx.Class.define("cv.config.items.Layout",
   properties : {
     colspan : {
       check : "Number",
-      init : 12
+      init : 6
     },
     rowspan : {
       check : "Number",

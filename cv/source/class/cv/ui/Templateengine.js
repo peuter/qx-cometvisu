@@ -33,8 +33,8 @@ qx.Class.define("cv.ui.Templateengine",
   construct : function() {
     this.base(arguments);
     
-    this._setLayout(new qx.ui.layout.VBox());
-    
+    this._setLayout(new qx.ui.layout.Dock());
+        
     this.setConfigSuffix(cv.Config.configSuffix);
     this.setForceReload(cv.Config.forceReload);
         
@@ -59,6 +59,13 @@ qx.Class.define("cv.ui.Templateengine",
     this._createChildControl("status-bar");
     
     this.setReady(true);
+
+    // listen to browser back button
+    qx.bom.History.getInstance().addListener("request", function(e) {
+      if (e.getData()) {
+        this.scrollToPage(e.getData());
+      }
+    }, this);
   },
 
   /*
@@ -68,7 +75,7 @@ qx.Class.define("cv.ui.Templateengine",
    */
   properties : {
     appearance : {
-      init : "main-template",
+      init : "template-engine",
       refine : true
     },
     
@@ -216,49 +223,63 @@ qx.Class.define("cv.ui.Templateengine",
     _createChildControlImpl : function(id) {
       var control = null;
       switch(id) {
-        
-        case "breadcrumb":
-          control = new cv.ui.parts.Breadcrumbs();
-          control.getContentElement().addClass("nav_path");
-          control.exclude();
-          this.getChildControl("header").add(control);
-          break;
-          
-        case "navbar-top":
-          control = new cv.ui.parts.Navbar("top");
-          control.getContentElement().setAttribute("id", "navbarTop");
-          control.exclude();
-          this.getChildControl("header").add(control);
+        // main page parts
+        case "header":
+          control = new qx.ui.container.Composite();
+          control.getContentElement().setAttribute("id", "top");
+          control.setLayout(new qx.ui.layout.VBox());        
+          control.addAt(new qx.ui.core.Widget().set({
+            appearance : "line"
+          }), 2);
+          this._add(control, {edge:"north", width: "100%"});
           break;
           
         case "navbar-left":
           control = new cv.ui.parts.Navbar("left");
           control.getContentElement().setAttribute("id", "navbarLeft");
           control.exclude();
-          this.getChildControl("main").add(control);
+          this._add(control, {edge:"west"});
           break;
-          
+        
         case "main": 
-          control = new qx.ui.container.Composite();
-          control.getContentElement().setAttribute("id", "centerContainer");
-          control.setLayout(new qx.ui.layout.HBox()); 
-          this._add(control, {flex: 1});
+          control = new qx.ui.container.Scroll(control);
+          control.getContentElement().setAttribute("id", "centerContainer"); 
+          this._add(control, {edge: "center", width: "100%", height: "100%"});
           break;
-          
+        
         case "navbar-right":
           control = new cv.ui.parts.Navbar("right");
           control.getContentElement().setAttribute("id", "navbarRight");
           control.exclude();
-          this.getChildControl("main").add(control);
+          this._add(control, {edge:"east"});
           break;
           
-        case "header":
+        case "footer":
           control = new qx.ui.container.Composite();
-          control.getContentElement().setAttribute("id", "top");
-          control.setLayout(new qx.ui.layout.VBox());          
-          this._add(control);
+          control.getContentElement().setAttribute("id", "bottom");
+          control.setLayout(new qx.ui.layout.VBox());
+          control.add(new qx.ui.core.Widget().set({
+            appearance : "line"
+          }));
+          this._add(control,{edge:"south", width: "100%"});
           break;
         
+        
+        // header content
+        case "breadcrumb":
+          control = new cv.ui.parts.Breadcrumbs();
+          control.getContentElement().addClass("nav_path");
+          this.getChildControl("header").addAt(control, 0);
+          break;
+          
+        case "navbar-top":
+          control = new cv.ui.parts.Navbar("top");
+          control.getContentElement().setAttribute("id", "navbarTop");
+          control.exclude();
+          this.getChildControl("header").addAt(control, 1);
+          break;
+        
+        //footer content
         case "status-bar": 
           control = new cv.ui.parts.Statusbar();
           control.getContentElement().addClass("footer");
@@ -272,18 +293,12 @@ qx.Class.define("cv.ui.Templateengine",
           control.exclude();
           this.getChildControl("footer").add(control);
           break;
-        
-        case "footer":
-          control = new qx.ui.container.Composite();
-          control.getContentElement().setAttribute("id", "bottom");
-          control.setLayout(new qx.ui.layout.VBox());
-          this._add(control);
-          break;
-        
+       
+        // main content 
         case "page-handler":
           control = new cv.ui.PageHandler();
           control.getContentElement().setAttribute("id", "pages");
-          this.getChildControl("main").add(control, {flex:1});
+          this.getChildControl("main").add(control);
           break;
       }
       if (!control) {
@@ -389,7 +404,6 @@ qx.Class.define("cv.ui.Templateengine",
           req.setUserData("origUrl", req.getUrl());
           req.setUrl(req.getUrl().replace('config/','config/demo/'));
           req.send();
-          return;
         }
         else if( 404 === req.getStatus() ) {
           this.configError( "filenotfound", [req.getUserData("origUrl"), req.getUrl()] );
@@ -420,14 +434,6 @@ qx.Class.define("cv.ui.Templateengine",
      */
     addStyling : function(item) {
       this.getStylings().push(item); 
-    },
-    
-    setupPage : function() {
-      
-    },
-    
-    selectDesign : function() {
-      
     },
     
     // wrapper function for backwards compabilität  

@@ -26,6 +26,31 @@ qx.Class.define("cv.ui.structure.pure.Designtoggle",
   
   include : [
     cv.mixin.Label,
-    cv.mixin.Layout
-  ]
+    cv.mixin.Layout,
+    cv.mixin.MBaseWidget
+  ],
+  
+   /*
+  *****************************************************************************
+     MEMBERS
+  *****************************************************************************
+  */
+  members :
+  {
+   
+    // overridden
+    _draw : function() {
+      cv.Utils.configurator.bind("design", this.getChildControl("actor"), "label");
+    },
+    
+    // overridden
+    _createChildControlImpl : function(id, hash)
+    {
+      var control;
+      if (this._hasMixinChildControl(id)) {
+        control = this._getMixinChildControl(id);
+      }
+      return control || this.base(arguments, id);
+    }
+  }
 });

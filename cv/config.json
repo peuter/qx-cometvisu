@@ -44,7 +44,7 @@
     "QOOXDOO_PATH" : "../external/qooxdoo",
     "QXTHEME"      : "cv.theme.Theme",
     "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
-    "LOCALES"      : [ "de", "en" ],
+    "LOCALES"      : [ "en" ],
     "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
     "ROOT"         : "."
   },
@@ -80,7 +80,7 @@
 	    {
 	      "boot"     :
 	      {
-	        "include" : [ "${QXTHEME}", "${APPLICATION}.Application", "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ],
+	        "include" : [ "${QXTHEME}", "${APPLICATION}.Application", "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ]
 	      }
 	    }
 	  }
@@ -98,7 +98,7 @@
 	  	"files" : ["config/visu_config.xml", "config/demo/visu_config_demo.xml"]
 	  }
 	},
-	
+		
 	"source" :
 	{
 	  "extend" : [ "parts-config" ]
@@ -115,7 +115,19 @@
     
     ,"build-script" :
     {
-      "include": ["${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ]
+      "include": ["${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ],
+      "environment" :
+      {
+        "engine.name" : [ "gecko", "mshtml", "webkit", "opera" ]
+      },
+      "compile-options" : 
+		{
+			"paths" :
+			{
+				"gzip" : true,
+				"file" : "${BUILD_PATH}/script/${APPLICATION}-{engine.name}.js"
+			}
+		}
     }
     
     ,"source-script" : {
