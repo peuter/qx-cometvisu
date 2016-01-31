@@ -1,0 +1,1 @@
+{"attributes": {"fullName": "cv.ui.structure.pure.Rgb", "packageName": "cv.ui.structure.pure", "type": "class", "name": "Rgb", "superClass": "cv.ui.structure.pure.BaseWidget"}, "type": "class", "children": [{"attributes": {"text": "<p>Rgb widget</p>"}, "type": "desc"}]}

@@ -1,0 +1,1 @@
+{"attributes": {"fullName": "cv.ui.structure.pure.Trigger", "packageName": "cv.ui.structure.pure", "type": "class", "name": "Trigger", "superClass": "cv.ui.structure.pure.BaseWidget"}, "type": "class", "children": [{"attributes": {"text": "<p>Trigger widget sends a defined value when clicked</p>"}, "type": "desc"}]}

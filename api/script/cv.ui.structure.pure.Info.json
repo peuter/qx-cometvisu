@@ -1,0 +1,1 @@
+{"attributes": {"fullName": "cv.ui.structure.pure.Info", "packageName": "cv.ui.structure.pure", "type": "class", "name": "Info", "superClass": "cv.ui.structure.pure.BaseWidget"}, "type": "class", "children": [{"attributes": {"text": "<p>Info displays a value but does not send anything to the backend</p>"}, "type": "desc"}]}

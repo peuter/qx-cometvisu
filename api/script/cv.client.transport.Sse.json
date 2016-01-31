@@ -1,0 +1,1 @@
+{"attributes": {"fullName": "cv.client.transport.Sse", "packageName": "cv.client.transport", "type": "class", "name": "Sse", "superClass": "cv.client.transport.Base"}, "type": "class", "children": [{"attributes": {"text": "<p>Implements the <span class=\"caps\">SSE</span> (Server-sent-events) transport protocol</p>"}, "type": "desc"}]}

@@ -1,0 +1,1 @@
+{"attributes": {"fullName": "cv.ui.structure.pure.Web", "packageName": "cv.ui.structure.pure", "type": "class", "name": "Web", "superClass": "cv.ui.structure.pure.BaseWidget"}, "type": "class", "children": [{"attributes": {"text": "<p>Web widget</p>"}, "type": "desc"}]}

@@ -1,0 +1,1 @@
+{"attributes": {"fullName": "cv.ui.structure.pure.Slide", "packageName": "cv.ui.structure.pure", "type": "class", "name": "Slide", "superClass": "cv.ui.structure.pure.BaseWidget"}, "type": "class", "children": [{"attributes": {"text": "<p>Slider widget</p>"}, "type": "desc"}]}

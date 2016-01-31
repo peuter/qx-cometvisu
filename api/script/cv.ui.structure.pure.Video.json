@@ -1,0 +1,1 @@
+{"attributes": {"fullName": "cv.ui.structure.pure.Video", "packageName": "cv.ui.structure.pure", "type": "class", "name": "Video", "superClass": "cv.ui.structure.pure.BaseWidget"}, "type": "class", "children": [{"attributes": {"text": "<p>Video widget</p>"}, "type": "desc"}]}

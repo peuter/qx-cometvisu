@@ -1,0 +1,1 @@
+{"attributes": {"fullName": "cv.ui.structure.pure.Toggle", "packageName": "cv.ui.structure.pure", "type": "class", "name": "Toggle", "superClass": "cv.ui.structure.pure.BaseWidget"}, "type": "class", "children": [{"attributes": {"text": "<p>Toggle widget</p>"}, "type": "desc"}]}
