@@ -28,39 +28,39 @@ qx.Class.define("cv.ui.structure.pure.Multitrigger",
    *****************************************************************************
    */
   properties: {
-    button1Value : {
+    button1value : {
       check : "String",
       nullable : true
     },
-    button1Label : {
+    button1label : {
       check : "String",
       nullable : true
     },
-    button2Value : {
+    button2value : {
       check : "String",
       nullable : true
     },
-    button2Label : {
+    button2label : {
       check : "String",
       nullable : true
     },
-    button3Value : {
+    button3value : {
       check : "String",
       nullable : true
     },
-    button3Label : {
+    button3label : {
       check : "String",
       nullable : true
     },
-    button4Value : {
+    button4value : {
       check : "String",
       nullable : true
     },
-    button4Label : {
+    button4label : {
       check : "String",
       nullable : true
     },
-    showStatus : {
+    showstatus : {
       check : "Boolean",
       transform : "stringToBool"
     }

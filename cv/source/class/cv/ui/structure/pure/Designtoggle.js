@@ -52,7 +52,7 @@ qx.Class.define("cv.ui.structure.pure.Designtoggle",
     _onTap : function() {
       var dialog = new cv.ui.dialog.DesignSelector(qx.locale.Manager.tr("Please select a design"));
       dialog.addListener("designSelected", function(e) {
-        bj.Utils.configurator.setDesign(e.getData());
+        cv.util.Configurator.getInstance().setDesign(e.getData());
       }, this);
       dialog.open();
     },

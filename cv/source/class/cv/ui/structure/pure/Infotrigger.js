@@ -28,19 +28,39 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
    *****************************************************************************
    */
   properties: {
-    downValue : {
+    downvalue : {
       check : "String",
       nullable : true
     },
-    upValue : {
+    upvalue : {
       check : "String",
       nullable : true
     },
-    downLabel : {
+    downlabel : {
       check : "String",
       nullable : true
     },
-    upLabel : {
+    uplabel : {
+      check : "String",
+      nullable : true
+    },
+    format : {
+      check : "String",
+      nullable : true
+    },
+    change : {
+      check : "String",
+      nullable : true
+    },
+    max : {
+      check : "String",
+      nullable : true
+    },
+    min : {
+      check : "String",
+      nullable : true
+    },
+    infoposition : {
       check : "String",
       nullable : true
     }
