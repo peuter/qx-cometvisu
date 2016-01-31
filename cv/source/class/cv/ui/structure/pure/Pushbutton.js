@@ -16,7 +16,7 @@
  */
 
 /**
- * Pushbutton widget
+ * Pushbutton widget: sends on value on pointerdown and off value on pointer up
  */
 qx.Class.define("cv.ui.structure.pure.Pushbutton",
 {
@@ -35,6 +35,61 @@ qx.Class.define("cv.ui.structure.pure.Pushbutton",
     upValue : {
       check : "String",
       nullable : true
+    }
+  },
+
+  /*
+   *****************************************************************************
+   MEMBERS
+   *****************************************************************************
+   */
+  members : {
+    //overridden
+    _draw: function () {
+      var actionControl = this.getActionChildControl();
+      actionControl.addListener("pointerdown", this._downAction, this);
+      actionControl.addListener("pointerup", this._upAction, this);
+    },
+
+    /**
+     * Handle pointerdown event
+     *
+     * @protected
+     */
+    _downAction: function () {
+      // toggle switch state
+      var writeValue = this.getDownValue();
+      this.getAddresses().forEach(function(address) {
+        if (address.getMode() !== "read" && (!address.getVariant() || address.getVariant() === "down")) {
+          cv.Utils.client.write(address.getItem().getAddress(), address.encodeValue(writeValue));
+        }
+      }, this);
+    },
+
+    /**
+     * Handle pointerup event
+     *
+     * @protected
+     */
+    _upAction: function () {
+      // toggle switch state
+      var writeValue = this.getUpValue();
+      this.getAddresses().forEach(function(address) {
+        if (address.getMode() !== "read" && (!address.getVariant() || address.getVariant() === "up")) {
+          cv.Utils.client.write(address.getItem().getAddress(), address.encodeValue(writeValue));
+        }
+      }, this);
+    },
+
+    /*
+     *****************************************************************************
+     DESTRUCTOR
+     *****************************************************************************
+     */
+    destruct: function () {
+      var actionControl = this.getActionChildControl();
+      actionControl.removeListener("pointerdown", this._downAction, this);
+      actionControl.removeListener("pointerup", this._upAction, this);
     }
   }
 });

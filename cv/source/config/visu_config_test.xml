@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" lib_version="8" design="pure" xsi:noNamespaceSchemaLocation="../visu_config.xsd" max_mobile_screen_width="480">
+  <meta>
+    <plugins>
+      <plugin name="colorchooser"/>
+      <plugin name="diagram"/>
+      <plugin name="strftime"/>
+    </plugins>
+    <mappings>
+      <mapping name="Close_Open">
+        <entry value="0">zu</entry>
+        <entry value="1">offen</entry>
+      </mapping>
+      <mapping name="Open_Close">
+        <entry value="0">offen</entry>
+        <entry value="1">zu</entry>
+      </mapping>
+      <mapping name="Open_Tilted_Close">
+        <entry value="0">offen</entry>
+        <entry value="1">gekippt</entry>
+        <entry value="2">zu</entry>
+      </mapping>
+      <mapping name="Off_On">
+        <entry value="0">Aus</entry>
+        <entry value="1">An</entry>
+      </mapping>
+      <mapping name="On_Off">
+        <entry value="0">An</entry>
+        <entry value="1">Aus</entry>
+      </mapping>
+      <mapping name="Sign">
+        <entry range_min="-1e99" range_max="0">Negativ</entry>
+        <entry value="0">Null</entry>
+        <entry range_min="0" range_max="1e99">Positiv</entry>
+      </mapping>
+      <mapping name="KonnexHVAC">
+        <entry value="auto"><icon name="status_automatic"/>Auto</entry>
+        <entry value="comfort"><icon name="status_comfort"/>Komfort</entry>
+        <entry value="standby"><icon name="status_standby"/>Stand By</entry>
+        <entry value="economy"><icon name="status_night"/>Economy</entry>
+        <entry value="building_protection"><icon name="status_frost"/>Haus-Schutz</entry>
+      </mapping>
+      <mapping name="AudioSource">
+        <entry value="0">UKW</entry>
+        <entry value="1">Squeeze</entry>
+        <entry value="2">Denon</entry>
+        <entry value="3">iPod</entry>
+        <entry value="4">Sat</entry>
+        <entry value="5">Kino</entry>
+      </mapping>
+      <mapping name="One1000th">
+        <formula>y = x/1000;</formula>
+      </mapping>
+      <mapping name="audio_mute">
+        <entry value="0"><icon name="audio_mute"/> Aus</entry>
+        <entry value="1">
+          <icon name="audio_audio"/>
+        </entry>
+      </mapping>
+    </mappings>
+    <stylings>
+      <styling name="Red_Green">
+        <entry value="0">red</entry>
+        <entry value="1">green</entry>
+      </styling>
+      <styling name="Green_Red">
+        <entry value="0">green</entry>
+        <entry value="1">red</entry>
+      </styling>
+      <styling name="Grey_Green">
+        <entry value="0">grey</entry>
+        <entry value="1">green</entry>
+      </styling>
+      <styling name="Grey_Red">
+        <entry value="0">grey</entry>
+        <entry value="1">red</entry>
+      </styling>
+      <styling name="Grey_Blue">
+        <entry value="0">grey</entry>
+        <entry value="1">blue</entry>
+      </styling>
+      <styling name="Brown_Purple">
+        <entry value="0">brown</entry>
+        <entry value="1">purple</entry>
+      </styling>
+      <styling name="Blue_Purple_Red">
+        <entry range_min="-100" range_max="0">blue</entry>
+        <entry value="0">purple</entry>
+        <entry range_min="0" range_max="100">red</entry>
+      </styling>
+      <styling name="Blue_Lightblue_Green_Purple_Red">
+        <entry range_min="-10" range_max="-1">blue</entry>
+        <entry range_min="-1" range_max="10">lightblue</entry>
+        <entry range_min="10" range_max="18">green</entry>
+        <entry range_min="18" range_max="24">purple</entry>
+        <entry range_min="24" range_max="32">red</entry>
+      </styling>
+      <styling name="All_Colors">
+        <entry value="0">red</entry>
+        <entry value="1">white</entry>
+        <entry value="2">cyan</entry>
+        <entry value="3">silver</entry>
+        <entry value="4">blue</entry>
+        <entry value="5">grey</entry>
+        <entry value="6">darkblue</entry>
+        <entry value="7">black</entry>
+        <entry value="8">lightblue</entry>
+        <entry value="9">orange</entry>
+        <entry value="10">purple</entry>
+        <entry value="11">brown</entry>
+        <entry value="12">yellow</entry>
+        <entry value="13">maroon</entry>
+        <entry value="14">lime</entry>
+        <entry value="15">green</entry>
+        <entry value="16">fuchsia</entry>
+        <entry value="17">olive</entry>
+      </styling>
+    </stylings>
+    <statusbar>
+      <status type="html"><![CDATA[
+          <img src="icon/comet_64_ff8000.png" alt="CometVisu" /> by <a href="http://www.cometvisu.org/">CometVisu.org</a>
+          - <a href="manager.php">Config-Manager</a>
+          - <a href=".?config=demo&forceReload=true">Reload</a>
+          - <a href=".">Default Config</a>
+        ]]></status>
+      <status type="html" condition="!edit" hrefextend="config"><![CDATA[
+          - <a href="editor/">Edit</a>
+        ]]></status>
+      <status type="html" hrefextend="config"><![CDATA[
+          - <a href="check_config.php">Check Config</a>
+          <div style="float:right;padding-right:0.5em">Version: Git</div>
+        ]]></status>
+    </statusbar>
+  </meta>
+  <page name="CometVisu Widget Demo">
+    <navbar position="left" dynamic="true" width="200px">
+      <text>
+        <label>Test 1</label>
+      </text>
+      <line>
+        <layout colspan="12"/>
+      </line>
+      <pagejump target="Flavour: Lithium" name="Lithium">
+        <label>Flavour</label>
+      </pagejump>
+      <pagejump target="Flavour: Potassium" name="Potassium">
+        <label>Flavour</label>
+        <widgetinfo>
+          <info format="%d">
+          <layout colspan="0" />
+            <address transform="DPT:9.001" variant="">12/7/9</address>
+          </info>
+        </widgetinfo>
+      </pagejump>
+      <pagejump path="Flavour Test/Flavour: Boron" target="Subpage" name="Subpage">
+      <label>Flavour: Boron</label>
+      </pagejump>
+      <pagejump target="2D fixed Bitmap" name="2D">
+        <!--
+        <label>2D</label>
+        -->
+      </pagejump>
+    </navbar>
+    <text align="center">
+      <label>Herzlich willkommen bei dem CometVisu Widget Demo!</label>
+    </text>
+    <text>
+      <label>&lt;b&gt;Hinweis:&lt;/b&gt;&lt;br/&gt;Alle Widgets verwenden KNX-Addressen mit der Haupt- und Mittelgruppe 12/7,
+      </label>
+    </text>
+    <line>
+      <layout colspan="12"/>
+    </line>
+    <text>
+      <label>Für die CometVisu gibt es verschiedene Designs.</label>
+    </text>
+    <designtoggle>
+      <label>Wechsle Design</label>
+    </designtoggle>
+    <line>
+      <layout colspan="12"/>
+    </line>
+    <text align="center">
+      <label>&lt;b&gt;Standard-Widgets&lt;/b&gt;</label>
+    </text>
+    <break/>
+    <switch mapping="Off_On" styling="Red_Green">
+      <label>Switch</label>
+      <address transform="DPT:1.001" mode="readwrite">12/7/1</address>
+    </switch>
+    <break/>
+    <trigger value="0" mapping="Off_On">
+      <label>Trigger</label>
+      <address transform="DPT:1.001" mode="readwrite">12/7/1</address>
+    </trigger>
+    <trigger value="1" mapping="Off_On" bind_click_to_widget="true">
+      <label>Trigger (bind_click_to_widget="true")</label>
+      <address transform="DPT:1.001" mode="readwrite">12/7/1</address>
+    </trigger>
+    <break/>
+    <switch mapping="Off_On" styling="Red_Green">
+      <label>Switch</label>
+      <address transform="DPT:1.001" mode="readwrite">12/7/2</address>
+    </switch>
+    <break/>
+    <pushbutton downValue="1" upValue="0" mapping="On_Off">
+      <label>Pushbutton</label>
+      <address transform="DPT:1.001" mode="readwrite">12/7/2</address>
+    </pushbutton>
+    <break/>
+    <multitrigger button1label="Auto" button1value="auto" button2label="Komfort" button2value="comfort" button3label="Standy By" button3value="standby" button4label="Economy" button4value="economy" showstatus="true">
+      <label>Multitrigger: KONNEX Betriebsart</label>
+      <address transform="DPT:20.102" mode="readwrite">12/7/20</address>
+    </multitrigger>
+    <info mapping="KonnexHVAC">
+      <label>Info: Betriebsart</label>
+      <address transform="DPT:20.102" mode="readwrite">12/7/20</address>
+    </info>
+    <break/>
+    <toggle mapping="KonnexHVAC">
+      <label>Toggle: Betriebsart</label>
+      <address transform="DPT:20.102" mode="readwrite">12/7/20</address>
+    </toggle>
+    <break/>
+    <multitrigger button1label="An" button1value="0" button2label="Aus" button2value="1" button3label="Essen" button3value="2" button4label="Fernsehen" button4value="3">
+      <label>Multitrigger: Szenenaufruf</label>
+      <address transform="DPT:5.010" mode="readwrite">12/7/5</address>
+    </multitrigger>
+    <switch mapping="audio_mute">
+      <label><icon name="audio_sound"/> Switch Icon</label>
+      <address transform="DPT:1.001" mode="readwrite">12/7/1</address>
+    </switch>
+    <break/>
+    <infotrigger uplabel="wärmer" downlabel="kälter" upvalue="0.1" downvalue="-0.1" align="center" format="%.1f °C" change="absolute" min="7" max="24">
+      <label>Infotrigger: Sollwert</label>
+      <address transform="DPT:9" mode="readwrite">12/7/9</address>
+    </infotrigger>
+    <infotrigger uplabel="&gt;" downlabel="&lt;" upvalue="1" downvalue="-1" min="0" max="5" align="center" infoposition="middle" change="absolute" mapping="AudioSource">
+      <label>Infotrigger: Audioquelle</label>
+      <address transform="DPT:5.010" mode="readwrite">12/7/105</address>
+    </infotrigger>
+  </page>
+</pages>

@@ -41,9 +41,15 @@ qx.Class.define("cv.ui.structure.pure.BaseWidget",
   properties : {
     styling : {},
     mapping : {},
-    on_value : {},
-    off_value : {},
-    bind_click_to_widget : {
+    onValue : {
+      check : "String",
+      init : "1"
+    },
+    offValue : {
+      check : "String",
+      init : "0"
+    },
+    bindClickToWidget : {
       check : "Boolean",
       transform : "stringToBool",
       init : false
@@ -65,6 +71,15 @@ qx.Class.define("cv.ui.structure.pure.BaseWidget",
         control = this._getMixinChildControl(id);
       }
       return control || this.base(arguments, id);
+    },
+
+    /**
+     * Get the childcontrol which is responsible for user events
+     * depending on the property {bind_click_to_widget} is is either the 'actor' or the 'widget'
+     * childontrol
+     */
+    getActionChildControl : function() {
+      return this.isBindClickToWidget() ? this.getChildControl("widget") : this.getChildControl("actor");
     }
   }
 });

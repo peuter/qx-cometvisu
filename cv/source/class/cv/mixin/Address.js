@@ -28,22 +28,15 @@ qx.Mixin.define("cv.mixin.Address",
    *****************************************************************************
    */
   properties : {
-    item : {
-      check : "cv.model.item.Item",
+
+    addresses : {
+      check : "qx.data.Array",
       init : null
     },
-    
-    transform : {
-      check : "String",
-      init : ""
-    },
-    
-    mode : {
-      check : [ "read", "write", "readwrite" ],
-      nullable : true,
-      init : null
-    },
-    
+
+    /**
+     * Incoming value from a readable address
+     */
     value : {
       init : "-",
       apply : "_applyValue",
@@ -57,32 +50,42 @@ qx.Mixin.define("cv.mixin.Address",
   *****************************************************************************
   */
   members :
-  {    
+  {
+    _bid : null,
+    _readAddress : null,
+
     /**
      * Parse address from xml node
      * @param node {Element}
      */
     _parseAddress : function(node) {
+      var item = cv.Model.getInstance().getItemByAddress(node.textContent);
+
+      var address = new cv.model.Address(item);
       if (node.getAttribute("transform")) {
-        this.setTransform(node.getAttribute("transform"));
+        address.setTransform(node.getAttribute("transform"));
       }
       if (node.getAttribute("mode")) {
-        this.setMode(node.getAttribute("mode"));
+        address.setMode(node.getAttribute("mode"));
       }
-      var item = cv.Model.getInstance().getItemByAddress(node.textContent);
-      this.setItem(item);
+      if (node.getAttribute("variant")) {
+        address.setVariant(node.getAttribute("variant"));
+      }
       
       // listen to value changes
-      if (this.getMode() !== "write") {
-        item.addValueListener(this, this.setValue);
+      if (address.getMode() !== "write") {
+        if (this._bid !== null) {
+          this.error("only one read address allowed, cannot bind to "+address.getItem().getAddress());
+        } else {
+          this._bid = address.bind("value", this, "value");
+          this._readAddress = address;
+        }
       }
     },
     
     _applyValue : function(value) {
       this.debug("new transformed value received "+ value);
-      
-      // TODO apply mapping, set styling
-      
+
       if (qx.Class.hasMixin(this.constructor, cv.mixin.MBaseWidget)) {
         // apply value to actor-label
         this.getChildControl("actor").setLabel(value);
@@ -96,6 +99,11 @@ qx.Mixin.define("cv.mixin.Address",
   *****************************************************************************
   */
   destruct : function() {
-    this.getItem().removeValueListener(this);
+    if (this._readAddress) {
+      this._readAddress.removeBinding(this._bid);
+      this._disposeObjects("_readAddress");
+      this._readAddress = null;
+      this._bid = null;
+    }
   }
 });

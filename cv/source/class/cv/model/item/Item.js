@@ -42,13 +42,8 @@ qx.Class.define("cv.model.item.Item",
     // the raw value of the item as it is delivered from the backend
     value : {
       check : "String",
-      init : null,
+      init : "",
       event : "changeValue"
-    },
-    
-    transforms : {
-      check : "Object",
-      init : {}
     }
   },
 
@@ -59,10 +54,6 @@ qx.Class.define("cv.model.item.Item",
   */
   members :
   {
-    //property apply
-    _applyRawValue : function(value) {
-      this.debug("updating %s to %s", this.getAddress(), value);
-      this.setValue(value);
-    }  
+
   }
 });

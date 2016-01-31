@@ -24,12 +24,49 @@ qx.Class.define("cv.ui.structure.pure.Switch",
   extend : cv.ui.structure.pure.BaseWidget,
 
   /*
+   *****************************************************************************
+   CONSTRUCTOR
+   *****************************************************************************
+   */
+  construct: function (node, path) {
+    this.base(arguments, node, path);
+    // initialize woth emtpy value
+    this.setValue("-");
+  },
+
+  /*
   *****************************************************************************
      MEMBERS
   *****************************************************************************
   */
   members :
-  {    
-    
+  {
+    //overridden
+    _draw : function() {
+      this.getActionChildControl().addListener("tap", this._action, this);
+    },
+
+    /**
+     * Handle tap event
+     * @protected
+     */
+    _action : function() {
+      // toggle switch state
+      var writeValue = this.getValue() === this.getOnValue() ? this.getOffValue() : this.getOnValue();
+      this.getAddresses().forEach(function(address) {
+        if (address.getMode() !== "read") {
+          cv.Utils.client.write(address.getItem().getAddress(), writeValue);
+        }
+      }, this);
+    },
+
+    /*
+     *****************************************************************************
+     DESTRUCTOR
+     *****************************************************************************
+     */
+    destruct: function () {
+      this.getActionChildControl().removeListener("tap", this._action, this);
+    }
   }
 });

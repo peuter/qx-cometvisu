@@ -46,7 +46,7 @@ qx.Theme.define("cv.theme.Appearance",
 
       style : function()
       {
-        
+
       }
     },
     "pagejump/actor" : {

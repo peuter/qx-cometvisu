@@ -16,6 +16,7 @@
  */
 
 
+//noinspection JSUnusedLocalSymbols
 /**
  * 
  *
@@ -388,13 +389,14 @@ qx.Class.define("cv.ui.Templateengine",
             if (!this._parser) {
               this._parser = new cv.config.Parser();
             }
-            if (qx.core.Environment.get("qx.aspects")) {
+            console.log(qx.core.Environment.get("qx.aspects"));
+            if (qx.core.Environment.get("qx.aspects") === true) {
               qx.dev.Profile.stop();
               qx.dev.Profile.start();
             }
             this._parser.parseMeta(xml);
             this._parser.parsePages(xml);
-            if (qx.core.Environment.get("qx.aspects")) {
+            if (qx.core.Environment.get("qx.aspects") === true) {
               qx.dev.Profile.stop();
               qx.dev.Profile.showResults(50);
             }
@@ -428,7 +430,8 @@ qx.Class.define("cv.ui.Templateengine",
     },
     
     initBackendClient : function() {
-      
+      var client = cv.client.Cometvisu.getInstance();
+      client.init(this.getBackendName());
     },
     
     /**

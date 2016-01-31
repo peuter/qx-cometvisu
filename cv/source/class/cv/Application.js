@@ -70,9 +70,8 @@ qx.Class.define("cv.Application",
         Below is your actual application code...
       -------------------------------------------------------------------------
       */
-      
-      var client = cv.client.Cometvisu.getInstance();
-      client.init("openhab");
+
+
       
       var engine = cv.ui.Templateengine.getInstance();
       

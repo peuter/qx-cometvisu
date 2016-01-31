@@ -31,7 +31,7 @@ qx.Class.define("cv.transforms.Factory",
   */
   statics :
   {
-    doTransform : function(transform, value) {
+    doTransformDecode : function(transform, value) {
       var parts = transform.split(":");
       var path = "cv.transforms";
       
@@ -40,14 +40,37 @@ qx.Class.define("cv.transforms.Factory",
         path+= "."+parts[0].toLowerCase();
         type = parts[1];
       } else {
-        this.error("illegal transform value "+transform);
+        qx.log.Logger.error("illegal transform value "+transform);
         return value;
       }
       path+= ".Transform";
        
       var clazz = qx.Class.getByName(path);
       if (clazz) {
-        return clazz.doTransform(type, value);
+        return clazz.doTransformDecode(type, value);
+      } else {
+        qx.log.Logger.debug("no class found: "+path);
+        return value;
+      }
+    },
+
+    doTransformEncode : function(transform, value) {
+      var parts = transform.split(":");
+      var path = "cv.transforms";
+
+      var type = null;
+      if (parts.length === 2) {
+        path+= "."+parts[0].toLowerCase();
+        type = parts[1];
+      } else {
+        qx.log.Logger.error("illegal transform value "+transform);
+        return value;
+      }
+      path+= ".Transform";
+
+      var clazz = qx.Class.getByName(path);
+      if (clazz) {
+        return clazz.doTransformEncode(type, value);
       } else {
         qx.log.Logger.debug("no class found: "+path);
         return value;

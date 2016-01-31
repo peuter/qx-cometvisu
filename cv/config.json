@@ -102,7 +102,11 @@
 		
 	"source" :
 	{
-	  "extend" : [ "parts-config" ]
+	  "extend" : [ "parts-config" ],
+      "environment" :
+      {
+        "qx.aspects" : false
+      }
 	},
 
     "profile" :

@@ -224,7 +224,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
       var props = {};
       for (var i=0; i < node.attributes.length; i++) {
           var attr = node.attributes[i];
-          var name = attr.name;
+          var name = qx.lang.String.camelCase(attr.name.replace("_", "-"));
           if (self.hasOwnProperty("propertyMapping") && self.propertyMapping.hasOwnProperty("name")) {
             name = self.propertyMapping[name];
             // this.debug("map "+attr.name+" to "+name+" for "+node.nodeName);
