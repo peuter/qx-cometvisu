@@ -1,19 +1,23 @@
 {
   "info" : 
   {
-    "name" : "cv",
+    "name" : "CometVisu",
 
     "summary" : "Custom Application",
-    "description" : "This is a skeleton for a custom application with qooxdoo.",
+    "description" : "This is a port of the CometVisu based on the qooxdoo framework",
     
-    "homepage" : "http://some.homepage.url/",
+    "homepage" : "https://github.com/peuter/qx-cometvisu",
 
-    "license" : "SomeLicense",
+    "license" : "GPL",
     "authors" : 
     [
       {
-        "name" : "First Author (uid)",
-        "email" : "first.author@some.domain"
+        "name" : "Christian Mayer (ChristianMayer)",
+        "email" : "CometVisu@ChristianMayer.de"
+      },
+      {
+        "name" : "Tobias Bräutigam (Peuter)",
+        "email" : "tbraeutigam@gmail.com"
       }
     ],
 

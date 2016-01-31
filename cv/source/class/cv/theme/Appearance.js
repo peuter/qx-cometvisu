@@ -19,7 +19,8 @@ qx.Theme.define("cv.theme.Appearance",
       style : function()
       {
         return {
-          decorator : "footer"
+          decorator : "footer",
+          textColor : "line"
         };
       }
     },
@@ -30,8 +31,7 @@ qx.Theme.define("cv.theme.Appearance",
       style : function()
       {
         return {
-          margin : 5,
-          padding : 5,
+          margin : 2,
           decorator : "widget"
         };
       }
@@ -74,6 +74,15 @@ qx.Theme.define("cv.theme.Appearance",
       {
         return {
           textAlign : "right"
+        };
+      }
+    },
+
+    "link" : {
+      style : function()
+      {
+        return {
+          textColor : "line"
         };
       }
     },

@@ -141,7 +141,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
   {
     _gridPosition : null,
     _columns : 12,
-    _rowHeight : 40,
     _queuedNode : null,
     
     /**
@@ -251,8 +250,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
    __getGridLayoutProperties : function(widget, layoutProperties) {
      if (this._gridPosition === null) {
        this._gridPosition = {row : 0, column : 0};
-       // this._getLayout().setRowFlex(this._gridPosition.row, 1);
-       // this._getLayout().setRowMinHeight(this._gridPosition.row, this._rowHeight);
        var layout = this._getLayout();
        var width = this.getColumnSize();
 
@@ -309,72 +306,9 @@ qx.Class.define("cv.ui.structure.pure.Page",
        // end of row
        this._gridPosition.row++;
        this._gridPosition.column = 0;
-       //this._getLayout().setRowFlex(this._gridPosition.row, 1);
-       //this._getLayout().setRowMinHeight(this._gridPosition.row, rowspan*this._rowHeight);
      }
      
      return layoutProps;
-   },
-   
-   /**
-    * Add widget to a custom box layout based on multiple {qx.ui.layout.Vbox} rows
-    * surrounding 12 {qx.ui.layout.Hbox} columns
-    * 
-    * @private
-    */
-   __addToBoxLayout : function(widget, layoutProperties) {
-     if (this._gridPosition === null) {
-       this._gridPosition = {rowIndex : 0, column : 0};
-       
-       // init first row
-       this._gridPosition.row = new qx.ui.container.Composite(new qx.ui.layout.HBox(2));
-       this._add(this._gridPosition.row, null, true);
-     } else if (widget instanceof cv.ui.structure.pure.Break || (layoutProperties && layoutProperties.newLine && layoutProperties.newLine === true)) {
-       this._gridPosition.rowIndex++;
-       this._gridPosition.column = 0;
-       
-       // add row
-       this._gridPosition.row = new qx.ui.container.Composite(new qx.ui.layout.HBox(2));
-       this._add(this._gridPosition.row, null, true);
-
-       if (widget instanceof cv.ui.structure.pure.Break) {
-         // do not add this widget
-         return;
-       }
-     }
-     
-     // calculate rowspan/cospan
-     var colspan = 6;
-     if (layoutProperties && layoutProperties.colSpan) {
-       colspan = layoutProperties.colSpan;
-     } else if (qx.Class.hasMixin(widget.constructor, cv.mixin.Layout) && widget.getLayout()) {
-       colspan =  widget.getLayout().getColspan();
-     }
-     var rowspan = 1;
-     if (layoutProperties && layoutProperties.rowSpan) {
-       rowspan = layoutProperties.rowSpan;
-     } else if (qx.Class.hasMixin(widget.constructor, cv.mixin.Layout) && widget.getLayout()) {
-       rowspan = widget.getLayout().getRowspan();
-     }
-     if (rowspan>1) {
-       widget.setHeight(rowspan*this._rowHeight);
-     }
-     
-     // add widget to row     
-     this._gridPosition.row.add(widget, {flex:colspan});
-     
-     // check for new row
-     this._gridPosition.column += colspan;
-     // update grid position
-     if (this._gridPosition.column >= this._columns) {
-       this._gridPosition.rowIndex++;
-       this._gridPosition.column = 0;
-       
-       // add row
-       this._gridPosition.row = new qx.ui.container.Composite(new qx.ui.layout.HBox(2));
-       this._add(this._gridPosition.row, null, true);
-     }
-     //console.log(this._gridPosition);
    },
    
    //overridden
@@ -387,8 +321,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
        if (layoutProperties !== null) {
          this.base(arguments, widget, layoutProperties);
        }
-     } else if (this._getLayout() instanceof qx.ui.layout.VBox) {
-       this.__addToBoxLayout(widget, layoutProperties);
      }
    },
 

@@ -307,9 +307,11 @@ qx.Class.define("cv.ui.structure.pure.Base",
             
             if (childWidget.isShowPageJump()) {
               // only add a button that links to this page
-              var button = new qx.ui.form.Button(childWidget.getName());
+              var button = new qx.ui.basic.Label(childWidget.getName());
+              button.setAppearance("link");
+              button.getContentElement().addClass("link");
               this._add(button);
-              button.addListener("execute", function() {
+              button.addListener("tap", function() {
                 cv.ui.Templateengine.getInstance().getChildControl("page-handler").setCurrentPage(this);
               }, childWidget);
             }
