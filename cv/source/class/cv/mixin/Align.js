@@ -45,6 +45,10 @@ qx.Mixin.define("cv.mixin.Align",
   {   
     //property apply
     _applyAlignIn : function(value) {
+      var label = this.getChildControl("label");
+      if (label) {
+        label.setAlignX(value);
+      }
       this.setAlignX(value);
     }
   }

@@ -60,7 +60,7 @@ qx.Class.define("cv.ui.structure.pure.Pagejump",
     //overridden
     getLayoutOptions : function() {
       if (!this.getLayout()) {
-        var pos = this.getNavbar() ? this.getNavbar().getPosition() : "";
+        var pos = this.getParentNavbar() ? this.getParentNavbar().getPosition() : "";
         switch(pos) {
           case "left":
           case "right":

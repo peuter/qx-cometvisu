@@ -22,7 +22,12 @@ TODO:
 * Plugin-Kompabilität???
 * Plugins in Parts/Module packen, damit sie bei Bedarf nachgeladen werden können
 * Replay/Logging für User-Aktionen (Debugging)
-* Parse-Queue: Alle Pages, die nicht sichtbar sind erstmal in die Queue und erst parsen, wenn sie sichtbar werden (oder im Hintergrund durch Webworker???)
+* DONE Parse-Queue: Alle Pages, die nicht sichtbar sind erstmal in die Queue und erst parsen, wenn sie sichtbar werden (oder im Hintergrund durch Webworker???)
+* Mapping
+* Styling
+* User-Aktionen
+* Diverse Widgets fertigstellen
+
 
 
 Vorteile Qooxdoo:

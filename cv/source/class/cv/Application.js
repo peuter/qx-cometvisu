@@ -16,15 +16,13 @@
  */
 
 /**
- * This is the main application class of your custom application "cv"
+ * This is the main application class of the CometVisu based on Qooxdoo
  *
  * @asset(cv/*)
  */
 qx.Class.define("cv.Application",
 {
   extend : qx.application.Standalone,
-
-
 
   /*
   *****************************************************************************

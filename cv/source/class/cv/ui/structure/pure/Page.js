@@ -67,7 +67,8 @@ qx.Class.define("cv.ui.structure.pure.Page",
     name : {
       check : "String",
       init : null,
-      apply : "_applyName"
+      apply : "_applyName",
+      event : "changeName"
     },
     ga : {},
     
@@ -259,9 +260,14 @@ qx.Class.define("cv.ui.structure.pure.Page",
          layout.setColumnFlex(i, 1);
          layout.setColumnMaxWidth(i, width);
        }
-     } else if (layoutProperties && layoutProperties.newLine && layoutProperties.newLine === true) {
+     } else if (widget instanceof cv.ui.structure.pure.Break || (layoutProperties && layoutProperties.newLine && layoutProperties.newLine === true)) {
        this._gridPosition.row++;
        this._gridPosition.column = 0;
+
+       if (widget instanceof cv.ui.structure.pure.Break) {
+         // do not add this widget
+         return null;
+       }
      }
      
       // calculate rowspan/cospan
@@ -323,13 +329,18 @@ qx.Class.define("cv.ui.structure.pure.Page",
        // init first row
        this._gridPosition.row = new qx.ui.container.Composite(new qx.ui.layout.HBox(2));
        this._add(this._gridPosition.row, null, true);
-     } else if (layoutProperties && layoutProperties.newLine && layoutProperties.newLine === true) {
+     } else if (widget instanceof cv.ui.structure.pure.Break || (layoutProperties && layoutProperties.newLine && layoutProperties.newLine === true)) {
        this._gridPosition.rowIndex++;
        this._gridPosition.column = 0;
        
        // add row
        this._gridPosition.row = new qx.ui.container.Composite(new qx.ui.layout.HBox(2));
        this._add(this._gridPosition.row, null, true);
+
+       if (widget instanceof cv.ui.structure.pure.Break) {
+         // do not add this widget
+         return;
+       }
      }
      
      // calculate rowspan/cospan
@@ -373,7 +384,9 @@ qx.Class.define("cv.ui.structure.pure.Page",
      }
      else if (this._getLayout() instanceof qx.ui.layout.Grid) {
        layoutProperties = this.__getGridLayoutProperties(widget, layoutProperties);
-       this.base(arguments, widget, layoutProperties);
+       if (layoutProperties !== null) {
+         this.base(arguments, widget, layoutProperties);
+       }
      } else if (this._getLayout() instanceof qx.ui.layout.VBox) {
        this.__addToBoxLayout(widget, layoutProperties);
      }

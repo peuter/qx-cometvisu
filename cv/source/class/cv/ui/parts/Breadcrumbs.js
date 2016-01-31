@@ -26,11 +26,7 @@ qx.Class.define("cv.ui.parts.Breadcrumbs",
     
     // listen to page changes (deferred because page-handler childcontrol is not ready yet)
     new qx.util.DeferredCall(function() {
-      var pageHandler = cv.Utils.engine.getChildControl("page-handler");
-      pageHandler.addListener("changeSelection", this._onPageChanged, this);
-      
-      // initialize with root page
-      this._onPageChanged(pageHandler.getSelection()[0]);
+      cv.Utils.engine.getChildControl("page-handler").addListener("changeSelection", this._onPageChanged, this);
     }, this).schedule();
     
     
@@ -58,7 +54,8 @@ qx.Class.define("cv.ui.parts.Breadcrumbs",
               padding : [0, 5]
             }));
           }
-          var label = new qx.ui.basic.Label(page.getName());
+          var label = new qx.ui.basic.Label();
+          page.bind("name", label, "value");
           label.setUserData("path", page.getPath());
           label.addListener("tap", function() {
             cv.Utils.engine.scrollToPage(this.getUserData("path"));
