@@ -62,6 +62,7 @@ qx.Class.define("cv.ui.Templateengine",
 
     // listen to browser back button
     qx.bom.History.getInstance().addListener("request", function(e) {
+      console.log(e.getData());
       if (e.getData()) {
         this.scrollToPage(e.getData());
       }
@@ -387,8 +388,16 @@ qx.Class.define("cv.ui.Templateengine",
             if (!this._parser) {
               this._parser = new cv.config.Parser();
             }
+            if (qx.core.Environment.get("qx.aspects")) {
+              qx.dev.Profile.stop();
+              qx.dev.Profile.start();
+            }
             this._parser.parseMeta(xml);
             this._parser.parsePages(xml);
+            if (qx.core.Environment.get("qx.aspects")) {
+              qx.dev.Profile.stop();
+              qx.dev.Profile.showResults(50);
+            }
           }
         }
       }, this);

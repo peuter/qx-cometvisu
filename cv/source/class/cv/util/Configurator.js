@@ -66,24 +66,34 @@ qx.Class.define("cv.util.Configurator",
     //property apply
     _applyDesign : function(value, old) {
       if (value && value !== old) {
-        // // load css files
-         // for (var partName in this._cssParts) {
-           // var part = this._cssParts[partName];
-           // if (part !== null) {
-             // // unload old css
-             // part.remove();
-           // }
-           // // load new css
-           // part = document.createElement("link");
-           // part.setAttribute("rel", "stylesheet");
-           // part.setAttribute("type", "text/css");
-           // part.setAttribute("href", "resource/cv/designs/"+value+"/"+partName+".css");
-           // if (partName === "mobile") {
-             // part.setAttribute("media", "only screen and (max-width: 480px)");
-           // }
-           // var head = document.getElementsByTagName("head")[0];
-           // head.appendChild(part);
-         // }
+        var theme = qx.Theme.getByName("cv.theme."+qx.lang.String.firstUp(value));
+        if (theme) {
+          var themeManager = qx.theme.manager.Meta.getInstance();
+          if (themeManager.getTheme() !== theme) {
+            themeManager.setTheme(theme);
+          }
+        } else {
+          this.debug("no theme found for name "+value+" fallback to old design");
+          // load old design via CSS
+          for (var partName in this._cssParts) {
+            //noinspection JSUnfilteredForInLoop
+            var part = this._cssParts[partName];
+            if (part !== null) {
+              // unload old css
+              part.remove();
+            }
+            // load new css
+            part = document.createElement("link");
+            part.setAttribute("rel", "stylesheet");
+            part.setAttribute("type", "text/css");
+            part.setAttribute("href", "resource/cv/designs/" + value + "/" + partName + ".css");
+            if (partName === "mobile") {
+              part.setAttribute("media", "only screen and (max-width: 480px)");
+            }
+            var head = document.getElementsByTagName("head")[0];
+            head.appendChild(part);
+          }
+        }
       }
     }
   }

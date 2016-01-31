@@ -84,8 +84,12 @@ qx.Class.define("cv.config.Parser",
         pageAttributes.design = cv.Config.clientDesign;
       }
       // selection dialog
-      else if (!pageAttributes.clientDesign) {
-        this._engine.selectDesign();
+      else if (!pageAttributes.design) {
+        var dialog = new cv.ui.dialog.DesignSelector(qx.locale.Manager.tr("Please select a design"));
+        dialog.addListener("designSelected", function(e) {
+          pageAttributes.design = e.getData();
+        }, this);
+        dialog.open();
       }
       
       // apply all pages-settings to the templateengine properties

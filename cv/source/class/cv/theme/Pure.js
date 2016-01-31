@@ -16,36 +16,14 @@
  */
 
 
-/**
- * Mixin for align property
- */
-qx.Mixin.define("cv.mixin.Align",
+qx.Theme.define("cv.theme.Pure",
 {
-
-  /*
-   *****************************************************************************
-      PROPERTIES
-   *****************************************************************************
-   */
-  properties : {
-    align : {
-      check : ["left", "right", "center"],
-      nullable : true,
-      event : "changeAlign",
-      apply : "_applyAlignIn"
-    }
-  },
-
-  /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
-  members :
-  {   
-    //property apply
-    _applyAlignIn : function(value) {
-      this.setAlignX(value);
-    }
+  meta :
+  {
+    color : cv.theme.Color,
+    decoration : cv.theme.Decoration,
+    font : cv.theme.Font,
+    icon : qx.theme.icon.Tango,
+    appearance : cv.theme.Appearance
   }
 });

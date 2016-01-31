@@ -30,7 +30,7 @@ qx.Class.define("cv.ui.structure.pure.Designtoggle",
     cv.mixin.MBaseWidget
   ],
   
-   /*
+  /*
   *****************************************************************************
      MEMBERS
   *****************************************************************************
@@ -41,6 +41,19 @@ qx.Class.define("cv.ui.structure.pure.Designtoggle",
     // overridden
     _draw : function() {
       cv.Utils.configurator.bind("design", this.getChildControl("actor"), "label");
+      this.getChildControl("actor").addListener("tap", this._onTap, this);
+    },
+
+    /**
+     * Handle tap event on actor
+     * @protected
+     */
+    _onTap : function() {
+      var dialog = new cv.ui.dialog.DesignSelector(qx.locale.Manager.tr("Please select a design"));
+      dialog.addListener("designSelected", function(e) {
+        bj.Utils.configurator.setDesign(e.getData());
+      }, this);
+      dialog.open();
     },
     
     // overridden
@@ -51,6 +64,15 @@ qx.Class.define("cv.ui.structure.pure.Designtoggle",
         control = this._getMixinChildControl(id);
       }
       return control || this.base(arguments, id);
+    },
+
+    /*
+     *****************************************************************************
+     DESTRUCTOR
+     *****************************************************************************
+     */
+    destruct: function () {
+      this.getChildControl("actor").removeListener("tap", this._onTap, this);
     }
   }
 });

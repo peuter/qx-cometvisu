@@ -234,11 +234,11 @@ qx.Class.define("cv.ui.structure.pure.Page",
     },
     
     _applyColumnSize : function(value) {
-      var layout = this._getLayout();
-      
-      this.debug("applying column width "+value+" to "+this._columns+" columns");
-      for(var i=0; i<this._columns; i++) {
-        layout.setColumnMaxWidth(i, value);
+      if (this.getParsingState() === "done") {
+        var layout = this._getLayout();
+        for (var i = 0; i < this._columns; i++) {
+          layout.setColumnMaxWidth(i, value);
+        }
       }
     },
         
@@ -252,8 +252,12 @@ qx.Class.define("cv.ui.structure.pure.Page",
        this._gridPosition = {row : 0, column : 0};
        // this._getLayout().setRowFlex(this._gridPosition.row, 1);
        // this._getLayout().setRowMinHeight(this._gridPosition.row, this._rowHeight);
+       var layout = this._getLayout();
+       var width = this.getColumnSize();
+
        for(var i=0; i < this._columns; i++) {
-         this._getLayout().setColumnFlex(i, 1);
+         layout.setColumnFlex(i, 1);
+         layout.setColumnMaxWidth(i, width);
        }
      } else if (layoutProperties && layoutProperties.newLine && layoutProperties.newLine === true) {
        this._gridPosition.row++;
@@ -374,7 +378,8 @@ qx.Class.define("cv.ui.structure.pure.Page",
        this.__addToBoxLayout(widget, layoutProperties);
      }
    },
-    
+
+
    _initLayout : function() {
      var layout = new qx.ui.layout.Grid();
      this._setLayout(layout);

@@ -17,7 +17,6 @@
 
 
 /**
- * 
  *
  */
 qx.Class.define("cv.template",

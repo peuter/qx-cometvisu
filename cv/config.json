@@ -33,7 +33,8 @@
     "translation",
     "validate-config",
     "validate-manifest",
-    "watch"
+    "watch",
+    "profile"
   ],
 
   "default-job" : "source-hybrid",
@@ -42,7 +43,7 @@
   {
     "APPLICATION"  : "cv",
     "QOOXDOO_PATH" : "../external/qooxdoo",
-    "QXTHEME"      : "cv.theme.Theme",
+    "QXTHEME"      : "cv.theme.Pure",
     "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
     "LOCALES"      : [ "en" ],
     "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
@@ -103,6 +104,16 @@
 	{
 	  "extend" : [ "parts-config" ]
 	},
+
+    "profile" :
+    {
+      "desc" : "generate source for profiling",
+      "extend" : [ "source" ],
+      "environment" :
+      {
+        "qx.aspects" : true
+      }
+    },
 	
 	"build" :
 	{
@@ -131,6 +142,7 @@
     }
     
     ,"source-script" : {
+      "extend" : [ "profiling" ],
       "include": ["${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ]
     }
   }

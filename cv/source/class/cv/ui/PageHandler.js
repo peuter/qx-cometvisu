@@ -15,10 +15,9 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
-
 /**
- * 
- *
+ * The {PageHandler} is responsible for all navigation purposes amongst pages
+ * it represents a {qx.ui.container.Stack} for all pages of a CometVisu config file
  */
 qx.Class.define("cv.ui.PageHandler",
 {
