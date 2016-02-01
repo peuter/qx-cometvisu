@@ -54,7 +54,7 @@ qx.Class.define("cv.ui.structure.pure.Pagejump",
         switch (value.getPosition()) {
           case "left":
           case "right":
-            this.getChildControl("label").exclude();
+            this.getChildControl("label-container").exclude();
             break;
         }
         
@@ -68,11 +68,11 @@ qx.Class.define("cv.ui.structure.pure.Pagejump",
         switch(pos) {
           case "left":
           case "right":
-            return this.base(arguments, { colspan : 12 });
+            return this.base(arguments, { flex : 1 });
             break;
           case "top":
           case "bottom":
-            return this.base(arguments, { colpspan : 0 }); 
+            return this.base(arguments);
             break;
         } 
       }
@@ -80,6 +80,7 @@ qx.Class.define("cv.ui.structure.pure.Pagejump",
     },
         
     _draw : function() {
+
       var actor = this.getChildControl("actor");
       this.bind("target", actor, "label");
       
