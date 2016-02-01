@@ -45,6 +45,7 @@ qx.Class.define("cv.Application",
       
       // patch the original decorator class
       qx.Class.patch(qx.ui.decoration.Decorator, cv.ui.decoration.MLinearBackgroundGradient);
+      qx.Class.patch(qx.ui.decoration.Decorator, cv.ui.decoration.MBorderImageGradient);
       
       // Enable logging in debug variant
       if (qx.core.Environment.get("qx.debug"))

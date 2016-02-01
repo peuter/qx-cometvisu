@@ -389,7 +389,7 @@ qx.Class.define("cv.ui.Templateengine",
             if (!this._parser) {
               this._parser = new cv.config.Parser();
             }
-            console.log(qx.core.Environment.get("qx.aspects"));
+
             if (qx.core.Environment.get("qx.aspects") === true) {
               qx.dev.Profile.stop();
               qx.dev.Profile.start();

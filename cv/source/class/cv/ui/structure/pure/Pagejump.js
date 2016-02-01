@@ -21,6 +21,10 @@
 qx.Class.define("cv.ui.structure.pure.Pagejump",
 {
   extend : cv.ui.structure.pure.BaseWidget,
+
+  include : [
+    cv.mixin.Widgetinfo
+  ],
   
   properties : {
     appearance : {

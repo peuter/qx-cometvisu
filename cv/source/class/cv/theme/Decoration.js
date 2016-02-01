@@ -60,6 +60,42 @@ qx.Theme.define("cv.theme.Decoration",
         gradientStart : ["#000000", 0],
         gradientEnd : ["#0F0F0F", 100]
       }
-    } 
+    },
+    /**
+     * The 4 navbars
+     */
+    "navbar-top": {
+      style : {
+
+      }
+    },
+    "navbar-bottom": {
+      style :
+      {
+
+      }
+    },
+    "navbar-left": {
+      style :
+      {
+        width : [ 0, 1, 0, 0],
+        colorRight : "line",
+        widthLeft : 0,
+        borderGradientOrientation : "vertical",
+        borderGradientStart : ["line-gradient", 0],
+        borderGradientEnd : ["line-gradient", 100],
+        borderColorStop : ["line", 33, 33]
+      }
+    },
+    "navbar-right": {
+      style :
+      {
+        width : [ 0, 0, 0, 1],
+        borderGradientOrientation : "vertical",
+        borderGradientStart : ["line-gradient", 0],
+        borderGradientEnd : ["line-gradient", 100],
+        borderColorStop : ["line", 33, 33]
+      }
+    }
   }
 });

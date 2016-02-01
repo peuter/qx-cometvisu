@@ -115,6 +115,42 @@ qx.Theme.define("cv.theme.Appearance",
           marginLeft : 15
         };
       }
+    },
+
+    /**
+     * The 4 navbars
+     */
+    "navbar-top": {
+      style : function()
+      {
+        return {
+          decorator : "navbar-top"
+        };
+      }
+    },
+    "navbar-bottom": {
+      style : function()
+      {
+        return {
+          decorator : "navbar-bottom"
+        };
+      }
+    },
+    "navbar-left": {
+      style : function()
+      {
+        return {
+          decorator : "navbar-left"
+        };
+      }
+    },
+    "navbar-right": {
+      style : function()
+      {
+        return {
+          decorator : "navbar-right"
+        };
+      }
     }
   }
 });

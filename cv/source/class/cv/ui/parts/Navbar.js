@@ -28,6 +28,7 @@ qx.Class.define("cv.ui.parts.Navbar",
   construct : function(position) {
     this.base(arguments);
     this._position = position;
+    this.setAppearance("navbar-"+position);
     switch (position) {
       case "top":
       case "bottom":

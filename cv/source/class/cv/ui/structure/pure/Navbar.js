@@ -37,9 +37,9 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
    *****************************************************************************
    */
   statics : {
-    // propertyMapping : {
-      // width : "definedWidth"
-    // } 
+     propertyMapping : {
+       width : "definedWidth"
+     }
   },
 
   /*
@@ -58,6 +58,12 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
     dynamic : {
       check : "Boolean",
       transform : "stringToBool"
+    },
+
+    definedWidth : {
+      check : "Number",
+      transform : "cssSizeToNumber",
+      apply : "_applyDefinedWidth"
     }
   },
 
@@ -67,7 +73,15 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
   *****************************************************************************
   */
   members :
-  {      
+  {
+    //property apply
+    _applyDefinedWidth : function(value) {
+      this.setWidth(value);
+      this.setMinWidth(value);
+      this.setMaxWidth(value);
+      console.log(this);
+    },
+
     //overridden
     getLayoutOptions : function() {
       if (this.getPosition() === "top" || this.getPosition() === "bottom") {

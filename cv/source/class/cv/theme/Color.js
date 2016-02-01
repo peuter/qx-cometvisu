@@ -17,7 +17,7 @@ qx.Theme.define("cv.theme.Color",
     // form
     "text-label" : "#FFFFFF",
     "background-application" : "#000000",
-    "line" : "#FF8000",
+    "line" : "rgb(255, 128, 0)",
     
     "line-gradient": "rgba(255, 128, 0, 0.2)"
   }

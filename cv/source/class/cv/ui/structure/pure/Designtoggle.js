@@ -42,7 +42,6 @@ qx.Class.define("cv.ui.structure.pure.Designtoggle",
     _draw : function() {
       cv.Utils.configurator.bind("design", this.getChildControl("actor"), "label");
       this.getChildControl("actor").addListener("tap", this._onTap, this);
-      console.log(this);
     },
 
     /**

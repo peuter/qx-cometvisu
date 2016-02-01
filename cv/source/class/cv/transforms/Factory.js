@@ -32,6 +32,9 @@ qx.Class.define("cv.transforms.Factory",
   statics :
   {
     doTransformDecode : function(transform, value) {
+      if (!transform) {
+        return value;
+      }
       var parts = transform.split(":");
       var path = "cv.transforms";
       
@@ -55,6 +58,9 @@ qx.Class.define("cv.transforms.Factory",
     },
 
     doTransformEncode : function(transform, value) {
+      if (!transform) {
+        return value;
+      }
       var parts = transform.split(":");
       var path = "cv.transforms";
 

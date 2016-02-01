@@ -88,7 +88,6 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
           });
           var align = qx.Class.hasMixin(this.constructor, cv.mixin.Align) && this.getAlign() ? this.getAlign() : "right";
           var dock = align === "left" ? "west" : align === "right" ? "east" : "center";
-          this.debug("Align: "+align+" => dock "+dock);
           this._getMixinChildControl("left").add(control, {edge : dock});
           break;
       }

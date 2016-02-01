@@ -84,8 +84,9 @@ qx.Mixin.define("cv.mixin.Address",
     },
     
     _applyValue : function(value) {
-      this.debug("new transformed value received "+ value);
-
+      if (value) {
+        this.debug("new transformed value received '" + value + "'");
+      }
       if (qx.Class.hasMixin(this.constructor, cv.mixin.MBaseWidget)) {
         // apply value to actor-label
         this.getChildControl("actor").setLabel(value);
