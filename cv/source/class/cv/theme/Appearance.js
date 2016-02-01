@@ -31,11 +31,12 @@ qx.Theme.define("cv.theme.Appearance",
       style : function()
       {
         return {
-          margin : 2,
+          padding : [3, 5] ,
           decorator : "widget"
         };
       }
     },
+    "text" : "cv-widget",
     "pagejump" : {
       include : "cv-widget",
       alias : "cv-widget"
@@ -93,7 +94,8 @@ qx.Theme.define("cv.theme.Appearance",
         return {
           height: 1,
           decorator: "line",
-          margin : 1
+          margin : 1,
+          allowGrowY : false
         };
       }
     },

@@ -291,6 +291,11 @@ qx.Class.define("cv.ui.structure.pure.Page",
        }
        cellWidget = this._getLayout().getCellWidget(this._gridPosition.row, this._gridPosition.column);
      }
+     if (this._gridPosition.column + colspan > this._columns+1) {
+       // bot enaough space in row, start a new one
+       this._gridPosition.row++;
+       this._gridPosition.column = 0;
+     }
      var layoutProps = {
        row : this._gridPosition.row,
        column : this._gridPosition.column,
@@ -301,13 +306,7 @@ qx.Class.define("cv.ui.structure.pure.Page",
      // console.log(layoutProps);
      
      this._gridPosition.column += colspan;
-     // update grid position
-     if (this._gridPosition.column >= this._columns-1) {
-       // end of row
-       this._gridPosition.row++;
-       this._gridPosition.column = 0;
-     }
-     
+
      return layoutProps;
    },
    

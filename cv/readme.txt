@@ -27,7 +27,9 @@ TODO:
 * Styling
 * User-Aktionen
 * Diverse Widgets fertigstellen
-
+* Basic-Design erstellen, welches alle Größen / Positionierungen enthält
+  * Pure davon ableiten mit Farben, Gradienten, Border(-Radius) usw.
+  * Metal ebenso portieren
 
 
 Vorteile Qooxdoo:
