@@ -53,6 +53,7 @@ qx.Mixin.define("cv.mixin.Address",
   {
     _bid : null,
     _readAddress : null,
+    _formatValueCache : null,
 
     /**
      * Parse address from xml node
@@ -72,7 +73,7 @@ qx.Mixin.define("cv.mixin.Address",
         address.setVariant(node.getAttribute("variant"));
       }
       
-      // listen to value changes
+      // listen to value changes @todo: Handle multiple read addresses (e.g. variants for r,g,b color)
       if (address.getMode() !== "write") {
         if (this._bid !== null) {
           this.error("only one read address allowed, cannot bind to "+address.getItem().getAddress());
@@ -81,15 +82,40 @@ qx.Mixin.define("cv.mixin.Address",
           this._readAddress = address;
         }
       }
+
+      this._formatValueCache = {};
     },
     
     _applyValue : function(value) {
+      // #1 incoming value is already transformed (done in Address mixin)
       if (value) {
         this.debug("new transformed value received '" + value + "'");
       }
+
       if (qx.Class.hasMixin(this.constructor, cv.mixin.MBaseWidget)) {
+        // #2: map it to a value the user wants to see
+        value = this.getMapping() ? this.getMapping().map(value) : value;
+
+        // #3: format it in a way the user understands the value
+        if( this.getPrecision() ) {
+          value = Number(value).toPrecision(this.getPrecision());
+        }
+        if( this.getFormat() ) {
+          //this._formatValueCache[this._readAddress.getAddress()] = value;
+
+          //argList = this.getAddresses().map(function(address) {
+          //  return address.getValue();
+          //}, this);
+          //var argList.push(value);
+
+          value = cv.util.StringFormat.getInstance().sprintf(this.getFormat(), [value]);
+        }
+
+
         // apply value to actor-label
         this.getChildControl("actor").setLabel(value);
+
+        // #4 will happen outside: style the value to be pretty
       }
     }
   },
@@ -105,6 +131,7 @@ qx.Mixin.define("cv.mixin.Address",
       this._disposeObjects("_readAddress");
       this._readAddress = null;
       this._bid = null;
+      this._formatValueCache = null;
     }
   }
 });

@@ -181,6 +181,40 @@ qx.Class.define("cv.ui.Templateengine",
     _libraryCheck : true,
     _pageHandler : null,
     _screensaveTimer : null,
+
+    /**
+     * Find styling by name
+     *
+     * @param name {String} name of the styling
+     * @returns {cv.config.meta.Styling|null}
+     */
+    getStylingByName : function(name) {
+      var found = null;
+      this.getStylings().some(function(styling) {
+        if (styling.getName() === name) {
+          found = styling;
+          return true;
+        }
+      });
+      return found;
+    },
+
+    /**
+     * Find mapping by name
+     *
+     * @param name {String} name of the mapping
+     * @returns {cv.config.meta.Mapping|null}
+     */
+    getMappingByName : function(name) {
+      var found = null;
+      this.getMappings().some(function(mapping) {
+        if (mapping.getName() === name) {
+          found = mapping;
+          return true;
+        }
+      });
+      return found;
+    },
     
     //property apply
     _applyDesign : function(value) {

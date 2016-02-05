@@ -44,10 +44,6 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
       check : "String",
       nullable : true
     },
-    format : {
-      check : "String",
-      nullable : true
-    },
     change : {
       check : "String",
       nullable : true

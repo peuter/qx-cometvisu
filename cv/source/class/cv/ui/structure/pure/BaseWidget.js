@@ -39,8 +39,16 @@ qx.Class.define("cv.ui.structure.pure.BaseWidget",
    *****************************************************************************
    */
   properties : {
-    styling : {},
-    mapping : {},
+    styling : {
+      check : "cv.config.meta.Styling",
+      nullable : true,
+      transform : "__getStylingByName"
+    },
+    mapping : {
+      check : "cv.config.meta.Mapping",
+      nullable : true,
+      transform : "__getMappingByName"
+    },
     onValue : {
       check : "String",
       init : "1"
@@ -53,6 +61,14 @@ qx.Class.define("cv.ui.structure.pure.BaseWidget",
       check : "Boolean",
       transform : "stringToBool",
       init : false
+    },
+    format : {
+      check : "String",
+      nullable : true
+    },
+    precision : {
+      check : "Number",
+      nullable : true
     }
   },
 
@@ -62,7 +78,23 @@ qx.Class.define("cv.ui.structure.pure.BaseWidget",
   *****************************************************************************
   */
   members :
-  {    
+  {
+    /**
+     * A shortcut to {cv.ui.Templateengine.getInstance().getStylingByName}, to be used as transform
+     * @private
+     */
+    __getStylingByName : function(name) {
+      return cv.Utils.engine.getStylingByName(name);
+    },
+
+    /**
+     * A shortcut to {cv.ui.Templateengine.getInstance().getMappingByName}, to be used as transform
+     * @private
+     */
+    __getMappingByName : function(name) {
+      return cv.Utils.engine.getMappingByName(name);
+    },
+
     // overridden
     _createChildControlImpl : function(id, hash)
     {
