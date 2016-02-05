@@ -70,11 +70,39 @@ qx.Theme.define("cv.theme.Appearance",
         };
       }
     },
+    "cv-widget/actor/label" : {
+      style : function(states)
+      {
+        // apply stylings to the widget
+        var tc = "text-label"; // default color
+        if (states.red) {
+          tc = "red";
+        } else if (states.green) {
+          tc = "green";
+        } else if (states.blue) {
+          tc = "blue";
+        } else if (states.purple) {
+          tc = "purple";
+        }
+
+        return {
+          textColor : tc
+        };
+      }
+    },
     "cv-widget/label/label" : {
       style : function()
       {
         return {
           textAlign : "right"
+        };
+      }
+    },
+    "cv-widget/image" : {
+      style : function() {
+        return {
+          marginLeft: 15,
+          padding: 3
         };
       }
     },

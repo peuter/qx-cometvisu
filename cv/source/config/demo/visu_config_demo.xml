@@ -321,14 +321,14 @@
       <address transform="DPT:9" mode="readwrite">12/7/9</address>
     </info>
     <break/>
-    <image src="icon/comet_128_ff8000.png">
+    <image src="cv/icons/comet_128_ff8000.png">
       <label>Image</label>
     </image>
     <page name="Image: Erweitert..." align="center">
       <image src="http://www.e-zeeinternet.com/count.php?page=546016&amp;style=default&amp;nbdigits=9&amp;reloads=1" refresh="10">
         <label>Image: Update alle 10s</label>
       </image>
-      <image src="icon/comet_128_ff8000.png" width="500px" height="46px">
+      <image src="cv/icons/icon/comet_128_ff8000.png" width="500px" height="46px">
         <label>Image: mit Größenangabe</label>
       </image>
     </page>

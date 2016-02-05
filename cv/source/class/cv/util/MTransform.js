@@ -55,6 +55,15 @@ qx.Mixin.define("cv.util.MTransform",
       }
       return false;
     },
+
+    /**
+     * Convert string to number
+     * @param value {String}
+     * @returns {Number}
+     */
+    stringToNumber : function(value) {
+      return parseInt(value);
+    },
     
     /**
      * Convert CSS width/height/size definitions to number (omit px,pt,... suffixes)

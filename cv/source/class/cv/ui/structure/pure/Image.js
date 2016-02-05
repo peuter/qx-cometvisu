@@ -20,5 +20,129 @@
  */
 qx.Class.define("cv.ui.structure.pure.Image",
 {
-  extend : cv.ui.structure.pure.BaseWidget
+  extend : cv.ui.structure.pure.BaseWidget,
+
+  /*
+   *****************************************************************************
+   PROPERTIES
+   *****************************************************************************
+   */
+  properties: {
+    /**
+     * The source URL of the image to show
+     */
+    src : {
+      check : "String",
+      nullable : true,
+      apply : "_applySrc"
+    },
+
+    /**
+     * Refresh interval of the image
+     */
+    refresh : {
+      check : "Number",
+      nullable : true,
+      transform : "stringToNumber",
+      apply : "_applyRefresh"
+    }
+  },
+
+  /*
+   *****************************************************************************
+   MEMBERS
+   *****************************************************************************
+   */
+  members: {
+    _refreshTimer : null,
+
+    //property apply
+    _applySrc : function(value) {
+      if (value) {
+        this.getChildControl("image").setSource(value);
+        this.getChildControl("image").show();
+      } else {
+        this.getChildControl("image").exclude();
+      }
+    },
+
+    //property apply
+    _applyRefresh : function(value) {
+      if (!this._refreshTimer) {
+        this._refreshTimer = new qx.event.Timer(value * 1000);
+        this._refreshTimer.addListener("interval", this._onInterval, this);
+      } else {
+        this._refreshTimer.restartWith(value * 1000);
+      }
+    },
+
+    /**
+     * Handle timer interval and reload the image
+     */
+    _onInterval : function() {
+      this.getChildControl("image").resetSource();
+      this.getChildControl("image").setSource(this.getSrc());
+    },
+
+    // overridden
+    _createChildControlImpl : function(id, hash)
+    {
+      var control;
+      if (this._hasMixinChildControl(id)) {
+        control = this._getMixinChildControl(id);
+      }
+      switch (id) {
+        case "image":
+          control = new qx.ui.basic.Image(this.getSrc());
+          control.setScale(true);
+          this.getChildControl("widget").add(control, {flex:1});
+          break;
+      }
+      return control || this.base(arguments, id);
+    },
+
+    //overridden
+    _draw : function() {
+      this.addListener("appear", this._onAppear, this);
+      this.addListener("disappear", this._onDisappear, this);
+    },
+
+    /**
+     * Start the refresh timer if the image gets visible
+     */
+    _onAppear : function() {
+      if (this._refreshTimer) {
+        // refresh immediately
+        this._onInterval();
+
+        // start timer
+        this._refreshTimer.start();
+      }
+    },
+
+    /**
+     * Stop the refresh timer if the image gets visible
+     */
+    _onDisappear : function() {
+      if (this._refreshTimer) {
+        this._refreshTimer.stop();
+      }
+    }
+  },
+
+  /*
+   *****************************************************************************
+   DESTRUCTOR
+   *****************************************************************************
+   */
+  destruct: function () {
+    if (this._refreshTimer) {
+      this._restartTimer.stop();
+      this._restartTimer.dispose();
+      this._restartTimer = null;
+    }
+
+    this.removeListener("appear", this._onAppear, this);
+    this.removeListener("disappear", this._onDisappear, this);
+  }
 });

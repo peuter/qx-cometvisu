@@ -8,6 +8,7 @@
 
 ************************************************************************ */
 
+//noinspection JSUnusedGlobalSymbols
 /**
  * 
  *
@@ -33,17 +34,20 @@ qx.Class.define("cv.config.meta.Styling",
   properties : {
     
     classnames : {
-      check : "String",
-      init : ""
+      check : "qx.data.Array",
+      nullable : true
     },
     value : {
       check : "Object",
-      init : {}
+      nullable : true
     },
-    defaultValue : {},
+    defaultValue : {
+      check : "String",
+      nullable : true
+    },
     range : {
       check : "Object",
-      init : {}
+      nullable : true
     }
   },
   
@@ -56,13 +60,16 @@ qx.Class.define("cv.config.meta.Styling",
     
     _parseNode : function(node) {
       this.base(arguments, node);
+
+      this.setValue({});
+      this.setRange({});
       
-      var classnames = '';
+      var classnames = new qx.data.Array();
       var entries = node.getElementsByTagName('entry');
       for (var i=0; i < entries.length; i++) {
         var entry = entries.item(i);
         
-        classnames += entry.textContent + ' ';
+        classnames.push(entry.textContent);
         // check for default entry
         var isDefaultValue = entry.attributes.getNamedItem('default');
         if (isDefaultValue) {
@@ -81,6 +88,7 @@ qx.Class.define("cv.config.meta.Styling",
         else {
           var min = parseFloat(entry.attributes.getNamedItem('range_min').value);
           var max = parseFloat(entry.attributes.getNamedItem('range_max').value);
+          
           this.getRange().min = [ max, entry.textContent ];
           if (isDefaultValue) {
             this.setDefaultValue(min);

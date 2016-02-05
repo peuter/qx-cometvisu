@@ -113,9 +113,51 @@ qx.Mixin.define("cv.mixin.Address",
 
 
         // apply value to actor-label
-        this.getChildControl("actor").setLabel(value);
+        var actor = this.getChildControl("actor");
+        actor.setLabel(value !== undefined && value !== "" ? value : "-");
 
-        // #4 will happen outside: style the value to be pretty
+        // #4 style the value to be pretty
+        var sty = this.getStyling();
+        if (sty) {
+          var widget = actor.getChildControl("label");
+
+          // remove only styling classes
+          sty.getClassnames().forEach(function(classname) {
+            widget.removeState(classname);
+          });
+
+          var findValue = function(v, findExact) {
+            if (undefined === v) {
+              return false;
+            }
+            if (sty[v]) { // fixed value
+              widget.addState(sty[v]);
+              return true;
+            }
+            else {
+              var range = sty.getRange();
+              if (findExact && range[v]) {
+                widget.addState(range[v][1]);
+                return true;
+              }
+              var valueFloat = parseFloat(v);
+              for (var min in range) {
+                if (min > valueFloat) continue;
+                //noinspection JSUnfilteredForInLoop
+                if (range[min][0] < valueFloat) continue; // check max
+                //noinspection JSUnfilteredForInLoop
+                widget.addState(range[min][1]);
+                return true;
+              }
+            }
+            return false;
+          };
+
+          if (!findValue(value, false) && sty.getDefaultValue() !== undefined) {
+            findValue(sty.getDefaultValue(), true);
+          }
+
+        }
       }
     }
   },
