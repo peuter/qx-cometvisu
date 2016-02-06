@@ -32,7 +32,7 @@ qx.Class.define("cv.transforms.Factory",
   statics :
   {
 
-    getTransform : function(transform, withType) {
+    getTransform : function(transform) {
       if (!transform || transform === "") {
         return null;
       }
@@ -51,11 +51,7 @@ qx.Class.define("cv.transforms.Factory",
 
       var clazz = qx.Class.getByName(path);
       if (clazz) {
-        if (withType) {
-          return [clazz, type];
-        } else {
-          return clazz;
-        }
+        return clazz.getTransform(type);
       } else {
         qx.log.Logger.debug("no class found: "+path);
         return null;
@@ -63,17 +59,19 @@ qx.Class.define("cv.transforms.Factory",
     },
 
     doTransformDecode : function(transform, value) {
-      var lookup = cv.transforms.Factory.getTransform(transform, true);
+      var lookup = cv.transforms.Factory.getTransform(transform);
       if (lookup) {
-        return lookup[0].doTransformDecode(lookup[1], value);
+        return lookup.decode(value);
       }
+      return value;
     },
 
     doTransformEncode : function(transform, value) {
       var lookup = cv.transforms.Factory.getTransform(transform);
       if (lookup) {
-        return lookup[0].doTransformEncode(lookup[1], value);
+        return lookup.encode(value);
       }
+      return value;
     }
   }
 });

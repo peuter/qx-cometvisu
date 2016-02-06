@@ -16,9 +16,65 @@
  */
 
 /**
- * Video widget
+ * Video widget @todo not supported by qooxdoo
  */
 qx.Class.define("cv.ui.structure.pure.Video",
 {
-  extend : cv.ui.structure.pure.BaseWidget
+  extend : cv.ui.structure.pure.Base,
+
+  include : [
+    cv.mixin.Label,
+    cv.mixin.Flavour
+  ],
+
+  /*
+   *****************************************************************************
+   PROPERTIES
+   *****************************************************************************
+   */
+  properties: {
+    src : {
+      check : "String",
+      nullable : true,
+      apply : "_applySrc"
+    },
+    autoplay : {
+      check : "String",
+      nullable : true
+    }
+  },
+
+  /*
+   *****************************************************************************
+   MEMBERS
+   *****************************************************************************
+   */
+  members: {
+
+    //property apply
+    _applySrc : function(value) {
+      if (value) {
+        this.getChildControl("video").setSource(value);
+        this.getChildControl("video").show();
+      } else if (this.hasChildControl("video")) {
+        this.getChildControl("video").exclude();
+      }
+    },
+
+    // overridden
+    _createChildControlImpl : function(id, hash)
+    {
+      var control;
+
+      switch (id) {
+        case "video":
+          control = new qx.bom.media.Video();
+
+          this._add(control, {flex:1});
+          break;
+
+      }
+      return control || this.base(arguments, id);
+    }
+  }
 });

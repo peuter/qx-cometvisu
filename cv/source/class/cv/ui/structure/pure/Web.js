@@ -69,7 +69,7 @@ qx.Class.define("cv.ui.structure.pure.Web",
         this.getChildControl("iframe").setSource(value);
         this.getChildControl("iframe").show();
       } else if (this.hasChildControl("iframe")) {
-        this.getChildControl("iframe").exlcude();
+        this.getChildControl("iframe").exclude();
       }
     },
 
