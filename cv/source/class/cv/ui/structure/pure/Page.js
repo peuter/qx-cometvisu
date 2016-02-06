@@ -174,17 +174,17 @@ qx.Class.define("cv.ui.structure.pure.Page",
       this._mapProperties(node);
       this._mapChildPages(node);
       
-      var bounds = this.getBounds();
-      if (this.isRoot() || bounds) {
+      //var bounds = this.getBounds();
+      //if (this.isRoot() || bounds) {
         // page is visible or root page -> proceed with parsing
-        this.debug("proceeding with parsing");
+        //this.debug("proceeding with parsing");
         this._mapChildren(node);
         this.setParsingState("done");
-      } else {
-        this.setParsingState("queued");
-        this._queuedNode = node;
-        this.debug("parsing has been delayed");
-      }
+      //} else {
+      //  this.setParsingState("queued");
+      //  this._queuedNode = node;
+      //  this.debug("parsing has been delayed");
+      //}
     },
     
     /**
@@ -192,6 +192,7 @@ qx.Class.define("cv.ui.structure.pure.Page",
      */
     enterPage : function() {
       if (this.getParsingState() === "queued") {
+        this.debug("parsing queued page "+this._queuedNode.getAttribute("name"));
         this._mapChildren(this._queuedNode);
         this.setParsingState("done");     
       }
@@ -293,9 +294,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
        colSpan : colspan,
        rowSpan : rowspan
      };
-     
-     // console.log(layoutProps);
-     
      this._gridPosition.column += colspan;
 
      return layoutProps;
@@ -309,11 +307,17 @@ qx.Class.define("cv.ui.structure.pure.Page",
      else if (this._getLayout() instanceof qx.ui.layout.Grid) {
        layoutProperties = this.__getGridLayoutProperties(widget, layoutProperties);
        if (layoutProperties !== null) {
+         //console.log(layoutProperties);
+         //console.log(widget);
          this.base(arguments, widget, layoutProperties);
        }
      }
    },
 
+    //overridden
+    getAlignWidget : function() {
+      return this.getChildControl("title");
+    },
 
    _initLayout : function() {
      var layout = new qx.ui.layout.Grid();

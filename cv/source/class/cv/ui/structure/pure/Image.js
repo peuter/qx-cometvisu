@@ -22,6 +22,10 @@ qx.Class.define("cv.ui.structure.pure.Image",
 {
   extend : cv.ui.structure.pure.BaseWidget,
 
+  include : [
+    cv.mixin.MRefreshable
+  ],
+
   /*
    *****************************************************************************
    PROPERTIES
@@ -35,16 +39,6 @@ qx.Class.define("cv.ui.structure.pure.Image",
       check : "String",
       nullable : true,
       apply : "_applySrc"
-    },
-
-    /**
-     * Refresh interval of the image
-     */
-    refresh : {
-      check : "Number",
-      nullable : true,
-      transform : "stringToNumber",
-      apply : "_applyRefresh"
     }
   },
 
@@ -54,7 +48,6 @@ qx.Class.define("cv.ui.structure.pure.Image",
    *****************************************************************************
    */
   members: {
-    _refreshTimer : null,
 
     //property apply
     _applySrc : function(value) {
@@ -63,16 +56,6 @@ qx.Class.define("cv.ui.structure.pure.Image",
         this.getChildControl("image").show();
       } else {
         this.getChildControl("image").exclude();
-      }
-    },
-
-    //property apply
-    _applyRefresh : function(value) {
-      if (!this._refreshTimer) {
-        this._refreshTimer = new qx.event.Timer(value * 1000);
-        this._refreshTimer.addListener("interval", this._onInterval, this);
-      } else {
-        this._refreshTimer.restartWith(value * 1000);
       }
     },
 
@@ -99,50 +82,6 @@ qx.Class.define("cv.ui.structure.pure.Image",
           break;
       }
       return control || this.base(arguments, id);
-    },
-
-    //overridden
-    _draw : function() {
-      this.addListener("appear", this._onAppear, this);
-      this.addListener("disappear", this._onDisappear, this);
-    },
-
-    /**
-     * Start the refresh timer if the image gets visible
-     */
-    _onAppear : function() {
-      if (this._refreshTimer) {
-        // refresh immediately
-        this._onInterval();
-
-        // start timer
-        this._refreshTimer.start();
-      }
-    },
-
-    /**
-     * Stop the refresh timer if the image gets visible
-     */
-    _onDisappear : function() {
-      if (this._refreshTimer) {
-        this._refreshTimer.stop();
-      }
     }
-  },
-
-  /*
-   *****************************************************************************
-   DESTRUCTOR
-   *****************************************************************************
-   */
-  destruct: function () {
-    if (this._refreshTimer) {
-      this._restartTimer.stop();
-      this._restartTimer.dispose();
-      this._restartTimer = null;
-    }
-
-    this.removeListener("appear", this._onAppear, this);
-    this.removeListener("disappear", this._onDisappear, this);
   }
 });

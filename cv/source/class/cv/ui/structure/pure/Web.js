@@ -20,5 +20,84 @@
  */
 qx.Class.define("cv.ui.structure.pure.Web",
 {
-  extend : cv.ui.structure.pure.BaseWidget
+  extend : cv.ui.structure.pure.Base,
+
+  include : [
+    cv.mixin.Label,
+    cv.mixin.Flavour,
+    cv.mixin.MRefreshable
+  ],
+
+  /*
+   *****************************************************************************
+   PROPERTIES
+   *****************************************************************************
+   */
+  properties: {
+    src : {
+      check : "String",
+      nullable : true,
+      apply : "_applySrc"
+    },
+    frameborder : {
+      check: "String",
+      nullable: true
+    },
+    background : {
+      check: "String",
+      nullable: true,
+      event : "changeBackground"
+    },
+
+    scrolling : {
+      check : ["yes", "no", "auto"],
+      nullable : true,
+      event : "changeScrolling"
+    }
+  },
+
+  /*
+   *****************************************************************************
+   MEMBERS
+   *****************************************************************************
+   */
+  members : {
+
+    //property apply
+    _applySrc : function(value) {
+      if (value) {
+        this.getChildControl("iframe").setSource(value);
+        this.getChildControl("iframe").show();
+      } else if (this.hasChildControl("iframe")) {
+        this.getChildControl("iframe").exlcude();
+      }
+    },
+
+    /**
+     * Handle timer interval and reload the website
+     */
+    _onInterval : function() {
+      this.getChildControl("iframe").resetSource();
+      this.getChildControl("iframe").setSource(this.getSrc());
+    },
+
+    // overridden
+    _createChildControlImpl : function(id, hash)
+    {
+      var control;
+
+      switch (id) {
+        case "iframe":
+          control = new qx.ui.embed.Iframe();
+
+          this.bind("background", control, "backgroundColor");
+          this.bind("scrolling", control, "scrollbar");
+
+          this._add(control, {flex:1});
+          break;
+
+      }
+      return control || this.base(arguments, id);
+    }
+  }
 });

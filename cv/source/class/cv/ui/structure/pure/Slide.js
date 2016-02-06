@@ -19,8 +19,6 @@
 /**
  * Slider widget
  *
- * @Todo: change the widgets structure to allow the knob to be higher than the slider range
- * (add an extra slider range widget ad chilcontrol with top/bottom padding
  */
 qx.Class.define("cv.ui.structure.pure.Slide",
 {

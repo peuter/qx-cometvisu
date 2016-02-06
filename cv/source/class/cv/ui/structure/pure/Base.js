@@ -175,16 +175,27 @@ qx.Class.define("cv.ui.structure.pure.Base",
           break;
           
         case "label":
+          console.trace("requesting label");
           control = new cv.ui.basic.Atom().set({
             rich : true, // allow HTML conten
             wrap : true // allow line wrapping
           });
           control.getContentElement().addClass("label");
+          control.exclude();
           this._add(control);
           break;
       }
 
       return control || this.base(arguments, id);
+    },
+
+    /**
+     * returns the widget the alignX settings should be applies to
+     *
+     * @returns {Widget|null}
+     */
+    getAlignWidget : function() {
+      return this.getChildControl("label");
     },
     
     /**

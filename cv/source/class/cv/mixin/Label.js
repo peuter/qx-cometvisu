@@ -55,6 +55,7 @@ qx.Mixin.define("cv.mixin.Label",
         var label = this.getChildControl("label");
         
         if (label) {
+          label.show();
           if (label instanceof qx.ui.basic.Label) {
             label.setValue(node.textContent);
             if (node.children.length === 1) {
