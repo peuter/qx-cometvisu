@@ -54,6 +54,9 @@ qx.Theme.define("cv.theme.Appearance",
       include : "cv-widget/actor",
       alias : "cv-widget/actor"      
     },
+
+    // container for the right side if a widget (e.g. used in infotrigger)
+    "cv-widget/right-container" : {},
     
     "cv-widget/actor" : {
       style : function(states)
@@ -70,6 +73,24 @@ qx.Theme.define("cv.theme.Appearance",
         };
       }
     },
+
+    "cv-widget/up" : "cv-widget/actor",
+    "cv-widget/down" : "cv-widget/actor",
+    "cv-widget/info" :  {
+      style : function()
+      {
+        return {
+          marginLeft : 15,
+          padding : 3,
+          minWidth : 100,
+          maxWidth : 200,
+          allowGrowY : false,
+          alignX : "center",
+          alignY : "middle"
+        };
+      }
+    },
+
     "cv-widget/actor/label" : {
       style : function(states)
       {

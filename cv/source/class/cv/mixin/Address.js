@@ -22,6 +22,10 @@
 qx.Mixin.define("cv.mixin.Address",
 {
 
+  construct : function() {
+    this.setAddresses(new qx.data.Array());
+  },
+
   /*
    *****************************************************************************
       PROPERTIES
@@ -80,7 +84,11 @@ qx.Mixin.define("cv.mixin.Address",
         address.setMode(node.getAttribute("mode"));
       }
       if (node.getAttribute("variant")) {
-        address.setVariant(node.getAttribute("variant"));
+        var variant = node.getAttribute("variant");
+        address.setVariant(variant);
+        if (self.variantBitMapping) {
+          address.setBitmask(self.variantBitMapping[variant]);
+        }
       }
       
       // listen to value changes @todo: Handle multiple read addresses (e.g. variants for r,g,b color)

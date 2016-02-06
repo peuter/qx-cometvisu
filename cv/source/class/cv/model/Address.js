@@ -66,6 +66,11 @@ qx.Class.define("cv.model.Address", {
     variant : {
       check : "String",
       nullable : true
+    },
+
+    bitmask : {
+      check : "Number",
+      init : 0
     }
   },
   /*

@@ -37,6 +37,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
   construct : function(node, path, root) {
     this.base(arguments);
     this.setRoot(!!root);
+
     this._initLayout();
     
     this.setPath(path);
@@ -175,7 +176,6 @@ qx.Class.define("cv.ui.structure.pure.Base",
           break;
           
         case "label":
-          console.trace("requesting label");
           control = new cv.ui.basic.Atom().set({
             rich : true, // allow HTML conten
             wrap : true // allow line wrapping

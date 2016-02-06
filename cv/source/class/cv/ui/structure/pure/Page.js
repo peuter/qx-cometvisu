@@ -22,13 +22,11 @@
  */
 qx.Class.define("cv.ui.structure.pure.Page",
 {
-  extend : cv.ui.structure.pure.Base,
+  extend : cv.ui.structure.pure.BaseWidgetContainer,
   
   include : [
-    cv.mixin.Layout,
     cv.mixin.Align,
-    cv.mixin.Flavour,
-    cv.mixin.MPages
+    cv.mixin.Flavour
   ],
    
   /*
@@ -114,12 +112,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
     shownavbar : {
       group : ["shownavbarTop", "shownavbarRight", "shownavbarBottom", "shownavbarLeft"],
       mode : "shorthand"
-    },
-    
-    columnSize : {
-      check : "Number",
-      init : 0,
-      apply : "_applyColumnSize"
     }
   },
 
@@ -130,8 +122,7 @@ qx.Class.define("cv.ui.structure.pure.Page",
   */
   members :
   {
-    _gridPosition : null,
-    _columns : 12,
+
     _queuedNode : null,
     
     /**
@@ -204,115 +195,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
     leavePage : function() {
       
     },
-    
-    //overridden
-    _draw : function() {
-      this._initColumnWidths();
-    },
-    
-    _initColumnWidths : function() {
-      this.addListener("resize", function(e) {
-        this.setColumnSize(Math.round(e.getData().width/this._columns));
-      }, this);
-      
-      var bounds = this.getBounds();
-      if (!bounds) {
-        this.addListenerOnce("appear", function() {
-          this._initColumnWidths();
-        }, this);
-        return;
-      }
-      this.setColumnSize(Math.round(bounds.width/this._columns));
-    },
-    
-    _applyColumnSize : function(value) {
-      if (this.getParsingState() === "done") {
-        var layout = this._getLayout();
-        for (var i = 0; i < this._columns; i++) {
-          layout.setColumnMaxWidth(i, value);
-        }
-      }
-    },
-        
-    /**
-     * Calculate layout properties for {qx.ui.layout.Grid} layout
-     * 
-     * @private
-     */
-   __getGridLayoutProperties : function(widget, layoutProperties) {
-     if (this._gridPosition === null) {
-       this._gridPosition = {row : 0, column : 0};
-       var layout = this._getLayout();
-       var width = this.getColumnSize();
-
-       for(var i=0; i < this._columns; i++) {
-         layout.setColumnFlex(i, 1);
-         layout.setColumnMaxWidth(i, width);
-       }
-     } else if (widget instanceof cv.ui.structure.pure.Break || (layoutProperties && layoutProperties.newLine && layoutProperties.newLine === true)) {
-       this._gridPosition.row++;
-       this._gridPosition.column = 0;
-
-       if (widget instanceof cv.ui.structure.pure.Break) {
-         // do not add this widget
-         return null;
-       }
-     }
-     
-      // calculate rowspan/cospan
-     var colspan = 6;
-     if (layoutProperties && layoutProperties.colSpan) {
-       colspan = layoutProperties.colSpan;
-     } else if (qx.Class.hasMixin(widget.constructor, cv.mixin.Layout) && widget.getLayout()) {
-       colspan =  widget.getLayout().getColspan();
-     }
-     var rowspan = 1;
-     if (layoutProperties && layoutProperties.rowSpan) {
-       rowspan = layoutProperties.rowSpan;
-     } else if (qx.Class.hasMixin(widget.constructor, cv.mixin.Layout) && widget.getLayout()) {
-       rowspan = widget.getLayout().getRowspan();
-     }
-     
-     // find free column
-     var cellWidget = this._getLayout().getCellWidget(this._gridPosition.row, this._gridPosition.column);
-     while (cellWidget !== null) {
-       this._gridPosition.column++;
-       if (this._gridPosition.column+colspan > this._columns) {
-         this._gridPosition.row++;
-         this._gridPosition.column = 0;
-       }
-       cellWidget = this._getLayout().getCellWidget(this._gridPosition.row, this._gridPosition.column);
-     }
-     if (this._gridPosition.column + colspan > this._columns+1) {
-       // bot enaough space in row, start a new one
-       this._gridPosition.row++;
-       this._gridPosition.column = 0;
-     }
-     var layoutProps = {
-       row : this._gridPosition.row,
-       column : this._gridPosition.column,
-       colSpan : colspan,
-       rowSpan : rowspan
-     };
-     this._gridPosition.column += colspan;
-
-     return layoutProps;
-   },
-   
-   //overridden
-   _add : function(widget, layoutProperties, callSuper) {
-     if(callSuper === true) {
-       this.base(arguments, widget, layoutProperties);
-     }
-     else if (this._getLayout() instanceof qx.ui.layout.Grid) {
-       layoutProperties = this.__getGridLayoutProperties(widget, layoutProperties);
-       if (layoutProperties !== null) {
-         //console.log(layoutProperties);
-         //console.log(widget);
-         this.base(arguments, widget, layoutProperties);
-       }
-     }
-   },
 
     //overridden
     getAlignWidget : function() {

@@ -54,7 +54,7 @@ qx.Class.define("cv.ui.structure.pure.Video",
     //property apply
     _applySrc : function(value) {
       if (value) {
-        this.getChildControl("video").setSource(value);
+        //this.getChildControl("video").setSource(value);
         this.getChildControl("video").show();
       } else if (this.hasChildControl("video")) {
         this.getChildControl("video").exclude();
@@ -68,7 +68,7 @@ qx.Class.define("cv.ui.structure.pure.Video",
 
       switch (id) {
         case "video":
-          control = new qx.bom.media.Video();
+          control = new qx.ui.core.Widget(); //new qx.bom.media.Video();
 
           this._add(control, {flex:1});
           break;

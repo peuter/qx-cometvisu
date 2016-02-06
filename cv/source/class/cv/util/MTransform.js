@@ -62,7 +62,7 @@ qx.Mixin.define("cv.util.MTransform",
       if (!value || value === "") {
         return 0;
       }
-      return parseInt(value);
+      return parseFloat(value);
     },
     
     /**

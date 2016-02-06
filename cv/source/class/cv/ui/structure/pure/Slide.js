@@ -177,7 +177,6 @@ qx.Class.define("cv.ui.structure.pure.Slide",
           } else {
             control.addListener("changeValue", action, this);
           }
-          console.log(control);
           this.getChildControl("widget").add(control, {flex:1});
           break;
       }
@@ -191,7 +190,7 @@ qx.Class.define("cv.ui.structure.pure.Slide",
     _action : function() {
       // toggle switch state
       var writeValue = this.getChildControl("slider").getValue();
-      console.log("sending "+writeValue+" to backend");
+
       var addresses = this.getAddresses();
       if (addresses) {
         addresses.forEach(function (address) {

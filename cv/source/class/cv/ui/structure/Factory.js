@@ -42,7 +42,7 @@ qx.Class.define("cv.ui.structure.Factory",
       if (clazz) {
         return new clazz(node, path, root);
       } else {
-        qx.log.Logger.debug("no class found: cv.ui.structure."+cv.Config.structure+"."+qx.lang.String.firstUp(node.nodeName));
+        qx.log.Logger.error("no class found: cv.ui.structure."+cv.Config.structure+"."+qx.lang.String.firstUp(node.nodeName));
         return new cv.ui.structure.Unknown().set({name: node.nodeName});
       }
     }

@@ -178,8 +178,6 @@ qx.Mixin.define("cv.ui.decoration.MBorderImageGradient",
         var cssName = qx.bom.Style.getCssName(styleName);
         styles[cssName] = prefixedName + "(" + deg + "deg, " + start + stops + "," + end + ") 1 100%";
       }
-
-      console.log(styles);
     },
 
 
