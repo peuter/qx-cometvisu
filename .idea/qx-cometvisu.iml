@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/cv/build" />
       <excludeFolder url="file://$MODULE_DIR$/cv/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/cvweb" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

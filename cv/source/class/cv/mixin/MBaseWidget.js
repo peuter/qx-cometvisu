@@ -37,7 +37,31 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
     getChildrenContainer : function() {
       return this.getChildControl("widget");
     },
-    
+
+    /**
+     * Returns the widget the incoming value is shown in
+     */
+    getValueWidget : function() {
+      return this.getChildControl("actor");
+    },
+
+    /**
+     * Returns the property name of the value widget where the value is written in
+     * @returns {string}
+     */
+    getValueProperty : function() {
+      return "label";
+    },
+
+    /**
+     * Show the incoming value in the value widget
+     *
+     * @param value {String}
+     */
+    setDisplayValue : function(value) {
+      this.getValueWidget().set(this.getValueProperty(), value !== undefined && value !== "" ? value : "-");
+    },
+
     /**
      * Get a mixin defined in this mixin by id
      * 

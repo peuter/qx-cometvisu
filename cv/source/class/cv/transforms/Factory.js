@@ -31,55 +31,48 @@ qx.Class.define("cv.transforms.Factory",
   */
   statics :
   {
-    doTransformDecode : function(transform, value) {
-      if (!transform) {
-        return value;
+
+    getTransform : function(transform, withType) {
+      if (!transform || transform === "") {
+        return null;
       }
       var parts = transform.split(":");
       var path = "cv.transforms";
-      
+
       var type = null;
       if (parts.length === 2) {
         path+= "."+parts[0].toLowerCase();
         type = parts[1];
       } else {
         qx.log.Logger.error("illegal transform value "+transform);
-        return value;
+        return null;
       }
       path+= ".Transform";
-       
+
       var clazz = qx.Class.getByName(path);
       if (clazz) {
-        return clazz.doTransformDecode(type, value);
+        if (withType) {
+          return [clazz, type];
+        } else {
+          return clazz;
+        }
       } else {
         qx.log.Logger.debug("no class found: "+path);
-        return value;
+        return null;
+      }
+    },
+
+    doTransformDecode : function(transform, value) {
+      var lookup = cv.transforms.Factory.getTransform(transform, true);
+      if (lookup) {
+        return lookup[0].doTransformDecode(lookup[1], value);
       }
     },
 
     doTransformEncode : function(transform, value) {
-      if (!transform) {
-        return value;
-      }
-      var parts = transform.split(":");
-      var path = "cv.transforms";
-
-      var type = null;
-      if (parts.length === 2) {
-        path+= "."+parts[0].toLowerCase();
-        type = parts[1];
-      } else {
-        qx.log.Logger.error("illegal transform value "+transform);
-        return value;
-      }
-      path+= ".Transform";
-
-      var clazz = qx.Class.getByName(path);
-      if (clazz) {
-        return clazz.doTransformEncode(type, value);
-      } else {
-        qx.log.Logger.debug("no class found: "+path);
-        return value;
+      var lookup = cv.transforms.Factory.getTransform(transform);
+      if (lookup) {
+        return lookup[0].doTransformEncode(lookup[1], value);
       }
     }
   }

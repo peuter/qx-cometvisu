@@ -41,6 +41,16 @@ qx.Mixin.define("cv.mixin.Address",
       init : "-",
       apply : "_applyValue",
       event : "changeValue"
+    },
+
+
+    /**
+     * When there is no write address we are in readonly mode
+     */
+    readOnly : {
+      check : "Boolean",
+      init : true,
+      event : "changeReadOnly"
     }
   },
 
@@ -82,7 +92,10 @@ qx.Mixin.define("cv.mixin.Address",
           this._readAddress = address;
         }
       }
-
+      if (address.getMode() !== "read") {
+        // writable address
+        this.setReadOnly(false);
+      }
       this._formatValueCache = {};
     },
     
@@ -113,8 +126,8 @@ qx.Mixin.define("cv.mixin.Address",
 
 
         // apply value to actor-label
-        var actor = this.getChildControl("actor");
-        actor.setLabel(value !== undefined && value !== "" ? value : "-");
+        var actor = this.getValueWidget();
+        this.setDisplayValue(value);
 
         // #4 style the value to be pretty
         var sty = this.getStyling();

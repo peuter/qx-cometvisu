@@ -59,6 +59,15 @@ qx.Class.define("cv.ui.structure.pure.Base",
       init : "cv-widget",
       refine : true
     },
+
+    /**
+     * Parsing state of this page
+     */
+    parsingState : {
+      check : ["new","queued","done"],
+      init : "new",
+      event : "changeParsingState"
+    },
     
     /**
      * Flag for the root page (note: only one page can be root)
@@ -224,13 +233,13 @@ qx.Class.define("cv.ui.structure.pure.Base",
       var props = {};
       for (var i=0; i < node.attributes.length; i++) {
           var attr = node.attributes[i];
-          var name = qx.lang.String.camelCase(attr.name.replace("_", "-"));
+          var name = qx.lang.String.camelCase(attr.name.replace(/_/g, "-"));
           if (self.hasOwnProperty("propertyMapping") && self.propertyMapping.hasOwnProperty("name")) {
             name = self.propertyMapping[name];
             // this.debug("map "+attr.name+" to "+name+" for "+node.nodeName);
           }
           if (qx.Class.hasProperty(this.constructor, name)) {
-            props[attr.name] = this._transformIncomingValue(name, attr.value);
+            props[name] = this._transformIncomingValue(name, attr.value);
           } else {
             this.error("class "+this.classname+" has no property named "+name);
           }
@@ -342,6 +351,8 @@ qx.Class.define("cv.ui.structure.pure.Base",
       
       this._mapProperties(node);
       this._mapChildren(node);
+
+      this.setParsingState("done");
     },
     
     

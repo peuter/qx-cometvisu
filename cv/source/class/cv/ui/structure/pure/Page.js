@@ -53,15 +53,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
   properties : {
     
     /**
-     * Parsing state of this page
-     */
-    parsingState : {
-      check : ["new","queued","done"],
-      init : "new",
-      event : "changeParsingState"
-    },
-    
-    /**
      * The page name
      */
     name : {

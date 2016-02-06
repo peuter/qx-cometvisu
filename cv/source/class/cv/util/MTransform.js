@@ -50,10 +50,7 @@ qx.Mixin.define("cv.util.MTransform",
      * @returns {Boolean}
      */
     stringToBool : function(value) {
-      if ( qx.lang.Type.isString(value) ) {
-        return value === "true";
-      }
-      return false;
+      return !!value;
     },
 
     /**
@@ -62,6 +59,9 @@ qx.Mixin.define("cv.util.MTransform",
      * @returns {Number}
      */
     stringToNumber : function(value) {
+      if (!value || value === "") {
+        return 0;
+      }
       return parseInt(value);
     },
     

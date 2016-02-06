@@ -107,6 +107,37 @@ qx.Theme.define("cv.theme.Appearance",
       }
     },
 
+    "cv-widget/slider" : {
+      style : function() {
+        return {
+          marginLeft: 15,
+          rangeMargin : 5
+        };
+      }
+    },
+
+    "cv-widget/slider/range" : {
+      style : function()
+      {
+        return {
+          decorator : "switch"
+        };
+      }
+    },
+
+    "cv-widget/slider/knob" :
+    {
+      include : "slider/knob",
+
+      style : function()
+      {
+        return {
+          decorator : "switch",
+          minWidth : 30
+        };
+      }
+    },
+
     "link" : {
       style : function()
       {
