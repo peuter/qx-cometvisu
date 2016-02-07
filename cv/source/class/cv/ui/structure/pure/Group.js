@@ -100,9 +100,6 @@ qx.Class.define("cv.ui.structure.pure.Group",
   */
   members :
   {
-
-
-    
     //overridden
     _draw : function() {
       // get number of columns from layout-colspan settings
@@ -115,11 +112,6 @@ qx.Class.define("cv.ui.structure.pure.Group",
     getAlignWidget : function() {
       return this.getChildControl("title");
     },
-
-   _initLayout : function() {
-     var layout = new qx.ui.layout.Grid();
-     this._setLayout(layout);
-    },
     
     //property apply
     _applyName : function(value) {
@@ -129,6 +121,15 @@ qx.Class.define("cv.ui.structure.pure.Group",
         control.show();
       } else {
         control.exclude();
+      }
+    },
+
+    //property apply
+    _applyNowidget : function(value) {
+      if (value === true) {
+        this.addState("nowidget");
+      } else {
+        this.removeState("nowidget");
       }
     },
     

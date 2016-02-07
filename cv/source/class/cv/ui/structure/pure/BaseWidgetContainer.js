@@ -15,6 +15,7 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
+//noinspection JSUnusedGlobalSymbols
 /**
  * BaseWidgetContainer is the superclass for all widgets that can contain other widgets like page, group, etc.
  * 
@@ -53,6 +54,15 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
     _gridPosition : null,
     _columns : 12,
 
+    //overridden
+    _initLayout : function() {
+      var layout = new qx.ui.layout.Grid();
+      this._setLayout(layout);
+    },
+
+    /**
+     * Initialize the columns width to windowSize / columns
+     */
     _initColumnWidths : function() {
       this.addListener("resize", function(e) {
         this.setColumnSize(Math.round(e.getData().width/this._columns));
@@ -68,13 +78,14 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
       this.setColumnSize(Math.round(bounds.width/this._columns));
     },
 
+    //property apply
     _applyColumnSize : function(value) {
-      if (this.getParsingState() === "done") {
+      //if (this.getParsingState() === "done") {
         var layout = this._getLayout();
         for (var i = 0; i < this._columns; i++) {
           layout.setColumnMaxWidth(i, value);
         }
-      }
+      //}
     },
 
 

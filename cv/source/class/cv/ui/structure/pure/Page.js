@@ -165,17 +165,18 @@ qx.Class.define("cv.ui.structure.pure.Page",
       this._mapProperties(node);
       this._mapChildPages(node);
       
-      //var bounds = this.getBounds();
-      //if (this.isRoot() || bounds) {
+      var bounds = this.getBounds();
+      if (this.isRoot() || bounds) {
         // page is visible or root page -> proceed with parsing
-        //this.debug("proceeding with parsing");
+        this.debug("proceeding with parsing");
         this._mapChildren(node);
         this.setParsingState("done");
-      //} else {
-      //  this.setParsingState("queued");
-      //  this._queuedNode = node;
-      //  this.debug("parsing has been delayed");
-      //}
+         this._queuedNode = null;
+      } else {
+        this.setParsingState("queued");
+        this._queuedNode = node;
+        this.debug("parsing has been delayed");
+      }
     },
     
     /**
@@ -199,11 +200,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
     //overridden
     getAlignWidget : function() {
       return this.getChildControl("title");
-    },
-
-   _initLayout : function() {
-     var layout = new qx.ui.layout.Grid();
-     this._setLayout(layout);
     },
     
     //property apply

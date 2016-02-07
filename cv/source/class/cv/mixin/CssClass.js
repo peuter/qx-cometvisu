@@ -18,7 +18,7 @@
 /**
  * Mixin for class attribute to add Custom CSS classes to the content element
  */
-qx.Mixin.define("cv.mixin.Address",
+qx.Mixin.define("cv.mixin.CssClass",
 {
   /*
    *****************************************************************************

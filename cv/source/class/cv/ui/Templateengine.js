@@ -335,6 +335,11 @@ qx.Class.define("cv.ui.Templateengine",
           control = new cv.ui.PageHandler();
           control.getContentElement().setAttribute("id", "pages");
           this.getChildControl("main").add(control);
+
+          //reset scroll position when page changes
+          control.addListener("changeSelection", function() {
+            this.getChildControl("main").scrollToY(0);
+          }, this);
           break;
       }
       if (!control) {
