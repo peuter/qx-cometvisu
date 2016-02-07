@@ -194,7 +194,7 @@ qx.Class.define("cv.ui.structure.pure.Slide",
       var addresses = this.getAddresses();
       if (addresses) {
         addresses.forEach(function (address) {
-          if (address.getMode() !== "read") {
+          if (address.isWriteable()) {
             cv.Utils.client.write(address.getItem().getAddress(), writeValue);
           }
         }, this);

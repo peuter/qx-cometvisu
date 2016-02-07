@@ -51,10 +51,13 @@ qx.Class.define("cv.model.Address", {
       init : ""
     },
 
+    /**
+     * Mode bitmask: bit 1: read, bit2: write
+     */
     mode : {
-      check : [ "read", "write", "readwrite" ],
-      nullable : true,
-      init : null
+      check : "Number",
+      init : 1|2,
+      transform : "_transformModeBitmask"
     },
 
     item : {
@@ -68,7 +71,7 @@ qx.Class.define("cv.model.Address", {
       nullable : true
     },
 
-    bitmask : {
+    variantBitmask : {
       check : "Number",
       init : 0
     }
@@ -79,6 +82,42 @@ qx.Class.define("cv.model.Address", {
    *****************************************************************************
    */
   members: {
+
+    /**
+     * Transform mode textvalue into bitmask value
+     *
+     * @param value {String} read, write, readwrite
+     * @returns {number} 1 for read, 2 for write and 4 for readwrite
+     */
+    _transformModeBitmask : function(value) {
+      switch (value) {
+        case "read":
+          return 1;
+        case "write":
+          return 2;
+        default:
+          return 1|2;
+      }
+    },
+
+    /**
+     * Returns true is this address is readable
+     *
+     * @returns {boolean}
+     */
+    isReadable : function() {
+      return this.getMode() & 1 > 0;
+    },
+
+    /**
+     * Returns true is this address is writeable
+     *
+     * @returns {boolean}
+     */
+    isWriteable : function() {
+      return this.getMode() & 2 > 0;
+    },
+
     /**
      * transform incoming value
      *

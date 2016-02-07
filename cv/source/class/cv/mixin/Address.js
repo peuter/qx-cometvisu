@@ -20,108 +20,111 @@
  * Mixin for address property
  */
 qx.Mixin.define("cv.mixin.Address",
-{
-
-  construct : function() {
-    this.setAddresses(new qx.data.Array());
-  },
-
-  /*
-   *****************************************************************************
-      PROPERTIES
-   *****************************************************************************
-   */
-  properties : {
-
-    addresses : {
-      check : "qx.data.Array",
-      init : null
-    },
-
-    /**
-     * Incoming value from a readable address
-     */
-    value : {
-      init : "-",
-      apply : "_applyValue",
-      event : "changeValue"
-    },
-
-
-    /**
-     * When there is no write address we are in readonly mode
-     */
-    readOnly : {
-      check : "Boolean",
-      init : true,
-      event : "changeReadOnly"
-    }
-  },
-
-  /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
-  members :
   {
-    _bid : null,
-    _readAddress : null,
-    _formatValueCache : null,
 
-    /**
-     * Parse address from xml node
-     * @param node {Element}
-     */
-    _parseAddress : function(node) {
-      var item = cv.Model.getInstance().getItemByAddress(node.textContent);
-
-      var address = new cv.model.Address(item);
-      if (node.getAttribute("transform")) {
-        address.setTransform(node.getAttribute("transform"));
-      }
-      if (node.getAttribute("mode")) {
-        address.setMode(node.getAttribute("mode"));
-      }
-      if (node.getAttribute("variant")) {
-        var variant = node.getAttribute("variant");
-        address.setVariant(variant);
-        if (self.variantBitMapping) {
-          address.setBitmask(self.variantBitMapping[variant]);
-        }
-      }
-      
-      // listen to value changes @todo: Handle multiple read addresses (e.g. variants for r,g,b color)
-      if (address.getMode() !== "write") {
-        if (this._bid !== null) {
-          this.error("only one read address allowed, cannot bind to "+address.getItem().getAddress());
-        } else {
-          this._bid = address.bind("value", this, "value");
-          this._readAddress = address;
-        }
-      }
-      if (address.getMode() !== "read") {
-        // writable address
-        this.setReadOnly(false);
-      }
-      this._formatValueCache = {};
+    construct : function() {
+      this.setAddresses(new qx.data.Array());
     },
-    
-    _applyValue : function(value) {
-      // #1 incoming value is already transformed (done in Address mixin)
-      if (value) {
-        this.debug("new transformed value received '" + value + "'");
-      }
 
-      if (qx.Class.hasMixin(this.constructor, cv.mixin.MBaseWidget)) {
+    /*
+     *****************************************************************************
+     PROPERTIES
+     *****************************************************************************
+     */
+    properties : {
+
+      addresses : {
+        check : "qx.data.Array",
+        init : null
+      },
+
+      /**
+       * Incoming value from a readable address
+       */
+      value : {
+        init : "-",
+        apply : "_applyValue",
+        event : "changeValue"
+      },
+
+
+      /**
+       * When there is no write address we are in readonly mode
+       */
+      readOnly : {
+        check : "Boolean",
+        init : true,
+        event : "changeReadOnly"
+      }
+    },
+
+    /*
+     *****************************************************************************
+     MEMBERS
+     *****************************************************************************
+     */
+    members :
+    {
+      _bid : null,
+      _readAddress : null,
+      _formatValueCache : null,
+
+      /**
+       * Parse address from xml node
+       * @param node {Element}
+       */
+      _parseAddress : function(node) {
+        var item = cv.Model.getInstance().getItemByAddress(node.textContent);
+
+        var address = new cv.model.Address(item);
+        if (node.getAttribute("transform")) {
+          address.setTransform(node.getAttribute("transform"));
+        }
+        if (node.getAttribute("mode")) {
+          address.setMode(node.getAttribute("mode"));
+        }
+        if (node.getAttribute("variant")) {
+          var variant = node.getAttribute("variant");
+          address.setVariant(variant);
+          if (self.variantBitMapping) {
+            address.setVariantBitmask(self.variantBitMapping[variant]);
+          }
+        } else if (self.variantBitMapping && self.variantBitMapping.unset) {
+          address.setVariantBitmask(self.variantBitMapping.unset);
+        }
+
+        // listen to value changes @todo: Handle multiple read addresses (e.g. variants for r,g,b color)
+        if (address.isReadable()) {
+          if (this._bid !== null) {
+            this.error("only one read address allowed, cannot bind to "+address.getItem().getAddress());
+          } else {
+            this._bid = address.bind("value", this, "value");
+            this._readAddress = address;
+          }
+        }
+        if (address.isWriteable()) {
+          // writable address
+          this.setReadOnly(false);
+        }
+        this._formatValueCache = {};
+      },
+
+      /**
+       * Apply mapping, precision and format settings to the value
+       *
+       * @param value {String} incoming value
+       * @returns {var}
+       */
+
+      _processValue : function(value) {
         // #2: map it to a value the user wants to see
-        value = this.getMapping() ? this.getMapping().map(value) : value;
+        value = this.getMapping && this.getMapping() ? this.getMapping().map(value) : value;
 
         // #3: format it in a way the user understands the value
-        if( this.getPrecision() ) {
+        if (this.getPrecision && this.getPrecision()) {
           value = Number(value).toPrecision(this.getPrecision());
         }
-        if( this.getFormat() ) {
+        if (this.getFormat && this.getFormat()) {
           //this._formatValueCache[this._readAddress.getAddress()] = value;
 
           //argList = this.getAddresses().map(function(address) {
@@ -131,7 +134,25 @@ qx.Mixin.define("cv.mixin.Address",
 
           value = cv.util.StringFormat.getInstance().sprintf(this.getFormat(), [value]);
         }
+        return value;
+      },
 
+      _applyValue : function(value) {
+        // #1 incoming value is already transformed (done in Address mixin)
+        if (value) {
+          this.debug("new transformed value received '" + value + "'");
+        }
+        value = this._processValue(value);
+
+        // send value to the
+        this._setAndStyleProcessedValue(value);
+      },
+
+      /**
+       * Send the processed value to the value widget and apply the styling to it
+       * @param value {var}
+       */
+      _setAndStyleProcessedValue :function(value) {
 
         // apply value to actor-label
         var actor = this.getValueWidget();
@@ -179,22 +200,22 @@ qx.Mixin.define("cv.mixin.Address",
           }
 
         }
+
+      }
+    },
+
+    /*
+     *****************************************************************************
+     DESTRUCTOR
+     *****************************************************************************
+     */
+    destruct : function() {
+      if (this._readAddress) {
+        this._readAddress.removeBinding(this._bid);
+        this._disposeObjects("_readAddress");
+        this._readAddress = null;
+        this._bid = null;
+        this._formatValueCache = null;
       }
     }
-  },
-  
-  /*
-  *****************************************************************************
-     DESTRUCTOR
-  *****************************************************************************
-  */
-  destruct : function() {
-    if (this._readAddress) {
-      this._readAddress.removeBinding(this._bid);
-      this._disposeObjects("_readAddress");
-      this._readAddress = null;
-      this._bid = null;
-      this._formatValueCache = null;
-    }
-  }
-});
+  });

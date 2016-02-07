@@ -15,6 +15,7 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
+//noinspection JSUnusedGlobalSymbols
 /**
  * Multitrigger widget
  */
@@ -63,6 +64,111 @@ qx.Class.define("cv.ui.structure.pure.Multitrigger",
     showstatus : {
       check : "Boolean",
       transform : "stringToBool"
+    }
+  },
+
+  members: {
+
+    // overridden
+    _draw : function() {
+      this.base(arguments);
+
+      // create childcontrols
+      for (var i=1; i<=4; i++) {
+        if (this.get("button"+i+"value")) {
+          this.getChildControl("button"+i);
+        }
+      }
+    },
+
+    // overridden
+    _createChildControlImpl : function(id, hash)
+    {
+      var control;
+
+      switch (id) {
+
+        case "right-container":
+          control = new qx.ui.container.Composite(new qx.ui.layout.Grid(10, 0));
+          this.getChildControl("widget").addAt(control, 1);
+          break;
+
+        case "button1":
+          control = this.__createButton(1);
+          break;
+
+        case "button2":
+          control = this.__createButton(2);
+          break;
+
+        case "button3":
+          control = this.__createButton(3);
+          break;
+
+        case "button4":
+          control = this.__createButton(4);
+          break;
+
+      }
+      return control || this.base(arguments, id);
+    },
+
+    //overridden
+    _setAndStyleProcessedValue :function(value) {
+      for (var i=1; i<=4; i++) {
+        if (value == this.get("button"+i+"value")) {
+          this.getChildControl("button"+i).addState("pressed");
+        } else {
+          this.getChildControl("button"+i).removeState("pressed");
+        }
+      }
+    },
+
+    /**
+     * Create button for given number
+     * @param no {Number} 1-4
+     * @private
+     */
+    __createButton : function(no) {
+      var control = new cv.ui.basic.Atom();
+
+      // apply label
+      if (this.getMapping()) {
+        // replace button label by mapped value
+        control.setLabel(this.getMapping().map("button" + no + "value"));
+      } else {
+        // use default label
+        control.setLabel(this.get("button" + no + "label"));
+      }
+
+      if (this.getAlign && this.getAlign() === "center") {
+        control.setCenter(true);
+      }
+
+      control.addListener("tap", this._action.bind(this, no), this);
+
+      var gridPos = {
+        row : Math.floor(no/3),
+        column : 0
+      };
+      gridPos.column = (no - gridPos.row*2)-1;
+
+      this.getChildControl("right-container").addAt(control, gridPos);
+    },
+
+    /**
+     * Handle user interaction, send pressed buttons value to the backend
+     *
+     * @param no {Number} number of the pressed button
+     */
+    _action : function(no) {
+      var writeValue = this.get("button"+no+"value");
+
+      this.getAddresses().forEach(function(address) {
+        if (address.isWriteable()) {
+          cv.Utils.client.write(address.getItem().getAddress(), writeValue);
+        }
+      }, this);
     }
   }
 });

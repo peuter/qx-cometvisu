@@ -128,8 +128,10 @@ qx.Class.define("cv.ui.structure.pure.Group",
     _applyNowidget : function(value) {
       if (value === true) {
         this.addState("nowidget");
+        this.getChildControl("title").exclude();
       } else {
         this.removeState("nowidget");
+        this.getChildControl("title").show();
       }
     },
     
@@ -146,6 +148,9 @@ qx.Class.define("cv.ui.structure.pure.Group",
             wrap : true // allow line wrapping
           });
           control.setAppearance("group-title");
+          if (this.isNowidget()) {
+            control.exclude();
+          }
           this._add(control, {colSpan:12});
           break;
       }

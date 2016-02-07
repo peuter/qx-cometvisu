@@ -181,9 +181,9 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
             case "info":
               return 0;
             case "up":
-              return 1;
-            case "down":
               return 2;
+            case "down":
+              return 1;
           }
           break;
 
@@ -192,9 +192,9 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
             case "info":
               return 1;
             case "up":
-              return 0;
-            case "down":
               return 2;
+            case "down":
+              return 0;
           }
           break;
 
@@ -203,9 +203,9 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
             case "info":
               return 3;
             case "up":
-              return 0;
-            case "down":
               return 1;
+            case "down":
+              return 0;
           }
           break;
       }
@@ -272,7 +272,7 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
         if( writeValue > this.getMax() ) writeValue = this.getMax();
       }
       this.getAddresses().forEach(function(address) {
-        if (address.getMode() !== "read" && address.getBitmask() & bitMask) {
+        if (address.isWritable() && address.getVariantBitmask() & bitMask) {
           cv.Utils.client.write(address.getItem().getAddress(), writeValue);
         }
       }, this);

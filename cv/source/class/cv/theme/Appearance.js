@@ -93,8 +93,7 @@ qx.Theme.define("cv.theme.Appearance",
           minWidth : 100,
           maxWidth : 200,
           allowGrowY : false,
-          alignX : "center",
-          alignY : "middle"
+          alignX : "center"
         };
       }
     },

@@ -54,7 +54,7 @@ qx.Class.define("cv.ui.structure.pure.Switch",
       // toggle switch state
       var writeValue = this.getValue() === this.getOnValue() ? this.getOffValue() : this.getOnValue();
       this.getAddresses().forEach(function(address) {
-        if (address.getMode() !== "read") {
+        if (address.isWriteable()) {
           cv.Utils.client.write(address.getItem().getAddress(), writeValue);
         }
       }, this);

@@ -38,6 +38,14 @@ qx.Class.define("cv.ui.structure.pure.Pushbutton",
     }
   },
 
+  statics : {
+    variantBitMapping : {
+      up : 1,
+      down : 2,
+      unset : 1|2
+    }
+  },
+
   /*
    *****************************************************************************
    MEMBERS
@@ -60,7 +68,7 @@ qx.Class.define("cv.ui.structure.pure.Pushbutton",
       // toggle switch state
       var writeValue = this.getDownValue();
       this.getAddresses().forEach(function(address) {
-        if (address.getMode() !== "read" && (!address.getVariant() || address.getVariant() === "down")) {
+        if (address.isWriteable() && address.getVariantBitmask() & self.variantBitMapping.down) {
           cv.Utils.client.write(address.getItem().getAddress(), address.encodeValue(writeValue));
         }
       }, this);
@@ -75,7 +83,7 @@ qx.Class.define("cv.ui.structure.pure.Pushbutton",
       // toggle switch state
       var writeValue = this.getUpValue();
       this.getAddresses().forEach(function(address) {
-        if (address.getMode() !== "read" && (!address.getVariant() || address.getVariant() === "up")) {
+        if (address.isWriteable() && address.getVariantBitmask() & self.variantBitMapping.up) {
           cv.Utils.client.write(address.getItem().getAddress(), address.encodeValue(writeValue));
         }
       }, this);
