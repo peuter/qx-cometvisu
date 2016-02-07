@@ -27,7 +27,8 @@ qx.Class.define("cv.ui.structure.pure.Text",
   include : [
     cv.mixin.Label,
     cv.mixin.Align,
-    cv.mixin.Flavour
+    cv.mixin.Flavour,
+    cv.mixin.CssClass
   ],
 
   /*
@@ -39,9 +40,7 @@ qx.Class.define("cv.ui.structure.pure.Text",
     appearance : {
       init : "text",
       refine : true
-    },
-    
-    "class" : {}
+    }
   },
 
   /*

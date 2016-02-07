@@ -123,20 +123,26 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
       }
 
       // find free column
-      var cellWidget = this._getLayout().getCellWidget(this._gridPosition.row, this._gridPosition.column);
-      while (cellWidget !== null) {
-        this._gridPosition.column++;
-        if (this._gridPosition.column+colspan > this._columns) {
-          this._gridPosition.row++;
-          this._gridPosition.column = 0;
+      var findFree = function() {
+        var cellWidget = this._getLayout().getCellWidget(this._gridPosition.row, this._gridPosition.column);
+        while (cellWidget !== null) {
+          this._gridPosition.column++;
+          if (this._gridPosition.column + colspan > this._columns) {
+            this._gridPosition.row++;
+            this._gridPosition.column = 0;
+          }
+          cellWidget = this._getLayout().getCellWidget(this._gridPosition.row, this._gridPosition.column);
         }
-        cellWidget = this._getLayout().getCellWidget(this._gridPosition.row, this._gridPosition.column);
-      }
-      if (this._gridPosition.column + colspan > this._columns+1) {
-        // bot enaough space in row, start a new one
+      }.bind(this);
+      findFree();
+
+      if (this._gridPosition.column + colspan > this._columns) {
+        // bot enough space in row, start a new one
         this._gridPosition.row++;
         this._gridPosition.column = 0;
       }
+      findFree();
+
       var layoutProps = {
         row : this._gridPosition.row,
         column : this._gridPosition.column,

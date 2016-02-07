@@ -24,6 +24,10 @@ qx.Theme.define("cv.theme.Appearance",
         };
       }
     },
+    "group": {
+
+    },
+
     /**
      * Widget stuff
      */
@@ -31,12 +35,16 @@ qx.Theme.define("cv.theme.Appearance",
       style : function()
       {
         return {
-          padding : [3, 5] ,
+          padding : [3, 5],
           decorator : "widget"
         };
       }
     },
-    "text" : "cv-widget",
+
+    "text" : {
+      include : "cv-widget",
+      alias : "cv-widget"
+    },
     "pagejump" : {
       include : "cv-widget",
       alias : "cv-widget"

@@ -42,7 +42,9 @@ qx.Class.define("cv.ui.structure.pure.Group",
   extend : cv.ui.structure.pure.BaseWidgetContainer,
 
   include :[
-    cv.mixin.Align
+    cv.mixin.Align,
+    cv.mixin.Flavour,
+    cv.mixin.CssClass
   ],
 
   /*
@@ -79,7 +81,8 @@ qx.Class.define("cv.ui.structure.pure.Group",
     nowidget :{
       check : "Boolean",
       init : false,
-      transform : "stringToBool"
+      transform : "stringToBool",
+      apply : "_applyNowidget"
     },
 
     /**
@@ -87,15 +90,6 @@ qx.Class.define("cv.ui.structure.pure.Group",
      */
     target : {
       check : "String"
-    },
-
-    /**
-     * Add this value to the CSS class so that it can be formated by a user provided style sheet.
-     */
-    "class" : {
-      check : "String",
-      nullable : true,
-      apply : "_applyClass"
     }
   },
 
@@ -107,14 +101,13 @@ qx.Class.define("cv.ui.structure.pure.Group",
   members :
   {
 
-    _queuedNode : null,
 
-    _applyClass : function(value) {
-
-    },
     
     //overridden
     _draw : function() {
+      // get number of columns from layout-colspan settings
+      this._columns = this.getLayout() ? this.getLayout().getColspan() : 6;
+
       this._initColumnWidths();
     },
 
