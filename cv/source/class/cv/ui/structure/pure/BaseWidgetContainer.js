@@ -177,6 +177,17 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
           //console.log(widget);
           this.base(arguments, widget, layoutProperties);
         }
+      } else if (this._getLayout() instanceof qx.ui.layout.Canvas) {
+        // free positioning by x/y coordinates
+        var layout = widget.getLayout();
+        if (layout) {
+          if (layout.getZ()) {
+            widget.setZIndex(layout.getZ());
+          }
+          this.base(arguments, widget, {left: layout.getX(), top: layout.getY()});
+        } else {
+          this.base(arguments, widget);
+        }
       }
     }
   }

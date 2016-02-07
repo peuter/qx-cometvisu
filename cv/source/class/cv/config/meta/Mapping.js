@@ -114,9 +114,13 @@ qx.Class.define("cv.config.meta.Mapping",
           var valueFloat = parseFloat(v);
           var range = this._range;
           for (var min in range) {
-            if (min > valueFloat) continue;
+            if (min > valueFloat) {
+              continue;
+            }
             //noinspection JSUnfilteredForInLoop
-            if (range[min][0] < valueFloat) continue; // check max
+            if (range[min][0] < valueFloat) {
+              continue;
+            } // check max
             //noinspection JSUnfilteredForInLoop
             return range[min][1];
           }

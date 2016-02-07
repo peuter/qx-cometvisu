@@ -268,8 +268,12 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
           value = 0; // anything is better than NaN...
         }
         writeValue = value + parseFloat(writeValue);
-        if (writeValue < this.getMin() ) writeValue = this.getMin();
-        if( writeValue > this.getMax() ) writeValue = this.getMax();
+        if (writeValue < this.getMin() ) {
+          writeValue = this.getMin();
+        }
+        if( writeValue > this.getMax() ) {
+          writeValue = this.getMax();
+        }
       }
       this.getAddresses().forEach(function(address) {
         if (address.isWritable() && address.getVariantBitmask() & bitMask) {

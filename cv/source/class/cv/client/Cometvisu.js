@@ -5,7 +5,22 @@
 qx.Class.define("cv.client.Cometvisu",
 {
   type : "singleton",
-  extend : qx.core.Object,  
+  extend : qx.core.Object,
+
+  /*
+   *****************************************************************************
+   CONSTRUCTOR
+   *****************************************************************************
+   */
+  construct: function () {
+    this.base(arguments);
+
+    this._backendNameAliases = {
+      'cgi-bin' : 'default',
+        'oh'      : 'openhab',
+        'oh2'     : 'openhab2'
+    };
+  },
   
   properties : {
     watchdog : {
@@ -85,11 +100,8 @@ qx.Class.define("cv.client.Cometvisu",
     _backends : null, // the hardcoded backend configs (including default config)
     
     // used for backwards compability
-    _backendNameAliases : {
-      'cgi-bin' : 'default',
-      'oh'      : 'openhab',
-      'oh2'     : 'openhab2'
-    },
+    _backendNameAliases : null,
+
     _initPath : null,
     
     /**
@@ -98,6 +110,7 @@ qx.Class.define("cv.client.Cometvisu",
     update : function(data) {
       var bus = qx.event.message.Bus.getInstance();
       for (var address in data) {
+        //noinspection JSUnfilteredForInLoop
         bus.dispatchByName("model.item.update."+address, data[address]);
       }
     },
@@ -105,7 +118,7 @@ qx.Class.define("cv.client.Cometvisu",
     /**
      * Initialize this instance
      */
-    init : function(backendName, initPath) {
+    init : function(backendName) {
       this.__initBackendConfigTemplate();
       
       this.setWatchdog(new cv.client.Watchdog());

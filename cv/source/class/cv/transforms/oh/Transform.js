@@ -53,15 +53,29 @@ qx.Class.define("cv.transforms.oh.Transform",
       'rollershutter' : {
         name : "OH_RollerShutter",
         encode : function(phy) {
-          if (phy == 1) return 'DOWN';
-          else if (phy == 0)  return 'UP';
-          else return phy;
+          if (phy == 1) {
+            return 'DOWN';
+          }
+          else if (phy == 0) {
+            return 'UP';
+          }
+          else {
+            return phy;
+          }
         },
         decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') return 0;
-          else if (str=="UP") return 0;
-          else if (str=="DOWN") return 1;
-          else return str;
+          if (str=="NaN" || str=='Uninitialized') {
+            return 0;
+          }
+          else if (str=="UP") {
+            return 0;
+          }
+          else if (str=="DOWN") {
+            return 1;
+          }
+          else {
+            return str;
+          }
         }
       },
       'dimmer' : {
@@ -70,10 +84,18 @@ qx.Class.define("cv.transforms.oh.Transform",
           return parseInt(phy);
         },
         decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') return 0;
-          else if (str=="ON") return 100;
-          else if (str=="OFF") return 0;
-          else return parseInt(str);
+          if (str=="NaN" || str=='Uninitialized') {
+            return 0;
+          }
+          else if (str=="ON") {
+            return 100;
+          }
+          else if (str=="OFF") {
+            return 0;
+          }
+          else {
+            return parseInt(str);
+          }
         }
       },
       'number' : {
@@ -82,7 +104,9 @@ qx.Class.define("cv.transforms.oh.Transform",
           return parseFloat(phy);
         },
         decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') return 0;
+          if (str=="NaN" || str=='Uninitialized') {
+            return 0;
+          }
           return parseFloat(str);
         }
       },
@@ -105,7 +129,9 @@ qx.Class.define("cv.transforms.oh.Transform",
           }
         },
         decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') return '-';
+          if (str=="NaN" || str=='Uninitialized') {
+            return '-';
+          }
           return new Date(str);
         }
       },
@@ -119,7 +145,9 @@ qx.Class.define("cv.transforms.oh.Transform",
           }
         },
         decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') return '-';
+          if (str=="NaN" || str=='Uninitialized') {
+            return '-';
+          }
           return new Date(str);
         }
       },
@@ -153,7 +181,7 @@ qx.Class.define("cv.transforms.oh.Transform",
           // decode HSV/HSB to RGB
           var hsb = hsbString.split(",");
           var h = hsb[0], s = hsb[1], v = hsb[2];
-          var r, g, b, i, f, p, q, t;
+          var r, g, b, i, f, p, qq, t;
           // h = h / 360;
           if (v === 0) { return [0, 0, 0]; }
           s = s / 100;
@@ -162,7 +190,7 @@ qx.Class.define("cv.transforms.oh.Transform",
           i = Math.floor(h);
           f = h - i;
           p = v * (1 - s);
-          q = v * (1 - (s * f));
+          qq = v * (1 - (s * f));
           t = v * (1 - (s * (1 - f)));
           if (i === 0) {
             r = v; g = t; b = p;
@@ -175,7 +203,7 @@ qx.Class.define("cv.transforms.oh.Transform",
           } else if (i === 4) {
             r = t; g = p; b = v;
           } else if (i === 5) {
-            r = v; g = p; b = q;
+            r = v; g = p; b = qq;
           }
           r = Math.floor(r * 255);
           g = Math.floor(g * 255);
@@ -185,8 +213,8 @@ qx.Class.define("cv.transforms.oh.Transform",
       },
 
       getTransform : function(type) {
-        if (cv.transforms.oh.transforms.hasOwnProperty(type)) {
-          return cv.transforms.oh.transforms[type];
+        if (cv.transforms.oh.Transform.transforms.hasOwnProperty(type)) {
+          return cv.transforms.oh.Transform.transforms[type];
         }
       }
     }

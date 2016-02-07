@@ -74,11 +74,21 @@ qx.Class.define("cv.ui.structure.pure.Page",
       init : "text"
     },
     size : {
-      check : ["fixed", "scaled"]
+      check : ["fixed", "scaled"],
+      init : "fixed",
+      event : "changeSize"
     },
+
+    /**
+     * Background image for page
+     */
     backdrop : {
-      check : "String"
+      check : "String",
+      nullable : true,
+      apply : "_applyBackdrop",
+      event : "changeBackdrop"
     },
+
     showtopnavigation : {
       check : "Boolean",
       transform : "cv.util.Transform.stringToBool",
@@ -122,8 +132,25 @@ qx.Class.define("cv.ui.structure.pure.Page",
   */
   members :
   {
-
     _queuedNode : null,
+
+    //overridden
+    _initLayout : function() {
+      if (this.getType() === "text") {
+        this.base(arguments);
+      } else {
+        var layout = new qx.ui.layout.Canvas();
+        this._setLayout(layout);
+      }
+    },
+
+    _applyBackdrop : function(value) {
+      if (value) {
+        this.getChildControl("backdrop").show();
+      } else {
+        this.getChildControl("backdrop").exclude();
+      }
+    },
     
     /**
      * Parse only the page children of this page, queue the rest until this page gets visible
@@ -228,6 +255,42 @@ qx.Class.define("cv.ui.structure.pure.Page",
           control.setAppearance("page-title");
           control.getChildControl("label").getContentElement().setNodeName("h1");
           this._add(control, {colSpan:12});
+          break;
+
+        case "backdrop":
+          control = new qx.ui.basic.Image();
+          this.bind("backdrop", control, "source");
+          this.bind("size", control, "scale", {
+            converter : function(data, source, target) {
+              if (data === "scaled") {
+                target.set({
+                  allowGrowX : true,
+                  allowGrowY : true
+                });
+                return true;
+              } else {
+                target.set({
+                  allowGrowX : false,
+                  allowGrowY : false
+                });
+                return false;
+              }
+            }
+          });
+          switch (this.getAlign()) {
+
+            case "center":
+              this._add(control, {edge: 0});
+              break;
+
+            case "right":
+              this._add(control, {top: 0, right: 0});
+              break;
+
+           default: // default is left
+              this._add(control, {top: 0, left: 0});
+              break;
+          }
           break;
       }
 

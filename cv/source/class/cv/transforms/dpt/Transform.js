@@ -153,7 +153,7 @@ qx.Class.define("cv.transforms.dpt.Transform",
       '7.001' : {
         name  : 'DPT_Value_2_Ucount',
         encode: function( phy ) {
-          var val = Transform.zeroFillString( parseInt(phy).toString( 16 ), 4);
+          var val = qx.lang.String.pad( parseInt(phy).toString( 16 ), 4, 0);
           return '80' + val;
         },
         decode: function( hex ){
@@ -169,7 +169,7 @@ qx.Class.define("cv.transforms.dpt.Transform",
         encode: function( phy ){
           var val = parseInt ( phy );
           val = val < 0 ? val + 65536 : val;
-          return '80' + Transform.zeroFillString( val.toString( 16 ), 4);
+          return '80' + qx.lang.String.pad( val.toString( 16 ), 4, 0);
         },
         decode: function( hex ){
           var val = parseInt( hex, 16 );
@@ -183,7 +183,9 @@ qx.Class.define("cv.transforms.dpt.Transform",
       '9.001' : {
         name  : 'DPT_Value_Temp',
         encode: function( phy ){
-          if( undefined === phy || isNaN(phy) ) return '7fff';
+          if( undefined === phy || isNaN(phy) ) {
+            return '7fff';
+          }
           var sign = phy < 0 ? 0x8000 : 0;
           var mant = Math.round(phy * 100.0);
           var exp = 0;
@@ -195,14 +197,17 @@ qx.Class.define("cv.transforms.dpt.Transform",
           return '80' + ( new Array(4 - val.length + 1).join('0') + val );
         },
         decode: function( hex ){
-          if( 0x7fff == parseInt( hex, 16 ) ) return NaN;
+          if( 0x7fff == parseInt( hex, 16 ) ) {
+            return NaN;
+          }
           var bin1 = parseInt( hex.substr(0,2), 16 );
           var bin2 = parseInt( hex.substr(2,2), 16 );
           var sign = parseInt( bin1 & 0x80 );
           var exp  = parseInt( bin1 & 0x78 ) >> 3;
           var mant = parseInt( ((bin1 & 0x7) << 8) | bin2 );
-          if( sign != 0 )
+          if( sign != 0 ) {
             mant = -(~(mant - 1) & 0x7ff);
+          }
           return (1 << exp) * 0.01 * mant;
         }
       },
@@ -228,9 +233,9 @@ qx.Class.define("cv.transforms.dpt.Transform",
       '10.001' : {
         name  : 'DPT_TimeOfDay',
         encode: function( phy ){
-          var val = Transform.zeroFillString( ((phy.getDay() << 5) + phy.getHours()).toString(16), 2);
-          val += Transform.zeroFillString( phy.getMinutes().toString(16), 2 );
-          val += Transform.zeroFillString( phy.getSeconds().toString(16), 2 );
+          var val = qx.lang.String.pad( ((phy.getDay() << 5) + phy.getHours()).toString(16), 2, 0);
+          val += qx.lang.String.pad( phy.getMinutes().toString(16), 2, 0 );
+          val += qx.lang.String.pad( phy.getSeconds().toString(16), 2, 0 );
           return '80' + val;
         },
         decode: function( hex ){
@@ -266,7 +271,7 @@ qx.Class.define("cv.transforms.dpt.Transform",
       '12.001' : {
         name  : 'DPT_Value_4_Ucount',
         encode: function( phy ){
-          var val = Transform.zeroFillString( parseInt(phy).toString( 16 ), 8);
+          var val = qx.lang.String.pad( parseInt(phy).toString( 16 ), 8, 0);
           return '80' + val;
         },
         decode: function( hex ){
@@ -282,7 +287,7 @@ qx.Class.define("cv.transforms.dpt.Transform",
         encode: function( phy ){
           var val = parseInt ( phy );
           val = val < 0 ? val + 4294967296 : val;
-          return '80' + Transform.zeroFillString( val.toString( 16 ), 8);
+          return '80' + qx.lang.String.pad( val.toString( 16 ), 8, 0);
         },
         decode: function( hex ){
           var val = parseInt( hex, 16 );
@@ -464,8 +469,8 @@ qx.Class.define("cv.transforms.dpt.Transform",
     },
 
     getTransform : function(type) {
-      if (cv.transforms.dpt.transforms.hasOwnProperty(type)) {
-        return cv.transforms.dpt.transforms[type];
+      if (cv.transforms.dpt.Transform.transforms.hasOwnProperty(type)) {
+        return cv.transforms.dpt.Transform.transforms[type];
       }
     }
   }

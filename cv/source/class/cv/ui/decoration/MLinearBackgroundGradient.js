@@ -51,6 +51,7 @@ qx.Mixin.define("cv.ui.decoration.MLinearBackgroundGradient",
 
     members :
     {
+      __canvas : null,
 
       /**
        * Takes a styles map and adds the linear background styles in place to the

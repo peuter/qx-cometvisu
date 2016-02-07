@@ -184,9 +184,13 @@ qx.Mixin.define("cv.mixin.Address",
               }
               var valueFloat = parseFloat(v);
               for (var min in range) {
-                if (min > valueFloat) continue;
+                if (min > valueFloat) {
+                  continue;
+                }
                 //noinspection JSUnfilteredForInLoop
-                if (range[min][0] < valueFloat) continue; // check max
+                if (range[min][0] < valueFloat) {
+                  continue; // check max
+                }
                 //noinspection JSUnfilteredForInLoop
                 widget.addState(range[min][1]);
                 return true;
