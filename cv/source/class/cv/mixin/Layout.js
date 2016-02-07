@@ -56,16 +56,16 @@ qx.Mixin.define("cv.mixin.Layout",
         props.rowspan = parseInt(node.getAttribute("rowspan"));
       }
       if (node.getAttribute("x")) {
-        props.x = node.getAttribute("x");
+        props.x = node.getAttribute("x").replace("px", "");
       }
       if (node.getAttribute("y")) {
-        props.y = node.getAttribute("y");
+        props.y = node.getAttribute("y").replace("px", "");
       }
       if (node.getAttribute("z")) {
         props.z = node.getAttribute("z");
       }
       if (node.getAttribute("width")) {
-        props.width = parseInt(node.getAttribute("width"));
+        props.width = this.cssSizeToNumber(node.getAttribute("width"));
       }
       layout.set(props);
       this.setLayout(layout);

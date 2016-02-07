@@ -23,8 +23,8 @@ TODO:
 * Plugins in Parts/Module packen, damit sie bei Bedarf nachgeladen werden können
 * Replay/Logging für User-Aktionen (Debugging)
 * DONE Parse-Queue: Alle Pages, die nicht sichtbar sind erstmal in die Queue und erst parsen, wenn sie sichtbar werden (oder im Hintergrund durch Webworker???)
-* Mapping
-* Styling
+* DONE Mapping
+* DONE Styling
 * User-Aktionen
 * Diverse Widgets fertigstellen
 * Basic-Design erstellen, welches alle Größen / Positionierungen enthält

@@ -139,16 +139,17 @@ qx.Class.define("cv.ui.structure.pure.Page",
       if (this.getType() === "text") {
         this.base(arguments);
       } else {
-        var layout = new qx.ui.layout.Canvas();
-        this._setLayout(layout);
+        this._setLayout(new qx.ui.layout.Canvas());
       }
     },
 
     _applyBackdrop : function(value) {
-      if (value) {
-        this.getChildControl("backdrop").show();
-      } else {
-        this.getChildControl("backdrop").exclude();
+      if (this.getParsingState() === "done") {
+        if (value) {
+          this.getChildControl("backdrop").show();
+        } else {
+          this.getChildControl("backdrop").exclude();
+        }
       }
     },
     
@@ -213,7 +214,13 @@ qx.Class.define("cv.ui.structure.pure.Page",
       if (this.getParsingState() === "queued") {
         this.debug("parsing queued page "+this._queuedNode.getAttribute("name"));
         this._mapChildren(this._queuedNode);
-        this.setParsingState("done");     
+        this.setParsingState("done");
+
+        if (this.getBackdrop()) {
+          this.getChildControl("backdrop").show();
+        } else if (this.hasChildControl("backdrop")) {
+          this.getChildControl("backdrop").exclude();
+        }
       }
     },
     

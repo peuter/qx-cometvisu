@@ -51,7 +51,7 @@ qx.Mixin.define("cv.ui.decoration.MLinearBackgroundGradient",
 
     members :
     {
-      __canvas : null,
+      __tempCanvas : null,
 
       /**
        * Takes a styles map and adds the linear background styles in place to the
@@ -104,8 +104,8 @@ qx.Mixin.define("cv.ui.decoration.MLinearBackgroundGradient",
         } else if (qx.core.Environment.get("css.gradient.filter") &&
           !qx.core.Environment.get("css.gradient.linear") && qx.core.Environment.get("css.borderradius")) {
 
-          if (!this.__canvas) {
-            this.__canvas = document.createElement("canvas");
+          if (!this.__tempCanvas) {
+            this.__tempCanvas = document.createElement("canvas");
           }
 
           var isVertical = this.getOrientation() == "vertical";
@@ -129,9 +129,9 @@ qx.Mixin.define("cv.ui.decoration.MLinearBackgroundGradient",
             }
           }
 
-          this.__canvas.width = width;
-          this.__canvas.height = height;
-          var ctx = this.__canvas.getContext('2d');
+          this.__tempCanvas.width = width;
+          this.__tempCanvas.height = height;
+          var ctx = this.__tempCanvas.getContext('2d');
 
           var lingrad = null;
           if (isVertical) {
@@ -165,7 +165,7 @@ qx.Mixin.define("cv.ui.decoration.MLinearBackgroundGradient",
           ctx.fillStyle = lingrad;
           ctx.fillRect(0, 0, width, height);
 
-          value = "url(" + this.__canvas.toDataURL() + ")";
+          value = "url(" + this.__tempCanvas.toDataURL() + ")";
           styles["background-image"] = value;
           if (unit === "%") {
             if (isVertical) {

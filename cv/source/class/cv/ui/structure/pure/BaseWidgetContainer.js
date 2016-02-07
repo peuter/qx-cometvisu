@@ -56,8 +56,7 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
 
     //overridden
     _initLayout : function() {
-      var layout = new qx.ui.layout.Grid();
-      this._setLayout(layout);
+      this._setLayout(new qx.ui.layout.Grid());
     },
 
     /**
@@ -91,7 +90,11 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
 
     //overridden
     _draw : function() {
-      this._initColumnWidths();
+      if (this._getLayout() instanceof qx.ui.layout.Grid) {
+        this._initColumnWidths();
+      } else if (this._getLayout() instanceof qx.ui.layout.Canvas) {
+        cv.Config.engine.getChildControl("page-handler").bind("width", this, "width");
+      }
     },
 
     /**

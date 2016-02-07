@@ -276,10 +276,10 @@ qx.Class.define("cv.ui.Templateengine",
           control.exclude();
           this._add(control, {edge:"west"});
           break;
-        
-        case "main": 
-          control = new qx.ui.container.Scroll(control);
-          control.getContentElement().setAttribute("id", "centerContainer"); 
+
+        case "main":
+          control = new qx.ui.container.Scroll();
+          control.getContentElement().setAttribute("id", "centerContainer");
           this._add(control, {edge: "center", width: "100%", height: "100%"});
           break;
         
