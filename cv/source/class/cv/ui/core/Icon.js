@@ -14,7 +14,7 @@
  */
 qx.Class.define("cv.ui.core.Icon",
 {
-  extend : qx.ui.core.Widget,
+  extend : qx.ui.basic.Label,
 
   include : [
     cv.mixin.CssClass
@@ -33,6 +33,29 @@ qx.Class.define("cv.ui.core.Icon",
     this.getContentElement().addClass("icon");
     this.bind("size", this, "height");
     this.bind("size", this, "width");
+
+    this.set({
+      anonymous : true,
+      allowGrowX : true,
+      allowGrowY : true,
+      font : cv.Config.iconFont,
+      rich : true
+    });
+  },
+
+  /*
+   *****************************************************************************
+      STATICS
+   *****************************************************************************
+   */
+  statics : {
+    getIconText : function(name) {
+      var index = cv.config.IconSet.glyphs.indexOf(name);
+      if (index >= 0) {
+        return String.fromCodePoint("0x"+cv.config.IconSet.codepoints[index]);
+      }
+      return null;
+    }
   },
 
   /*
@@ -122,12 +145,10 @@ qx.Class.define("cv.ui.core.Icon",
     },
     
     //property apply
-    _applyName : function(value, old) {
-      if (old) {
-        this.getContentElement().removeClass("icon_"+old);
-      }
-      if (value) {
-        this.getContentElement().addClass("icon_"+value);
+    _applyName : function(value) {
+      var text = cv.ui.core.Icon.getIconText(value);
+      if (text) {
+        this.setValue(text);
         this.show();
       } else {
         this.exclude();

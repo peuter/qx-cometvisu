@@ -33,6 +33,8 @@ qx.Class.define("cv.Config",
     enableAddressQueue : false, // load addresses from first page first
     
     rememberLastPage : false,
+
+    iconFont : null,
    
     /**
      * Parse query string and initalize global config settings

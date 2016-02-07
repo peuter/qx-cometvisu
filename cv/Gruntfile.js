@@ -26,7 +26,7 @@ module.exports = function(grunt) {
       }
     }
     */
-    // PLUGINS CONFIG
+    // webfont generation
     webfont: {
       icons: {
         src: [
@@ -35,10 +35,9 @@ module.exports = function(grunt) {
         ],
         dest: 'source/resource/cv/font',
         options: {
-          font : "knx-uf-icons",
-          customOutputs: [{
-            template: 'templates/icon-glyph-config-boilerplate.json',
-            dest: 'source/class/cv/icon-glyph-list.json'
+          customOutput: [{
+            template: 'templates/IconSet.jstemp',
+            dest: 'source/class/cv/config/IconSet.js'
           }],
           autoHint : false
         }

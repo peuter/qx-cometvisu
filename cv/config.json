@@ -89,11 +89,6 @@
 	
 	"common" :
 	{
-	  "add-css" : [
-    	{
-    		"uri" : "resource/cv/font/knx-uf-icons.css"
-    	} 
-	  ],
 	  "copy-files" :
 	  {
 	  	"files" : ["config/visu_config.xml", "config/demo/visu_config_demo.xml"]
@@ -131,6 +126,14 @@
     ,"build-script" :
     {
       "include": ["${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ],
+
+      "copy-files" :
+      {
+        "source": "${SOURCE_PATH}/loader/build/",
+        "target" : "${BUILD_PATH}/loader",
+        "files" : ["loader.js"]
+      },
+
       "environment" :
       {
         "engine.name" : [ "gecko", "mshtml", "webkit", "opera" ]
