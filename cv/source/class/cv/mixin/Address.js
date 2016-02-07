@@ -161,7 +161,7 @@ qx.Mixin.define("cv.mixin.Address",
         // #4 style the value to be pretty
         var sty = this.getStyling();
         if (sty) {
-          var widget = actor.getChildControl("label");
+          var widget = actor instanceof qx.ui.basic.Atom ? actor.getChildControl("label") : actor;
 
           // remove only styling classes
           sty.getClassnames().forEach(function(classname) {

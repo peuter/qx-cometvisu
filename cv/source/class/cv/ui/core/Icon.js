@@ -16,6 +16,10 @@ qx.Class.define("cv.ui.core.Icon",
 {
   extend : qx.ui.core.Widget,
 
+  include : [
+    cv.mixin.CssClass
+  ],
+
   /*
    *****************************************************************************
       CONSTRUCTOR
@@ -37,6 +41,10 @@ qx.Class.define("cv.ui.core.Icon",
    *****************************************************************************
    */
   properties : {
+    appearance : {
+      init : "cv-icon",
+      refine : true
+    },
     name : {
       check : "String",
       init : null,
@@ -51,13 +59,20 @@ qx.Class.define("cv.ui.core.Icon",
       check : "Number",
       init : 16,
       apply : "_applySize",
-      event : "changeSize"
+      event : "changeSize",
+      themeable : true
     },
     color : {
       check : "String",
       transform : "_transformColor",
-      init : "#000000",
-      apply : "_applyColor"
+      init : "#FFFFFF",
+      apply : "_applyColor",
+      themeable : true
+    },
+    styling : {
+      check : "cv.config.meta.Styling",
+      nullable : true,
+      transform : "__getStylingByName"
     }
   },
 

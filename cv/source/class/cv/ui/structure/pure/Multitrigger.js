@@ -89,7 +89,7 @@ qx.Class.define("cv.ui.structure.pure.Multitrigger",
       switch (id) {
 
         case "right-container":
-          control = new qx.ui.container.Composite(new qx.ui.layout.Grid(10, 0));
+          control = new qx.ui.container.Composite(new qx.ui.layout.Grid(0, 2));
           this.getChildControl("widget").addAt(control, 1);
           break;
 
@@ -131,6 +131,7 @@ qx.Class.define("cv.ui.structure.pure.Multitrigger",
      */
     __createButton : function(no) {
       var control = new cv.ui.basic.Atom();
+      control.setAppearance("cv-button");
 
       // apply label
       if (this.getMapping()) {
@@ -153,7 +154,8 @@ qx.Class.define("cv.ui.structure.pure.Multitrigger",
       };
       gridPos.column = (no - gridPos.row*2)-1;
 
-      this.getChildControl("right-container").addAt(control, gridPos);
+      this.getChildControl("right-container").add(control, gridPos);
+      return control;
     },
 
     /**

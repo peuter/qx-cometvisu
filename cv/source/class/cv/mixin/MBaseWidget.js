@@ -30,7 +30,7 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
   members :
   {
     _hasMixinChildControl : function(id) {
-      return id === "widget" || id === "actor" || id === "status" || id === "label" || id === "label-container";
+      return id === "widget" || id === "actor" || id === "status" || id === "label" || id === "label-container" || id === "right-container";
     },
     
     //overridden
@@ -89,13 +89,18 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
           }
           this._add(control,{ flex: 1});
           break;
+
+        case "right-container":
+          control = new qx.ui.container.Composite(new qx.ui.layout.Grow());
+          this.getChildControl("widget").addAt(control, 1);
+          break;
          
         case "actor":
           control = new cv.ui.basic.Atom();
           if (this.getAlign && this.getAlign() === "center") {
             control.setCenter(true);
           }
-          this.getChildControl("widget").addAt(control, 1);
+          this.getChildControl("right-container").add(control);
           break;
 
         case "label-container" :

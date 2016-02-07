@@ -24,19 +24,36 @@ qx.Class.define("cv.ui.structure.pure.Info",
 
   /*
    *****************************************************************************
-   PROPERTIES
-   *****************************************************************************
-   */
-  properties: {
-
-  },
-
-  /*
-   *****************************************************************************
    MEMBERS
    *****************************************************************************
    */
   members: {
+
+    //overridden
+    getValueWidget : function() {
+      return this.getChildControl("info");
+    },
+
+    //overridden
+    getValueProperty : function() {
+      return "value";
+    },
+
+    // overridden
+    _createChildControlImpl : function(id, hash)
+    {
+      var control;
+
+      switch (id) {
+
+        case "info":
+          control = new qx.ui.basic.Label();
+          this.getChildControl("right-container").add(control);
+          break;
+
+      }
+      return control || this.base(arguments, id);
+    }
 
   }
 });

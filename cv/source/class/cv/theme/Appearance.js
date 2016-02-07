@@ -28,6 +28,15 @@ qx.Theme.define("cv.theme.Appearance",
 
     },
 
+    "cv-icon" : {
+      style : function() {
+        return {
+          color : "#FFFFFF",
+          size : 36
+        };
+      }
+    },
+
     /**
      * Widget stuff
      */
@@ -64,13 +73,21 @@ qx.Theme.define("cv.theme.Appearance",
     },
 
     // container for the right side if a widget (e.g. used in infotrigger)
-    "cv-widget/right-container" : {},
-    
-    "cv-widget/actor" : {
+    "cv-widget/right-container" : {
+      style : function() {
+        return {
+          padding : 3,
+          marginLeft : 15
+        }
+      }
+    },
+
+    // main button styling
+    "cv-button" : {
       style : function(states)
       {
         return {
-          marginLeft : 15,
+          marginRight : 15,
           padding : 3,
           minWidth : 100,
           maxWidth : 200,
@@ -81,6 +98,8 @@ qx.Theme.define("cv.theme.Appearance",
         };
       }
     },
+    
+    "cv-widget/actor" : "cv-button",
 
     "cv-widget/up" : "cv-widget/actor",
     "cv-widget/down" : "cv-widget/actor",
@@ -88,11 +107,10 @@ qx.Theme.define("cv.theme.Appearance",
       style : function()
       {
         return {
-          marginLeft : 15,
+          marginRight : 15,
           padding : 3,
           minWidth : 100,
           maxWidth : 200,
-          allowGrowY : false,
           alignX : "center"
         };
       }

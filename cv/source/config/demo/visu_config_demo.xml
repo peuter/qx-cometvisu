@@ -697,46 +697,46 @@
     </page>
     <page name="Icon Test" align="center">
       <text>
-        <label><icon name="CometVisu" type="64"/> Icon links vom Text</label>
+        <label><icon name="comet_opt" type="64"/> Icon links vom Text</label>
       </text>
       <text>
-        <label>Icon <icon name="CometVisu" type="64"/> mitten im Text</label>
+        <label>Icon <icon name="comet_opt" type="64"/> mitten im Text</label>
       </text>
       <text>
-        <label>Icon rechts vom Text <icon name="CometVisu" type="64"/></label>
+        <label>Icon rechts vom Text <icon name="comet_opt" type="64"/></label>
       </text>
       <text>
-        <label><icon name="CometVisu" type="64"/> Mehrere Icons <icon name="CometVisu" type="64"/></label>
-      </text>
-      <line>
-        <layout colspan="12"/>
-      </line>
-      <text>
-        <label><icon name="CometVisu" type="16"/> Icon mit type="16"</label>
-      </text>
-      <text>
-        <label><icon name="CometVisu" type="32"/> Icon mit type="32"</label>
-      </text>
-      <text>
-        <label><icon name="CometVisu" type="64"/> Icon mit type="64"</label>
-      </text>
-      <text>
-        <label><icon name="CometVisu" type="128"/> Icon mit type="128"</label>
+        <label><icon name="comet_opt" type="64"/> Mehrere Icons <icon name="comet_opt" type="64"/></label>
       </text>
       <line>
         <layout colspan="12"/>
       </line>
       <text>
-        <label><icon name="CometVisu" type="16" styling="height:auto"/> Icon mit type="16" und styling</label>
+        <label><icon name="comet_opt" type="16"/> Icon mit type="16"</label>
       </text>
       <text>
-        <label><icon name="CometVisu" type="32" styling="height:auto"/> Icon mit type="32" und styling</label>
+        <label><icon name="comet_opt" type="32"/> Icon mit type="32"</label>
       </text>
       <text>
-        <label><icon name="CometVisu" type="64" styling="height:auto"/> Icon mit type="64" und styling</label>
+        <label><icon name="comet_opt" type="64"/> Icon mit type="64"</label>
       </text>
       <text>
-        <label><icon name="CometVisu" type="128" styling="height:auto"/> Icon mit type="128" und styling</label>
+        <label><icon name="comet_opt" type="128"/> Icon mit type="128"</label>
+      </text>
+      <line>
+        <layout colspan="12"/>
+      </line>
+      <text>
+        <label><icon name="comet_opt" type="16" styling="height:auto"/> Icon mit type="16" und styling</label>
+      </text>
+      <text>
+        <label><icon name="comet_opt" type="32" styling="height:auto"/> Icon mit type="32" und styling</label>
+      </text>
+      <text>
+        <label><icon name="comet_opt" type="64" styling="height:auto"/> Icon mit type="64" und styling</label>
+      </text>
+      <text>
+        <label><icon name="comet_opt" type="128" styling="height:auto"/> Icon mit type="128" und styling</label>
       </text>
       <line>
         <layout colspan="12"/>

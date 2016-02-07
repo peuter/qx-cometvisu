@@ -56,24 +56,39 @@ qx.Mixin.define("cv.mixin.Label",
         
         if (label) {
           label.show();
+          var icon;
+          var iconNodeSet = node.getElementsByTagName("icon");
           if (label instanceof qx.ui.basic.Label) {
             label.setValue(node.textContent);
-            if (node.children.length === 1) {
-              var icon = this.getChildControl("icon");
-              // icon set
-              icon.setName(node.children[0].getAttribute("name"));
-            }
+            // no icons supported
           } else if (label instanceof qx.ui.basic.Atom) {
             label.setLabel(node.textContent);
-            if (node.children.length === 1) {
-              // icon set
-              label.setIcon(node.children[0].getAttribute("name"));
+            if (iconNodeSet.length === 1) {
+              icon = label.getChildControl("icon");
             }
           }
+          if (icon) {
+            this.__parseIcon(iconNodeSet[0], icon);
+          }
         }
-        
-        
       } 
+    },
+
+    __parseIcon : function(iconNode, icon) {
+      icon.setName(iconNode.getAttribute("name"));
+      if (iconNode.hasAttribute("type")) {
+        icon.setSize(this.stringToNumber(iconNode.getAttribute("type")));
+      }
+      if (iconNode.hasAttribute("color")) {
+        icon.setColor(iconNode.getAttribute("color"));
+      }
+      if (iconNode.hasAttribute("flavour")) {
+        icon.setColor(iconNode.getAttribute("flavour"));
+      }
+      if (iconNode.hasAttribute("class")) {
+        icon.setCssClass(iconNode.getAttribute("class"));
+      }
+      return icon;
     }
   }
 });
