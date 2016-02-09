@@ -18,8 +18,6 @@
 /**
  * Font definitions
  *
- * @asset(cv/font/icons.ttf)
- * @asset(cv/font/icons.woff)
  */
 qx.Theme.define("cv.theme.Font",
 {
@@ -41,14 +39,14 @@ qx.Theme.define("cv.theme.Font",
       family : ['URW Gothic L','Century Gothic','Apple Gothic',"arial","sans-serif"]
     },
 
-    "icons" :
+    "Icons" :
     {
       family : ["CVIconFont"],
       sources : [
         {
           family : "CVIconFont",
           source : [
-            "cv/font/icons.woff", "cv/font/icons.ttf"
+            "cv/font/CVIconFont.eot", "cv/font/CVIconFont.woff", "cv/font/CVIconFont.ttf"
           ]
         }
       ]

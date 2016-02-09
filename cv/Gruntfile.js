@@ -18,14 +18,6 @@ module.exports = function(grunt) {
       "QXTHEME": "cv.theme.Theme"
     },
 
-    /*
-    myTask: {
-      options: {},
-      myTarget: {
-        options: {}
-      }
-    }
-    */
     // webfont generation
     webfont: {
       icons: {
@@ -35,6 +27,7 @@ module.exports = function(grunt) {
         ],
         dest: 'source/resource/cv/font',
         options: {
+          font : "CVIconFont",
           customOutput: [{
             template: 'templates/IconSet.jstemp',
             dest: 'source/class/cv/config/IconSet.js'
@@ -46,12 +39,9 @@ module.exports = function(grunt) {
   };
 
   var mergedConf = qx.config.mergeConfig(config);
-  // console.log(util.inspect(mergedConf, false, null));
   grunt.initConfig(mergedConf);
 
   qx.task.registerTasks(grunt);
 
   grunt.loadNpmTasks('grunt-webfont');
-
-  // grunt.loadNpmTasks('grunt-my-plugin');
 };

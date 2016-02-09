@@ -90,10 +90,9 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
 
     //overridden
     _draw : function() {
+      cv.ui.Templateengine.getInstance().getChildControl("page-handler").bind("width", this, "width");
       if (this._getLayout() instanceof qx.ui.layout.Grid) {
         this._initColumnWidths();
-      } else if (this._getLayout() instanceof qx.ui.layout.Canvas) {
-        cv.Config.engine.getChildControl("page-handler").bind("width", this, "width");
       }
     },
 

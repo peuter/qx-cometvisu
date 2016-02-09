@@ -38,7 +38,7 @@ qx.Class.define("cv.ui.core.Icon",
       anonymous : true,
       allowGrowX : true,
       allowGrowY : true,
-      font : cv.Config.iconFont,
+      font : qx.theme.manager.Font.getInstance().resolve("Icons"),
       rich : true
     });
   },
