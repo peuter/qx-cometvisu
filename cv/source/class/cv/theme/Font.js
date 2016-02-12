@@ -41,15 +41,15 @@ qx.Theme.define("cv.theme.Font",
 
     "Icons" :
     {
-      family : ["CVIconFont"],
-      sources : [
-        {
-          family : "CVIconFont",
-          source : [
-            "cv/font/CVIconFont.eot", "cv/font/CVIconFont.woff", "cv/font/CVIconFont.ttf"
-          ]
-        }
-      ]
+      family : ["CVIconFont"]
+      //sources : [
+      //  {
+      //    family : "CVIconFont",
+      //    source : [
+      //      "resource/cv/font/CVIconFont.eot", "resource/cv/font/CVIconFont.woff", "resource/cv/font/CVIconFont.ttf"
+      //    ]
+      //  }
+      //]
     }
   }
 });

@@ -28,6 +28,7 @@ module.exports = function(grunt) {
         dest: 'source/resource/cv/font',
         options: {
           font : "CVIconFont",
+          normalize : true,
           customOutput: [{
             template: 'templates/IconSet.jstemp',
             dest: 'source/class/cv/config/IconSet.js'

@@ -1,0 +1,9 @@
+@font-face {
+    font-family:"CVIconFont";
+    src:url("CVIconFont.eot?3f98121e83802bb96eb9bb79786257f6");
+    src:url("CVIconFont.eot?#iefix") format("embedded-opentype"),
+    url("CVIconFont.woff?3f98121e83802bb96eb9bb79786257f6") format("woff"),
+    url("CVIconFont.ttf?3f98121e83802bb96eb9bb79786257f6") format("truetype");
+    font-weight:normal;
+    font-style:normal;
+}

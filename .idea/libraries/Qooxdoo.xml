@@ -4,6 +4,7 @@
       <option name="frameworkName" value="qooxdoo" />
     </properties>
     <CLASSES />
+    <JAVADOC />
     <SOURCES />
   </library>
 </component>

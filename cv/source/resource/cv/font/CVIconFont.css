@@ -3,22 +3,22 @@
 
 @font-face {
 	font-family:"CVIconFont";
-	src:url("CVIconFont.eot?a1441c9bd7a7fac14e26a70f19ee164b");
+	src:url("CVIconFont.eot?3f98121e83802bb96eb9bb79786257f6");
 	src:url("CVIconFont.eot?#iefix") format("embedded-opentype"),
-		url("CVIconFont.woff?a1441c9bd7a7fac14e26a70f19ee164b") format("woff"),
-		url("CVIconFont.ttf?a1441c9bd7a7fac14e26a70f19ee164b") format("truetype");
+		url("CVIconFont.woff?3f98121e83802bb96eb9bb79786257f6") format("woff"),
+		url("CVIconFont.ttf?3f98121e83802bb96eb9bb79786257f6") format("truetype");
 	font-weight:normal;
 	font-style:normal;
 }
 
 .icon {
+	/*noinspection CssNoGenericFontName*/
 	font-family:"CVIconFont";
 	display:inline-block;
 	vertical-align:middle;
 	line-height:1;
 	font-weight:normal;
 	font-style:normal;
-	speak:none;
 	text-decoration:inherit;
 	text-transform:none;
 	text-rendering:auto;

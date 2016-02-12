@@ -92,7 +92,12 @@
 	  "copy-files" :
 	  {
 	  	"files" : ["config/visu_config.xml", "config/demo/visu_config_demo.xml"]
-	  }
+	  },
+      "add-css" : [
+        {
+          "uri" : "resource/cv/font/FontLoader.css"
+        }
+      ]
 	},
 		
 	"source" :
