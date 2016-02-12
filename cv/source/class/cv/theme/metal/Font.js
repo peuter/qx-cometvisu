@@ -52,7 +52,7 @@ qx.Theme.define("cv.theme.metal.Font",
 
     "subtext" :
     {
-      size : 12,
+      size : 14,
       color : "white",
       family : [ 'Dosis','Helvetica','sans-serif' ]
     },

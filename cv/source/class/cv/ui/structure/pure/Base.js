@@ -316,6 +316,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
             var bar = cv.ui.Templateengine.getInstance().getChildControl("navbar-"+childWidget.getPosition());
             if (bar) {
               bar.addWidget(childWidget);
+              console.log(childWidget);
             }
           } else if (childWidget.getDataType() !== "page") {
             // all widgets that are no pages or navbars
@@ -339,6 +340,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
             }
             
             if (childWidget.isShowPagejump()) {
+              console.log(childWidget);
               // only add a button that links to this page
               var button = new qx.ui.basic.Label(childWidget.getName());
               button.setAppearance("link");

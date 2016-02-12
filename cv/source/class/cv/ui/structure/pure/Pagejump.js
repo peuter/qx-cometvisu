@@ -56,11 +56,16 @@ qx.Class.define("cv.ui.structure.pure.Pagejump",
     //overridden
     _applyNavbar : function(value, old) {
       this.base(arguments, value, old);
-      this.getChildControl("label-container").exclude();
 
+      if (old) {
+        this.removeState(old.getPosition());
+      }
       // tell the appearance the on which navbar this pagejump is placed
-      this.removeState(old);
-      this.addState(value);
+      if (value) {
+        this.addState(value.getPosition());
+        this.getChildControl("right-container").exclude();
+        this.getChildControl("label-container").setLayoutProperties({width: "100%"});
+      }
     },
     
     //overridden

@@ -48,6 +48,11 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
    *****************************************************************************
    */
   properties : {
+    appearance : {
+      init : "navbar-part",
+      refine : true
+    },
+
     position : {
       check : [ "top", "left", "bottom", "right"],
       init : "left",
@@ -76,10 +81,13 @@ qx.Class.define("cv.ui.structure.pure.Navbar",
   {
     //property apply
     _applyDefinedWidth : function(value) {
+      if (this.getPosition() === "top" || this.getPosition() === "bottom") {
+        // ignore width settings on top/bottom navbars
+        return;
+      }
       this.setWidth(value);
       this.setMinWidth(value);
       this.setMaxWidth(value);
-      console.log(this);
     },
 
     //overridden

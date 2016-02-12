@@ -49,6 +49,11 @@ qx.Class.define("cv.ui.structure.pure.Page",
    *****************************************************************************
    */
   properties : {
+
+    appearance : {
+      init : "page",
+      refine : true
+    },
     
     /**
      * The page name
@@ -67,7 +72,8 @@ qx.Class.define("cv.ui.structure.pure.Page",
     showPagejump : {
       check : "Boolean",
       init : true,
-      transform : 'stringToBool'
+      transform : "stringToBool",
+      apply : "_applyShowpagejump"
     },
     type : {
       check : ["text", "2d", "3d"],
@@ -141,6 +147,10 @@ qx.Class.define("cv.ui.structure.pure.Page",
       } else {
         this._setLayout(new qx.ui.layout.Canvas());
       }
+    },
+
+    _applyShowpagejump : function(value) {
+      console.log("Show pagejump: "+value);
     },
 
     _applyBackdrop : function(value) {

@@ -27,7 +27,7 @@ qx.Mixin.define("cv.mixin.Label",
   construct : function() {
     if (qx.core.Environment.get("qx.debug")) {
       // check for widget
-      qx.core.Assert.assertQxWidget(this, "the label mixin can only by included in subclasses fo qx.ui.core.Widget");
+      qx.core.Assert.assertQxWidget(this, "the label mixin can only by included in subclasses of qx.ui.core.Widget");
       
       // check childcontrols
       // qx.core.Assert.assertTrue(this.hasChildControl("label"), "no childcontrol 'label' available");
@@ -59,10 +59,10 @@ qx.Mixin.define("cv.mixin.Label",
           var icon;
           var iconNodeSet = node.getElementsByTagName("icon");
           if (label instanceof qx.ui.basic.Label) {
-            label.setValue(node.textContent);
+            label.setValue(node.textContent.trim());
             // no icons supported
           } else if (label instanceof qx.ui.basic.Atom) {
-            label.setLabel(node.textContent);
+            label.setLabel(node.textContent.trim());
             if (iconNodeSet.length === 1) {
               icon = label.getChildControl("icon");
             }

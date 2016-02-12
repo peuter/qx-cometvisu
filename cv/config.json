@@ -77,7 +77,7 @@
 	  "packages" :
 	  {
 	  	//"verifier-bombs-on-error" : false,
-        "separate-loader" : true,
+        //"separate-loader" : true,
 	    "parts"  :
 	    {
 	      "boot"     :
@@ -97,7 +97,7 @@
 	{
 	  "copy-files" :
 	  {
-	  	"files" : ["config/visu_config.xml", "config/demo/visu_config_demo.xml"]
+	  	"files" : [ "config/*" ]
 	  },
       "add-css" : [
         {

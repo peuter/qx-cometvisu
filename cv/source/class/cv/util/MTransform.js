@@ -50,7 +50,7 @@ qx.Mixin.define("cv.util.MTransform",
      * @returns {Boolean}
      */
     stringToBool : function(value) {
-      return !!value;
+      return value === "true";
     },
 
     /**

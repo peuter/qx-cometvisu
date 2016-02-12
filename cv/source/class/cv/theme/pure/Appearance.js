@@ -56,15 +56,38 @@ qx.Theme.define("cv.theme.pure.Appearance",
     },
     "pagejump" : {
       include : "cv-widget",
-      alias : "cv-widget"
+      alias : "cv-widget",
+
+      style : function(states)
+      {
+        if (states.top || states.bottom) {
+          // pagejump on top/bottom navbar
+          return {
+            decorator : null
+          }
+        } else {
+          return {};
+        }
+      }
+
     },
     "pagejump/label" : {
       include : "cv-widget/label",
       alias : "cv-widget/label",
 
-      style : function()
+      style : function(states)
       {
-
+        if (states.top || states.bottom) {
+          // pagejump on top/bottom navbar
+          return {
+            decorator : null,
+            iconPosition: "top",
+            font : "subtext",
+            center : true
+          }
+        } else {
+          return {};
+        }
       }
     },
     "pagejump/actor" : {
@@ -72,13 +95,14 @@ qx.Theme.define("cv.theme.pure.Appearance",
       alias : "cv-widget/actor",
 
       style : function(states) {
-        console.log(states);
+
         if (states.top || states.bottom) {
           // pagejump on top/bottom navbar
           return {
-            decorator : null,
-            iconPosition: "top",
-            font : "subtext"
+            excluded : true
+            //decorator : null,
+            //iconPosition: "top",
+            //font : "subtext"
           }
         } else {
           return {};
