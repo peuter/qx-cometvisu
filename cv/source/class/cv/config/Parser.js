@@ -134,13 +134,13 @@ qx.Class.define("cv.config.Parser",
       // then the icons
       qx.xml.Element.selectNodes(xml, '//meta/icons/icon-definition').forEach(function(node) {
         this._engine.getIconHandler().insert(
-          node.attributes.getNamedItem('name') ? node.attributes.getNamedItem('name').value : undefined, 
-			    node.attributes.getNamedItem('type') ? node.attributes.getNamedItem('type').value : undefined,
-			    node.attributes.getNamedItem('flavour') ? node.attributes.getNamedItem('flavour').value : undefined,
-			    node.attributes.getNamedItem('color') ? node.attributes.getNamedItem('color').value : undefined,
-			    node.attributes.getNamedItem('styling') ? node.attributes.getNamedItem('styling').value : undefined,
-			    node.attributes.getNamedItem('class') ? node.attributes.getNamedItem('class').value : undefined,
-			    node.attributes.getNamedItem('dynamic') ? node.attributes.getNamedItem('dynamic').value : undefined
+          node.hasAttribute('name')    ? node.getAttribute('name')    : undefined,
+			    node.hasAttribute('type')    ? node.getAttribute('type')    : undefined,
+			    node.hasAttribute('flavour') ? node.getAttribute('flavour') : undefined,
+			    node.hasAttribute('color')   ? node.getAttribute('color')   : undefined,
+			    node.hasAttribute('styling') ? node.getAttribute('styling') : undefined,
+			    node.hasAttribute('class')   ? node.getAttribute('class')   : undefined,
+			    node.hasAttribute('dynamic') ? node.getAttribute('dynamic') : undefined
         );
       }, this);
 
@@ -156,9 +156,9 @@ qx.Class.define("cv.config.Parser",
 
       // then the status bar
       qx.xml.Element.selectNodes(xml, '//meta/statusbar/status').forEach(function(node) {
-        //var type = node.attributes.getNamedItem('type');
-        var condition = node.attributes.getNamedItem('condition');
-        var extend = node.attributes.getNamedItem('hrefextend');
+        //var type = node.getAttribute('type');
+        var condition = node.getAttribute('condition');
+        var extend = node.getAttribute('hrefextend');
         var sPath = window.location.pathname;
         var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
 
@@ -251,8 +251,6 @@ qx.Class.define("cv.config.Parser",
       // if (this._engine.scrollSpeed != undefined) {
         // this._engine.main_scroll.getConf().speed = this._engine.scrollSpeed;
       // }
-     
-      //this._engine.scrollToPage(startpage,0);
   
       // $('.fast').bind('click', function() {
         // this._engine.main_scroll.seekTo($(this).text());
@@ -280,9 +278,7 @@ qx.Class.define("cv.config.Parser",
         cv.client.Cometvisu.getInstance().subscribe(addressesToSubscribe);
       }
       xml = null; // not needed anymore - free the space
-      
-      //$('.icon').each(function(){ fillRecoloredIcon(this);});
-      
+            
       this.fireEvent("loaded");
     },
     

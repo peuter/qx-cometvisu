@@ -8,7 +8,7 @@
 
 ************************************************************************ */
 
-qx.Theme.define("cv.theme.Appearance",
+qx.Theme.define("cv.theme.pure.Appearance",
 {
   extend : qx.theme.modern.Appearance,
 
@@ -45,7 +45,7 @@ qx.Theme.define("cv.theme.Appearance",
       {
         return {
           padding : [3, 5],
-          decorator : "widget"
+          decorator : "cv-widget"
         };
       }
     },
@@ -80,6 +80,8 @@ qx.Theme.define("cv.theme.Appearance",
             iconPosition: "top",
             font : "subtext"
           }
+        } else {
+          return {};
         }
       }
     },

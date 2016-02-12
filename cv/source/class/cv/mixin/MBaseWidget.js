@@ -76,7 +76,6 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
       {
         case "widget":
           control = new qx.ui.container.Composite();
-          control.setAppearance("cv-widget");
           control.setLayout(new qx.ui.layout.HBox());
           control.getContentElement().addClass(this.getDataType());
           if (this.getAlign && this.getAlign()) {

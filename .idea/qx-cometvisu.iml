@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/cv/build" />
       <excludeFolder url="file://$MODULE_DIR$/cv/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/cvweb" />
+      <excludeFolder url="file://$MODULE_DIR$/external/icons" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

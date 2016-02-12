@@ -16,14 +16,14 @@
  */
 
 
-qx.Theme.define("cv.theme.Pure",
+qx.Theme.define("cv.theme.Metal",
 {
   meta :
   {
-    color : cv.theme.pure.Color,
-    decoration : cv.theme.pure.Decoration,
-    font : cv.theme.pure.Font,
+    color : cv.theme.metal.Color,
+    decoration : cv.theme.metal.Decoration,
+    font : cv.theme.metal.Font,
     icon : cv.theme.pure.Icon,
-    appearance : cv.theme.pure.Appearance
+    appearance : cv.theme.metal.Appearance
   }
 });

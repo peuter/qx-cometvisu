@@ -82,7 +82,7 @@
 	    {
 	      "boot"     :
 	      {
-	        "include" : [ "${QXTHEME}", "${APPLICATION}.Application", "${APPLICATION}.Utils", "${APPLICATION}.ui.structure.pure.*" ]
+	        "include" : [ "${QXTHEME}", "${APPLICATION}.Application", "${APPLICATION}.Utils", "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.theme.*" ]
 	      },
 
           "plugin-infoaction" :
@@ -132,7 +132,7 @@
     
     ,"build-script" :
     {
-      "include": [ "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils", "${APPLICATION}.plugin.infoaction.*" ],
+      "include": [ "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils", "${APPLICATION}.plugin.*", "${APPLICATION}.theme.*" ],
 
       "copy-files" :
       {
@@ -157,7 +157,7 @@
     
     ,"source-script" : {
       //"extend" : [ "profiling" ],
-      "include": [ "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils", "${APPLICATION}.plugin.infoaction.*" ]
+      "include": [ "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils", "${APPLICATION}.plugin.*", "${APPLICATION}.theme.*" ]
     }
   }
 }

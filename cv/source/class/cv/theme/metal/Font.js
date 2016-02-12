@@ -17,24 +17,44 @@
 
 /**
  * Font definitions
- *
  */
-qx.Theme.define("cv.theme.Font",
+qx.Theme.define("cv.theme.metal.Font",
 {
-  extend : qx.theme.modern.Font,
+  extend : cv.theme.pure.Font,
 
   fonts :
   {
-    "default" :
+    "Dosis" : {
+      family: ["Dosis"],
+      sources: [
+        {
+          family: "Dosis",
+          source: [
+            "resource/cv/designs/metal/fonts/Dosis-Medium.ttf"
+          ]
+        }
+      ]
+    },
+
+    "group-title" :
     {
       size : 18,
-      family : ['URW Gothic L','Century Gothic','Apple Gothic',"arial","sans-serif"]
+      color : "white",
+      family : [ 'Dosis','Helvetica','sans-serif' ]
+    },
+
+    "default" :
+    {
+      size : 22,
+      color : "white",
+      family : [ 'Dosis','Helvetica','sans-serif' ]
     },
 
     "subtext" :
     {
       size : 12,
-      family : ['URW Gothic L','Century Gothic','Apple Gothic',"arial","sans-serif"]
+      color : "white",
+      family : [ 'Dosis','Helvetica','sans-serif' ]
     },
     
     "title" :
@@ -42,20 +62,8 @@ qx.Theme.define("cv.theme.Font",
       size : 38,
       lineHeight : 2.5,
       bold : true,
-      family : ['URW Gothic L','Century Gothic','Apple Gothic',"arial","sans-serif"]
-    },
-
-    "Icons" :
-    {
-      family : ["CVIconFont"]
-      //sources : [
-      //  {
-      //    family : "CVIconFont",
-      //    source : [
-      //      "resource/cv/font/CVIconFont.eot", "resource/cv/font/CVIconFont.woff", "resource/cv/font/CVIconFont.ttf"
-      //    ]
-      //  }
-      //]
+      color : "white",
+      family : [ 'Dosis','Helvetica','sans-serif' ]
     }
   }
 });

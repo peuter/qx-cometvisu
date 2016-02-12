@@ -8,7 +8,7 @@
 
 ************************************************************************ */
 
-qx.Theme.define("cv.theme.Decoration",
+qx.Theme.define("cv.theme.pure.Decoration",
 {
   extend : qx.theme.modern.Decoration,
 
@@ -19,15 +19,10 @@ qx.Theme.define("cv.theme.Decoration",
       
     },
     
-    "widget" : {
-      style : {
-        radius : 5
-      }
-    },
-    
     "cv-widget" : {
       style : {
         width : 1,
+        radius : 5,
         color : "border-main"
       }
     },
@@ -44,10 +39,10 @@ qx.Theme.define("cv.theme.Decoration",
         innerWidth : 1,
         width : 1,
         radius : 5,
-        color : [ "#666666",  "#444444", "#444444", "#666666"],
-        innerColor : [ "#FFFFFF", "#666666", "#666666", "#FFFFFF"],
-        gradientStart : ["#0F0F0F", 0],
-        gradientEnd : ["#000000", 100]
+        color : [ "actor-border-top",  "actor-border-bottom", "actor-border-bottom", "actor-border-top"],
+        innerColor : [ "actor-border-inner", "actor-border-top", "actor-border-top", "actor-border-inner"],
+        gradientStart : ["actor-gradient-start", 0],
+        gradientEnd : ["actor-gradient-end", 100]
       }
     },
     "switch-pressed" : {
@@ -55,10 +50,10 @@ qx.Theme.define("cv.theme.Decoration",
         innerWidth : 1,
         width : 1,
         radius : 5,
-        color : [ "#666666",  "#FFFFFF", "#FFFFFF", "#666666"],
-        innerColor : [ "#444444", "#666666", "#666666", "#444444"],
-        gradientStart : ["#000000", 0],
-        gradientEnd : ["#0F0F0F", 100]
+        color : [ "actor-border-top",  "actor-border-inner", "actor-border-inner", "actor-border-top"],
+        innerColor : [ "actor-border-bottom", "actor-border-top", "actor-border-top", "actor-border-bottom"],
+        gradientStart : ["actor-gradient-start", 0],
+        gradientEnd : ["actor-gradient-start", 100]
       }
     },
     /**
