@@ -64,10 +64,10 @@ qx.Class.define("cv.ui.structure.pure.Page",
     /**
      * @var {Boolean} If true the page should be 'visible' in the parent page by showing a pagejump button
      */
-    showPageJump : {
+    showPagejump : {
       check : "Boolean",
       init : true,
-      transform : "cv.util.Transform.stringToBool"
+      transform : 'stringToBool'
     },
     type : {
       check : ["text", "2d", "3d"],
@@ -91,32 +91,32 @@ qx.Class.define("cv.ui.structure.pure.Page",
 
     showtopnavigation : {
       check : "Boolean",
-      transform : "cv.util.Transform.stringToBool",
+      transform : "stringToBool",
       init : true
     },
     showfooter : {
       check : "Boolean",
-      transform : "cv.util.Transform.stringToBool",
+      transform : "stringToBool",
       init : true
     },
     shownavbarTop : {
       check : "Boolean",
-      transform : "cv.util.Transform.stringToBool",
+      transform : "stringToBool",
       init : true
     },
     shownavbarBottom : {
       check : "Boolean",
-      transform : "cv.util.Transform.stringToBool",
+      transform : "stringToBool",
       init : true
     },
     shownavbarLeft : {
       check : "Boolean",
-      transform : "cv.util.Transform.stringToBool",
+      transform : "stringToBool",
       init : true
     },
     shownavbarRight : {
       check : "Boolean",
-      transform : "cv.util.Transform.stringToBool",
+      transform : "stringToBool",
       init : true
     },
     shownavbar : {

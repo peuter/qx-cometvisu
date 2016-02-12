@@ -24,6 +24,11 @@
 qx.Class.define("cv.ui.Templateengine",
 {
   extend : qx.ui.core.Widget,
+
+  include : [
+    cv.util.MTransform
+  ],
+
   type : "singleton",
 
   /*
@@ -96,12 +101,19 @@ qx.Class.define("cv.ui.Templateengine",
       check : "Boolean",
       init : false
     },
-    
-    backendName : {
+
+    /**
+     * Backend name
+     */
+    backend : {
       check : ["default", "openhab", "openhab2"],
-      init : "default"
+      init : "default",
+      transform : "_backendTransform"
     },
-    
+
+    /**
+     * Url to backends login page
+     */
     backendUrl : {
       check : "String",
       init : ""
@@ -115,7 +127,8 @@ qx.Class.define("cv.ui.Templateengine",
     
     enableColumnAdjustment : {
       check : "Boolean",
-      init : false
+      init : false,
+      transform : "stringToBool"
     },
     
     design : {
@@ -181,6 +194,24 @@ qx.Class.define("cv.ui.Templateengine",
     _libraryCheck : true,
     _pageHandler : null,
     _screensaveTimer : null,
+
+    /**
+     * Backwards compability for formerly used backend names
+     *
+     * @param value {String}
+     * @returns {String}
+     * @protected
+     */
+    _backendTransform : function(value) {
+      switch (value) {
+        case "oh":
+          return "openhab";
+        case "oh2":
+          return "openhab2";
+        default:
+          return value;
+      }
+    },
 
     /**
      * Find styling by name
@@ -470,7 +501,7 @@ qx.Class.define("cv.ui.Templateengine",
     
     initBackendClient : function() {
       var client = cv.client.Cometvisu.getInstance();
-      client.init(this.getBackendName());
+      client.init(this.getBackend());
     },
     
     /**

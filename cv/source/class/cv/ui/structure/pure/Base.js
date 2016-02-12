@@ -52,6 +52,19 @@ qx.Class.define("cv.ui.structure.pure.Base",
 
   /*
    *****************************************************************************
+   STATICS
+   *****************************************************************************
+   */
+  statics : {
+    /**
+     * Map config attributes to properties in case of name conflicts
+     * can be overridden by subclasses
+     */
+    propertyMapping : {}
+  },
+
+  /*
+   *****************************************************************************
       PROPERTIES
    *****************************************************************************
    */
@@ -245,9 +258,9 @@ qx.Class.define("cv.ui.structure.pure.Base",
       for (var i=0; i < node.attributes.length; i++) {
           var attr = node.attributes[i];
           var name = qx.lang.String.camelCase(attr.name.replace(/_/g, "-"));
-          if (self.hasOwnProperty("propertyMapping") && self.propertyMapping.hasOwnProperty("name")) {
-            name = self.propertyMapping[name];
-            // this.debug("map "+attr.name+" to "+name+" for "+node.nodeName);
+          if (this.constructor.propertyMapping && this.constructor.propertyMapping.hasOwnProperty(name)) {
+            name = this.constructor.propertyMapping[name];
+             //this.debug("map "+attr.name+" to "+name+" for "+node.nodeName);
           }
           if (qx.Class.hasProperty(this.constructor, name)) {
             props[name] = this._transformIncomingValue(name, attr.value);
@@ -325,7 +338,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
               this.addChildPage(childWidget);
             }
             
-            if (childWidget.isShowPageJump()) {
+            if (childWidget.isShowPagejump()) {
               // only add a button that links to this page
               var button = new qx.ui.basic.Label(childWidget.getName());
               button.setAppearance("link");

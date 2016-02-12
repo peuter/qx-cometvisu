@@ -71,7 +71,10 @@ qx.Class.define("cv.config.Parser",
         if (attr[i].name === "xmlns:xsi" || attr[i].name === "xsi:noNamespaceSchemaLocation") {
           continue;
         }
-        var name = propertyNameMapping[attr[i].name] ? propertyNameMapping[attr[i].name] : attr[i].name;
+        var name = qx.lang.String.camelCase(attr[i].name.replace(/_/g, "-"));
+        if (propertyNameMapping.hasOwnProperty(name)) {
+          name = propertyNameMapping[name];
+        }
         pageAttributes[name] = attr[i].value === "true" ? true : attr[i].value === "false" ? false : attr[i].value;
       }
       
@@ -112,20 +115,12 @@ qx.Class.define("cv.config.Parser",
       //require( getCSSlist, delaySetup('design') );
 
       // start with the plugins
-      var pluginsToLoad = [];
+      var pluginsToLoad = new qx.data.Array();
       qx.xml.Element.selectNodes(xml, '//meta/plugins/plugin').forEach(function(node) {
-        var name = node.attributes.getNamedItem('name');
+        var name = node.getAttribute('name');
         if (name) {
-          if (!pluginsToLoad[name.value]) {
-            /*
-            pluginsToLoadCount++;
-            $.includeScripts( 
-                ['plugins/' + name + '/structure_plugin.js'],
-                delaySetup( 'plugin_' + name)
-              );
-            pluginsToLoad[name] = true;
-            */
-            pluginsToLoad.push( 'plugins/' + name.value + '/structure_plugin' );
+          if (!pluginsToLoad.contains("plugin-"+name)) {
+            pluginsToLoad.push( "plugin-"+name );
           }
         }
       });
@@ -134,7 +129,7 @@ qx.Class.define("cv.config.Parser",
         delete loadReady.plugins;
       }
       */
-      //require( pluginsToLoad, delaySetup('plugins') );
+      cv.PluginHandler.loadPlugins(pluginsToLoad);
       
       // then the icons
       qx.xml.Element.selectNodes(xml, '//meta/icons/icon-definition').forEach(function(node) {

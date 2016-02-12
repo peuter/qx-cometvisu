@@ -76,13 +76,19 @@
 	{
 	  "packages" :
 	  {
-	  	"verifier-bombs-on-error" : false,
+	  	//"verifier-bombs-on-error" : false,
+        "separate-loader" : true,
 	    "parts"  :
 	    {
 	      "boot"     :
 	      {
-	        "include" : [ "${QXTHEME}", "${APPLICATION}.Application", "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ]
-	      }
+	        "include" : [ "${QXTHEME}", "${APPLICATION}.Application", "${APPLICATION}.Utils", "${APPLICATION}.ui.structure.pure.*" ]
+	      },
+
+          "plugin-infoaction" :
+          {
+            "include" : [ "${APPLICATION}.plugin.infoaction.*" ]
+          }
 	    }
 	  }
 	},
@@ -102,11 +108,7 @@
 		
 	"source" :
 	{
-	  "extend" : [ "parts-config" ],
-      "environment" :
-      {
-        "qx.aspects" : false
-      }
+	  "extend" : [ "parts-config" ]
 	},
 
     "profile" :
@@ -130,7 +132,7 @@
     
     ,"build-script" :
     {
-      "include": ["${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ],
+      "include": [ "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils", "${APPLICATION}.plugin.infoaction.*" ],
 
       "copy-files" :
       {
@@ -154,8 +156,8 @@
     }
     
     ,"source-script" : {
-      "extend" : [ "profiling" ],
-      "include": ["${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils" ]
+      //"extend" : [ "profiling" ],
+      "include": [ "${APPLICATION}.ui.structure.pure.*", "${APPLICATION}.Utils", "${APPLICATION}.plugin.infoaction.*" ]
     }
   }
 }

@@ -30,6 +30,12 @@ qx.Theme.define("cv.theme.Font",
       size : 18,
       family : ['URW Gothic L','Century Gothic','Apple Gothic',"arial","sans-serif"]
     },
+
+    "subtext" :
+    {
+      size : 12,
+      family : ['URW Gothic L','Century Gothic','Apple Gothic',"arial","sans-serif"]
+    },
     
     "title" :
     {

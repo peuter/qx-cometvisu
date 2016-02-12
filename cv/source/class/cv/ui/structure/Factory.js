@@ -39,6 +39,12 @@ qx.Class.define("cv.ui.structure.Factory",
         }
       }
       var clazz = qx.Class.getByName("cv.ui.structure."+cv.Config.structure+"."+qx.lang.String.firstUp(node.nodeName));
+      if (!clazz) {
+        // try plugin
+        if (cv.PluginHandler.hasWidgetPlugin(node.nodename)) {
+          clazz = cv.PluginHandler.getWidgetPlugin(node.nodename);
+        }
+      }
       if (clazz) {
         return new clazz(node, path, root);
       } else {

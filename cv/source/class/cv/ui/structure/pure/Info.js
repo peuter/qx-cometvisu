@@ -22,6 +22,10 @@ qx.Class.define("cv.ui.structure.pure.Info",
 {
   extend : cv.ui.structure.pure.BaseWidget,
 
+  include : [
+    cv.mixin.CssClass
+  ],
+
   /*
    *****************************************************************************
    MEMBERS

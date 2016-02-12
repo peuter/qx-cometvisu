@@ -45,20 +45,22 @@ qx.Class.define("cv.ui.structure.pure.Pagejump",
   },
   
   members : {
+
+    _forwardStates : {
+      top : true,
+      bottom : true,
+      left : true,
+      right : true
+    },
     
     //overridden
     _applyNavbar : function(value, old) {
       this.base(arguments, value, old);
-      
-      if (value) {
-        switch (value.getPosition()) {
-          case "left":
-          case "right":
-            this.getChildControl("label-container").exclude();
-            break;
-        }
-        
-      }
+      this.getChildControl("label-container").exclude();
+
+      // tell the appearance the on which navbar this pagejump is placed
+      this.removeState(old);
+      this.addState(value);
     },
     
     //overridden
@@ -85,7 +87,7 @@ qx.Class.define("cv.ui.structure.pure.Pagejump",
       this.bind("target", actor, "label");
       
       // add listener for pagejumps
-      actor.addListener("tap", function() {
+      this.addListener("tap", function() {
         cv.Utils.engine.scrollToPage(this.getTarget());
       }, this);
     }

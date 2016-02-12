@@ -69,7 +69,19 @@ qx.Theme.define("cv.theme.Appearance",
     },
     "pagejump/actor" : {
       include : "cv-widget/actor",
-      alias : "cv-widget/actor"      
+      alias : "cv-widget/actor",
+
+      style : function(states) {
+        console.log(states);
+        if (states.top || states.bottom) {
+          // pagejump on top/bottom navbar
+          return {
+            decorator : null,
+            iconPosition: "top",
+            font : "subtext"
+          }
+        }
+      }
     },
 
     // container for the right side if a widget (e.g. used in infotrigger)

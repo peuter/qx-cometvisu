@@ -19,6 +19,7 @@
  * This is the main application class of the CometVisu based on Qooxdoo
  *
  * @asset(cv/*)
+ *
  */
 qx.Class.define("cv.Application",
 {
@@ -63,7 +64,7 @@ qx.Class.define("cv.Application",
 
       var bus = qx.event.message.Bus.getInstance();
       bus.subscribe("*", function(msg) {
-        this.debug("new bus message %o", msg);
+        console.log("new bus message '%s': %o", msg.getName(), msg.getData());
       }, this);
       
       /*
