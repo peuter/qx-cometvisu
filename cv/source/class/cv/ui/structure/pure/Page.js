@@ -28,6 +28,18 @@ qx.Class.define("cv.ui.structure.pure.Page",
     cv.mixin.Align,
     cv.mixin.Flavour
   ],
+
+  /*
+   *****************************************************************************
+   CONSTRUCTOR
+   *****************************************************************************
+   */
+  construct : function(node, path, root, parent) {
+    this._visibilityProperties = new qx.data.Array();
+    this._visibilityProperties.append(["showtopnavigation", "showfooter", "shownavbarLeft", "shownavbarRight", "shownavbarTop", "shownavbarBottom"]);
+
+    this.base(arguments,node, path, root, parent);
+  },
    
   /*
    *****************************************************************************
@@ -72,8 +84,7 @@ qx.Class.define("cv.ui.structure.pure.Page",
     showPagejump : {
       check : "Boolean",
       init : true,
-      transform : "stringToBool",
-      apply : "_applyShowpagejump"
+      transform : "stringToBool"
     },
     type : {
       check : ["text", "2d", "3d"],
@@ -98,32 +109,38 @@ qx.Class.define("cv.ui.structure.pure.Page",
     showtopnavigation : {
       check : "Boolean",
       transform : "stringToBool",
-      init : true
+      init : true,
+      event : "changeShowtopnavigation"
     },
     showfooter : {
       check : "Boolean",
       transform : "stringToBool",
-      init : true
+      init : true,
+      event : "changeShowfooter"
     },
     shownavbarTop : {
       check : "Boolean",
       transform : "stringToBool",
-      init : true
+      init : true,
+      event : "changeShownavbarTop"
     },
     shownavbarBottom : {
       check : "Boolean",
       transform : "stringToBool",
-      init : true
+      init : true,
+      event : "changeShownavbarBottom"
     },
     shownavbarLeft : {
       check : "Boolean",
       transform : "stringToBool",
-      init : true
+      init : true,
+      event : "changeShownavbarLeft"
     },
     shownavbarRight : {
       check : "Boolean",
       transform : "stringToBool",
-      init : true
+      init : true,
+      event : "changeShownavbarRight"
     },
     shownavbar : {
       group : ["shownavbarTop", "shownavbarRight", "shownavbarBottom", "shownavbarLeft"],
@@ -139,6 +156,18 @@ qx.Class.define("cv.ui.structure.pure.Page",
   members :
   {
     _queuedNode : null,
+    /**
+     * Array of properties that define the visibility of elements outside this page (e.g. header, footer, navbars)
+     */
+    _visibilityProperties : null,
+
+    /**
+     * Publig getter for the protected variable _visibilityProperties
+     * @returns {qx.data.Array}
+     */
+    getVisibilityProperties : function() {
+      return this._visibilityProperties;
+    },
 
     //overridden
     _initLayout : function() {
@@ -147,10 +176,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
       } else {
         this._setLayout(new qx.ui.layout.Canvas());
       }
-    },
-
-    _applyShowpagejump : function(value) {
-      console.log("Show pagejump: "+value);
     },
 
     _applyBackdrop : function(value) {
@@ -177,14 +202,14 @@ qx.Class.define("cv.ui.structure.pure.Page",
           continue;
         }
         // create instance
-        var childPage = cv.ui.structure.Factory.createWidget(childNode, this.getPath()+"_"+i);
-        
-        // tell the widget on which page it is set
-        childPage.setParentPage(this._currentPage);
+        var childPage = cv.ui.structure.Factory.createWidget(childNode, this.getPath()+"_"+i, false, this);
         
         // add to childPages if available
         if (qx.Class.hasMixin(this.constructor, cv.mixin.MPages)) {
           this.addChildPage(childPage);
+
+          // parse address elements
+
         }
       }
     },
@@ -200,9 +225,18 @@ qx.Class.define("cv.ui.structure.pure.Page",
       cv.ui.Templateengine.getInstance().getChildControl("page-handler").add(this);
       this._currentPage = this;
             
-      this._mapProperties(node);
+      var props = this._mapProperties(node);
       this._mapChildPages(node);
-      
+
+      // inherit some property values from parent page if not set
+      if (this.getParentPage()) {
+        this._visibilityProperties.forEach(function(prop) {
+          if (!props.hasOwnProperty(prop)) {
+            this.getParentPage().bind(prop, this, prop);
+          }
+        }, this);
+      }
+
       var bounds = this.getBounds();
       if (this.isRoot() || bounds) {
         // page is visible or root page -> proceed with parsing
@@ -215,6 +249,7 @@ qx.Class.define("cv.ui.structure.pure.Page",
         this._queuedNode = node;
         this.debug("parsing has been delayed");
       }
+      console.log(this);
     },
     
     /**

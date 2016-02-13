@@ -34,9 +34,13 @@ qx.Class.define("cv.ui.structure.pure.Base",
       CONSTRUCTOR
    *****************************************************************************
    */
-  construct : function(node, path, root) {
+  construct : function(node, path, root, parent) {
     this.base(arguments);
     this.setRoot(!!root);
+
+    if (parent) {
+      this.setParentPage(parent);
+    }
 
     this._initLayout();
     
@@ -269,6 +273,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
           }
       }
       this.set(props);
+      return props;
     },
     
     /**
@@ -367,10 +372,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
      */
     map : function(node) {
       this.setDataType(node.nodeName);  
-      if (this.getDataType() === "page") {
-        cv.ui.Templateengine.getInstance().getChildControl("page-handler").add(this);
-        this._currentPage = this;
-      }
+
       if (qx.core.Environment.get("qx.debug")) {
         qx.core.Assert.assertNotNull(node, "node must not be null");
       }

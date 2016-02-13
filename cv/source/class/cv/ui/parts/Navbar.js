@@ -71,7 +71,13 @@ qx.Class.define("cv.ui.parts.Navbar",
       this._add(widget);
       
       // bind navbar visibility to its parent pages visibility
-      widget.getParentPage().bind("visibility", widget, "visibility");
+      //widget.getParentPage().bind("visibility", widget, "visibility", {
+      //  converter : function(data, model, source, target) {
+      //    if (data === false) {
+      //      // we also have to check all parent pages as this value is inheritable
+      //    }
+      //  }
+      //});
     }
   },
   

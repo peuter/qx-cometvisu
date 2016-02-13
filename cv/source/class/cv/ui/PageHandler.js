@@ -80,6 +80,14 @@ qx.Class.define("cv.ui.PageHandler",
         }
         // add to history for browser back button
         qx.bom.History.getInstance().addToHistory(page.getPath());
+
+        // update visibility of parts
+        var visProps = {};
+        page.getVisibilityProperties().forEach(function(prop) {
+          visProps[prop] = page.get(prop);
+        }, this);
+
+        cv.ui.Templateengine.getInstance().applyPageVisibilityProperties(visProps);
       }
     }
   },

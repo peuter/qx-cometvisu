@@ -34,6 +34,14 @@ qx.Theme.define("cv.theme.pure.Decoration",
         colorStop : ["line", 33, 33]
       }
     },
+    "vline" : {
+      style : {
+        orientation : "vertical",
+        gradientStart : ["line-gradient", 0],
+        gradientEnd : ["line-gradient", 100],
+        colorStop : ["line", 33, 33]
+      }
+    },
     "switch" : {
       style : {
         innerWidth : 1,
@@ -90,6 +98,22 @@ qx.Theme.define("cv.theme.pure.Decoration",
         borderGradientStart : ["line-gradient", 0],
         borderGradientEnd : ["line-gradient", 100],
         borderColorStop : ["line", 33, 33]
+      }
+    },
+
+    "widgetinfo" : {
+      style : {
+        radius: [0, 0, 0, 25],
+        width : 0,
+        backgroundColor : "widget-info-bg"
+      }
+    },
+
+    "widgetinfo-topbottom" : {
+      style : {
+        radius: 20,
+        width : 0,
+        backgroundColor : "widget-info-bg-nav"
       }
     }
   }

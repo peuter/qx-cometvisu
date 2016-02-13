@@ -45,6 +45,12 @@ qx.Theme.define("cv.theme.pure.Font",
       family : ['URW Gothic L','Century Gothic','Apple Gothic',"arial","sans-serif"]
     },
 
+    "widgetinfo" :
+    {
+      size : 14,
+      family : ['URW Gothic L','Century Gothic','Apple Gothic',"arial","sans-serif"]
+    },
+
     "Icons" :
     {
       family : ["CVIconFont"]

@@ -64,7 +64,12 @@ qx.Class.define("cv.ui.structure.pure.Pagejump",
       if (value) {
         this.addState(value.getPosition());
         this.getChildControl("right-container").exclude();
-        this.getChildControl("label-container").setLayoutProperties({width: "100%"});
+        this.getChildControl("label-container").setLayoutProperties({edge: 0});
+        this.getChildControl("widget").getChildren().forEach(function(child) {
+          if (child.getAppearance() === "widgetinfo") {
+            child.addState(value.getPosition());
+          }
+        })
       }
     },
     

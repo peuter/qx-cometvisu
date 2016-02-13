@@ -28,5 +28,20 @@ qx.Class.define("cv.ui.structure.pure.Line",
       init : "line",
       refine : true
     }
+  },
+
+  members : {
+    //overridden
+    _applyNavbar : function(value, old) {
+      this.base(arguments, value, old);
+
+      if (old) {
+        this.removeState(old.getPosition());
+      }
+      // tell the appearance the on which navbar this pagejump is placed
+      if (value) {
+        this.addState(value.getPosition());
+      }
+    }
   }
 });

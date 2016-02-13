@@ -379,6 +379,39 @@ qx.Class.define("cv.ui.Templateengine",
         return control;
       }
     },
+
+    /**
+     * Exclude or show certain childcontrols
+     *
+     * @param props {Map}
+     */
+    applyPageVisibilityProperties : function(props) {
+      var control;
+      console.log(props);
+      for (var prop in props) {
+        if (prop === "showtopnavigation") {
+          control = this.getChildControl("breadcrumb");
+        } else if (prop === "showfooter") {
+          control = this.getChildControl("status-bar");
+        } else if (prop === "shownavbarLeft") {
+          control = this.getChildControl("navbar-left");
+        } else if (prop === "shownavbarRight") {
+          control = this.getChildControl("navbar-right");
+        } else if (prop === "shownavbarTop") {
+          control = this.getChildControl("navbar-top");
+        } else if (prop === "shownavbarBottom") {
+          control = this.getChildControl("navbar-bottom");
+        }
+        if (control) {
+          //noinspection JSUnfilteredForInLoop
+          if (props[prop] === true) {
+            control.show();
+          } else {
+            control.exclude();
+          }
+        }
+      }
+    },
     
     /**
      * Show config error

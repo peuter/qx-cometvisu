@@ -27,12 +27,12 @@ qx.Class.define("cv.ui.core.Icon",
    */
   construct : function(name) {
     this.base(arguments);
+    this._setLayout(new qx.ui.layout.Grow());
+
     if (name) {
       this.setName(name);
     }
     this.getContentElement().addClass("icon");
-    this.bind("size", this, "height");
-    this.bind("size", this, "width");
 
     this.set({
       anonymous : true,
@@ -142,6 +142,8 @@ qx.Class.define("cv.ui.core.Icon",
     //property apply
     _applySize : function(value) {
       this.getContentElement().setStyle("font-size", value+"px");
+      this.setMinWidth(value);
+      this.setMinHeight(value);
     },
     
     //property apply

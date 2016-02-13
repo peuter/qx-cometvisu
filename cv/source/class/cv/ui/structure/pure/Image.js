@@ -78,7 +78,7 @@ qx.Class.define("cv.ui.structure.pure.Image",
         case "image":
           control = new qx.ui.basic.Image(this.getSrc());
           control.setScale(true);
-          this.getChildControl("widget").add(control, {flex:1});
+          this.getChildControl("widget").add(control, {edge:0});
           break;
       }
       return control || this.base(arguments, id);

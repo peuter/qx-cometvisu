@@ -31,7 +31,10 @@ qx.Theme.define("cv.theme.pure.Color",
     "red" : "#FF4444",
     "green" : "#44FF44",
     "blue" : "#44FFFF",
-    "purple" : "#FF44FF"
+    "purple" : "#FF44FF",
 
+    "widget-info-bg" : "#DDDDDD",
+    "widgetinfo-text-color" : "#000000",
+    "widget-info-bg-nav" : "#FFFFFF"
   }
 });

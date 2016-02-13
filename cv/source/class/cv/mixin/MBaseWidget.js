@@ -76,7 +76,7 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
       {
         case "widget":
           control = new qx.ui.container.Composite();
-          control.setLayout(new qx.ui.layout.HBox());
+          control.setLayout(new qx.ui.layout.Canvas());
           control.getContentElement().addClass(this.getDataType());
           if (this.getAlign && this.getAlign()) {
             control.getContentElement().addClass(this.getAlign());
@@ -91,7 +91,7 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
 
         case "right-container":
           control = new qx.ui.container.Composite(new qx.ui.layout.Grow());
-          this.getChildControl("widget").addAt(control, 1);
+          this.getChildControl("widget").addAt(control, 1, {left: "50%", top: 0});
           break;
          
         case "actor":
@@ -105,7 +105,7 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
         case "label-container" :
           control = new qx.ui.container.Composite(new qx.ui.layout.Dock());
           control.setAnonymous(true);
-          this.getChildControl("widget").addAt(control, 0, { width: "50%"});
+          this.getChildControl("widget").addAt(control, 0, { top: 0, left: 0, width: "50%"});
           break;
           
         case "label":

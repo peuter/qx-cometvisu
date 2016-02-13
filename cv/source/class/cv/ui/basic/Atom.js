@@ -64,6 +64,10 @@ qx.Class.define("cv.ui.basic.Atom",
         case "icon":
           control = new cv.ui.core.Icon(this.getIcon());
           control.setAnonymous(true);
+          control.set({
+            allowGrowX : false,
+            allowGrowY : false
+          })
           this._addAt(control, 0);
           if (this.getIcon() === null || this.getShow() === "label") {
             control.exclude();

@@ -30,7 +30,7 @@ qx.Class.define("cv.ui.structure.Factory",
   */
   statics :
   {
-    createWidget : function(node, path, root) {
+    createWidget : function(node, path, root, parent) {
       if (node.nodeName === "page") {
         // check if there is a page in the pagehandler for this path 
         var page = cv.Utils.engine.getChildControl("page-handler").getPageByPath(path);
@@ -46,7 +46,7 @@ qx.Class.define("cv.ui.structure.Factory",
         }
       }
       if (clazz) {
-        return new clazz(node, path, root);
+        return new clazz(node, path, root, parent);
       } else {
         qx.log.Logger.error("no class found: cv.ui.structure."+cv.Config.structure+"."+qx.lang.String.firstUp(node.nodeName));
         return new cv.ui.structure.Unknown().set({name: node.nodeName});
