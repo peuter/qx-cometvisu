@@ -68,7 +68,6 @@ qx.Class.define("cv.ui.Templateengine",
 
     // listen to browser back button
     qx.bom.History.getInstance().addListener("request", function(e) {
-      console.log(e.getData());
       if (e.getData()) {
         this.scrollToPage(e.getData());
       }
@@ -387,7 +386,6 @@ qx.Class.define("cv.ui.Templateengine",
      */
     applyPageVisibilityProperties : function(props) {
       var control;
-      console.log(props);
       for (var prop in props) {
         if (prop === "showtopnavigation") {
           control = this.getChildControl("breadcrumb");

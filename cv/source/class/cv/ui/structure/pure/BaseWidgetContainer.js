@@ -33,6 +33,16 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
 
   /*
    *****************************************************************************
+   CONSTRUCTOR
+   *****************************************************************************
+   */
+  construct : function(node, path, root, parent) {
+    this._columns = 12;
+    this.base(arguments, node, path, root, parent);
+  },
+
+  /*
+   *****************************************************************************
       PROPERTIES
    *****************************************************************************
    */
@@ -52,7 +62,7 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
   members :
   {
     _gridPosition : null,
-    _columns : 12,
+    _columns : null,
 
     //overridden
     _initLayout : function() {
@@ -101,7 +111,7 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
      *
      * @private
      */
-    __getGridLayoutProperties : function(widget, layoutProperties) {
+    _getGridLayoutProperties : function(widget, layoutProperties) {
       if (this._gridPosition === null) {
         this._gridPosition = {row : 0, column : 0};
         var layout = this._getLayout();
@@ -173,10 +183,13 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
         this.base(arguments, widget, layoutProperties);
       }
       else if (this._getLayout() instanceof qx.ui.layout.Grid) {
-        layoutProperties = this.__getGridLayoutProperties(widget, layoutProperties);
+        layoutProperties = this._getGridLayoutProperties(widget, layoutProperties);
         if (layoutProperties !== null) {
-          //console.log(layoutProperties);
-          //console.log(widget);
+          if (this instanceof cv.ui.structure.pure.Group) {
+            console.log(layoutProperties);
+            console.log(this._columns);
+            //console.log(widget);
+          }
           this.base(arguments, widget, layoutProperties);
         }
       } else if (this._getLayout() instanceof qx.ui.layout.Canvas) {

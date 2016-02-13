@@ -67,6 +67,10 @@ qx.Class.define("cv.ui.structure.pure.Base",
     propertyMapping : {}
   },
 
+  events : {
+    layoutReady : "qx.event.type.Event"
+  },
+
   /*
    *****************************************************************************
       PROPERTIES
@@ -283,9 +287,21 @@ qx.Class.define("cv.ui.structure.pure.Base",
      */
     _mapChildren : function(node) {
       // match children
+
+      // parse layout first as it is needed when children are added
+      var layoutChild = node.querySelector("layout");
+      if (qx.Class.hasMixin(this.constructor, cv.mixin.Layout)) {
+        this._parseLayout(layoutChild);
+        this.fireEvent("layoutReady");
+      }
+
       var children = node.children;
       for(var i=0; i < children.length; i++) {
         var childNode = children[i];
+        if (childNode.nodeName === "layout") {
+          // already done before
+          continue;
+        }
         
         // check if this classe has a mixin that can parse the childNode
         var mixin = qx.Mixin.getByName("cv.mixin."+qx.lang.String.firstUp(childNode.nodeName));
@@ -321,7 +337,6 @@ qx.Class.define("cv.ui.structure.pure.Base",
             var bar = cv.ui.Templateengine.getInstance().getChildControl("navbar-"+childWidget.getPosition());
             if (bar) {
               bar.addWidget(childWidget);
-              console.log(childWidget);
             }
           } else if (childWidget.getDataType() !== "page") {
             // all widgets that are no pages or navbars
@@ -345,7 +360,6 @@ qx.Class.define("cv.ui.structure.pure.Base",
             }
             
             if (childWidget.isShowPagejump()) {
-              console.log(childWidget);
               // only add a button that links to this page
               var button = new qx.ui.basic.Label(childWidget.getName());
               button.setAppearance("link");

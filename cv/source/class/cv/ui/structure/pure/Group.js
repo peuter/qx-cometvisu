@@ -49,6 +49,21 @@ qx.Class.define("cv.ui.structure.pure.Group",
 
   /*
    *****************************************************************************
+   CONSTRUCTOR
+   *****************************************************************************
+   */
+  construct : function(node, path, root, parent) {
+    this.addListenerOnce("layoutReady", function() {
+      // get number of columns from layout-colspan settings
+      this._columns = this.getLayout() ? this.getLayout().getColspan() : 6;
+      this._initColumnWidths();
+    }, this);
+
+    this.base(arguments, node, path, root, parent);
+  },
+
+  /*
+   *****************************************************************************
       STATICS
    *****************************************************************************
    */
@@ -100,14 +115,6 @@ qx.Class.define("cv.ui.structure.pure.Group",
   */
   members :
   {
-    //overridden
-    _draw : function() {
-      // get number of columns from layout-colspan settings
-      this._columns = this.getLayout() ? this.getLayout().getColspan() : 6;
-
-      this._initColumnWidths();
-    },
-
     //overridden
     getAlignWidget : function() {
       return this.getChildControl("title");

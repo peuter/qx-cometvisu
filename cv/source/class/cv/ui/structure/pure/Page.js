@@ -249,7 +249,6 @@ qx.Class.define("cv.ui.structure.pure.Page",
         this._queuedNode = node;
         this.debug("parsing has been delayed");
       }
-      console.log(this);
     },
     
     /**
