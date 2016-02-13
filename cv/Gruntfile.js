@@ -70,7 +70,7 @@ module.exports = function(grunt) {
           banner: '<%= banner %>'
         },
         files: {
-          src: [ 'source/class/cv/*/*.js' ]
+          src: [ 'source/class/cv/**/*.js' ]
         }
       }
     }

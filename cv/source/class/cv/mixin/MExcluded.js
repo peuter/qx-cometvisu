@@ -19,6 +19,7 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
+
 /**
  * Mixin to patch qx.ui.core.Widget to allow excluding widgets by appearance
  */
