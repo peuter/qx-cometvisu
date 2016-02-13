@@ -1,12 +1,4 @@
-/* ************************************************************************
 
-   Copyright:
-
-   License:
-
-   Authors:
-
-************************************************************************ */
 
 qx.Theme.define("cv.theme.metal.Appearance",
 {
@@ -37,6 +29,24 @@ qx.Theme.define("cv.theme.metal.Appearance",
           return {
             decorator: "group",
             margin: [4, 10]
+          };
+        }
+      }
+    },
+
+    "cv-widget" : {
+      style : function(states) {
+        console.log(states);
+        if (states.nowidget) {
+          // a nowidget group has no special appearance
+          return {
+            padding : [3, 5],
+            decorator: null
+          };
+        } else {
+          return {
+            padding : [3, 5],
+            decorator : "cv-widget"
           };
         }
       }

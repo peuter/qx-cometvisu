@@ -1,9 +1,9 @@
 {
   "info" : 
   {
-    "name" : "CometVisu",
+    "name" : "QX-CometVisu",
 
-    "summary" : "Custom Application",
+    "summary" : "CometVisu Qooxdoo port",
     "description" : "This is a port of the CometVisu based on the qooxdoo framework",
     
     "homepage" : "https://github.com/peuter/qx-cometvisu",
@@ -12,12 +12,12 @@
     "authors" : 
     [
       {
-        "name" : "Christian Mayer (ChristianMayer)",
-        "email" : "CometVisu@ChristianMayer.de"
+        "name" : "Tobias Bräutigam (Peuter)",
+        "email" : "tbraeutigam at gmail dot com"
       },
       {
-        "name" : "Tobias Bräutigam (Peuter)",
-        "email" : "tbraeutigam@gmail.com"
+        "name" : "Christian Mayer (ChristianMayer)",
+        "email" : "CometVisu at ChristianMayer dot de"
       }
     ],
 

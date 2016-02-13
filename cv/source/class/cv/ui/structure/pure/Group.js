@@ -97,7 +97,8 @@ qx.Class.define("cv.ui.structure.pure.Group",
       check : "Boolean",
       init : false,
       transform : "stringToBool",
-      apply : "_applyNowidget"
+      apply : "_applyNowidget",
+      inheritable : true
     },
 
     /**

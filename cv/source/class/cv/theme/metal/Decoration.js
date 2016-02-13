@@ -1,12 +1,3 @@
-/* ************************************************************************
-
-   Copyright:
-
-   License:
-
-   Authors:
-
-************************************************************************ */
 
 qx.Theme.define("cv.theme.metal.Decoration",
 {
@@ -64,6 +55,20 @@ qx.Theme.define("cv.theme.metal.Decoration",
       style : {
         gradientStart : ["group-title-start", 0],
         gradientEnd : ["group-title-end", 100]
+      }
+    },
+
+    "navbar-top": {
+      style : {
+        gradientStart : ["navbar-top-start", 0],
+        gradientEnd : ["navbar-top-end", 100]
+      }
+    },
+    "navbar-bottom": {
+      style :
+      {
+        gradientStart : ["navbar-top-end", 0],
+        gradientEnd : ["navbar-top-start", 100]
       }
     }
   }
