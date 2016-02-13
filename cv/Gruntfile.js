@@ -8,11 +8,18 @@ module.exports = function(grunt) {
   var config = {
     appConfig : grunt.file.readJSON( 'Manifest.json' ) || {},
 
-    banner: '/* <%= appConfig.info.name %> - version <%= appConfig.info.version %> - <%= grunt.template.today("dd-mm-yyyy") %>\n' +
+    banner: '/* \n' +
+    ' * <%= appConfig.info.name %> - version <%= appConfig.info.version %> - <%= grunt.template.today("dd-mm-yyyy") %>\n' +
+    ' *  \@see(<%= appConfig.info.homepage %>)\n' +
+    ' * \n' +
     ' * <%= appConfig.info.description %>\n' +
+    ' *  \@see(<%= appConfig.info.links[0] %>)\n' +
+    ' *  \@see(<%= appConfig.info.links[1] %>)\n' +
+    ' * \n' +
     ' * copyright (c) <%= grunt.template.today("yyyy") %> <%= appConfig.info.authors[0].name %> [<%= appConfig.info.authors[0].email %>]\n' +
     ' * \n' +
-    ' * based on the original cometvisu.js (c) 2010 by <%= appConfig.info.authors[1].name %> [<%= appConfig.info.authors[1].email %>]\n'+
+    ' * based on: \n'+
+    ' * cometvisu.js (c) 2010 by <%= appConfig.info.authors[1].name %> [<%= appConfig.info.authors[1].email %>]\n'+
     ' * \n' +
     ' * This program is free software; you can redistribute it and/or modify it\n' +
     ' * under the terms of the GNU General Public License as published by the Free\n' +

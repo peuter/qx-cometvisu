@@ -1,10 +1,14 @@
 {
   "info" : 
   {
-    "name" : "QX-CometVisu",
+    "name" : "QometVisu",
 
-    "summary" : "CometVisu Qooxdoo port",
-    "description" : "This is a port of the CometVisu based on the qooxdoo framework",
+    "summary" : "QometVisu = CometVisu + Qooxdoo.",
+    "description" : "This is a port of the CometVisu smart home visualization, based on the qooxdoo framework",
+    "links" : [
+      "https://github.com/cometvisu/cometvisu",
+      "https://github.com/qooxdoo/qooxdoo"
+    ],
     
     "homepage" : "https://github.com/peuter/qx-cometvisu",
 
@@ -21,7 +25,7 @@
       }
     ],
 
-    "version" : "master",
+    "version" : "0.0.1-SNAPSHOT",
     "qooxdoo-versions": ["5.1"]
   },
   
