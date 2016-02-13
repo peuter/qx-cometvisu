@@ -29,6 +29,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
   extend : qx.ui.core.Widget,
   implement : cv.ui.structure.IWidget,
   include : [
+    qx.ui.core.MRemoteChildrenHandling,
     cv.util.MTransform,
     cv.mixin.Layout
   ],
@@ -295,7 +296,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
 
       // parse layout first as it is needed when children are added
       var layoutChild = node.querySelector("layout");
-      if (qx.Class.hasMixin(this.constructor, cv.mixin.Layout)) {
+      if (layoutChild && qx.Class.hasMixin(this.constructor, cv.mixin.Layout)) {
         this._parseLayout(layoutChild);
         this.fireEvent("layoutReady");
       }
@@ -339,16 +340,20 @@ qx.Class.define("cv.ui.structure.pure.Base",
           // special handling for some data-types
           if (childWidget.getDataType() === "navbar") {
             // add navbar widgets to according navbars
-            var bar = cv.ui.Templateengine.getInstance().getChildControl("navbar-"+childWidget.getPosition());
-            if (bar) {
-              bar.addWidget(childWidget);
-            }
+            //var bar = cv.ui.Templateengine.getInstance().getChildControl("navbar-" + childWidget.getPosition());
+            //if (bar) {
+            //  bar.addWidget(childWidget);
+            //}
           } else if (childWidget.getDataType() !== "page") {
             // all widgets that are no pages or navbars
             
             if (this.getDataType() === "navbar") {
               // adding child to navbar -> tell the child to which navbar it has been added
               childWidget.setParentNavbar(this);
+              var bar = cv.ui.Templateengine.getInstance().getChildControl("navbar-"+this.getPosition());
+              if (bar) {
+                bar.addWidget(childWidget);
+              }
             }
             try {
               this._add(childWidget, childWidget.getLayoutOptions());

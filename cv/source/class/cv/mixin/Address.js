@@ -81,7 +81,7 @@ qx.Mixin.define("cv.mixin.Address",
       _parseAddress : function(node) {
         var item = cv.Model.getInstance().getItemByAddress(node.textContent);
 
-        var address = new cv.model.Address(item);
+        var address = new cv.model.Address();
         if (node.getAttribute("transform")) {
           address.setTransform(node.getAttribute("transform"));
         }
@@ -97,6 +97,9 @@ qx.Mixin.define("cv.mixin.Address",
         } else if (self.variantBitMapping && self.variantBitMapping.unset) {
           address.setVariantBitmask(self.variantBitMapping.unset);
         }
+
+        // always set item after everythin is read especially the transform
+        address.setItem(item);
 
         // listen to value changes @todo: Handle multiple read addresses (e.g. variants for r,g,b color)
         if (address.isReadable()) {

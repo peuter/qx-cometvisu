@@ -48,9 +48,13 @@ qx.Class.define("cv.ui.parts.Navbar",
         break;
       case "left":
       case "right":
-       this._setLayout(new qx.ui.layout.VBox());
+        this._setLayout(new qx.ui.layout.VBox());
         break;
     }
+
+    this._model = new qx.data.Array();
+
+    qx.event.message.Bus.subscribe("parser.finished", this._onParserFinished, this);
   },
 
   /*
@@ -70,6 +74,69 @@ qx.Class.define("cv.ui.parts.Navbar",
   members :
   {
     _position : null,
+    _list : null,
+    _controller : null,
+    _model : null,
+
+    /**
+     * Called when parser has finished parsing, applies model to list
+     * @protected
+     */
+    _onParserFinished : function() {
+      if (this._controller) {
+        this._controller.setModel(this._model);
+      }
+    },
+
+    _initList : function() {
+      switch (this._position) {
+        case "top":
+        case "bottom":
+          this._list = new qx.ui.form.List(true);
+          // bind list height to childrencontainer height to prevent vertical scrolling
+          this._list.getChildrenContainer().bind("height", this._list, "height");
+          break;
+        case "left":
+        case "right":
+          this._list = new qx.ui.form.List();
+          // bind list height to childrencontainer height to prevent horizontal scrolling
+          this._list.getChildrenContainer().bind("width", this._list, "width");
+          break;
+      }
+
+      this._list.setAppearance("navbar-list");
+
+      this._add(this._list, {flex:1});
+
+      this._controller = new qx.data.controller.List(null, this._list);
+
+      this._controller.setDelegate({
+        createItem : function() {
+          return new cv.ui.basic.WidgetContainer();
+        },
+        bindItem : function(controller, item, index) {
+          controller.bindProperty("", "widget", null, item, index);
+        },
+
+        // only show widgets whos page (or their ancestor is visible)
+        filter : function(model) {
+          var visible = false;
+          var page = model.getParentPage();
+          if (!page) {
+            // root page -> always show list items
+            return true;
+          }
+          while (page && !visible) {
+            if (page.isVisible()) {
+              visible = true;
+            } else {
+              page = page.getParentPage();
+            }
+          }
+          return visible;
+        }
+      });
+    },
     
     /**
      * 
@@ -80,16 +147,14 @@ qx.Class.define("cv.ui.parts.Navbar",
       if (!this.isVisible()) {
         this.show();
       }
-      this._add(widget);
-      
-      // bind navbar visibility to its parent pages visibility
-      //widget.getParentPage().bind("visibility", widget, "visibility", {
-      //  converter : function(data, model, source, target) {
-      //    if (data === false) {
-      //      // we also have to check all parent pages as this value is inheritable
-      //    }
-      //  }
-      //});
+      if (!this._controller) {
+        this._initList();
+      }
+      if (widget.getDataType() === "navbar") {
+        this._model.append(widget.getChildren());
+      } else {
+        this._model.push(widget);
+      }
     }
   },
   
@@ -99,6 +164,7 @@ qx.Class.define("cv.ui.parts.Navbar",
    *****************************************************************************
    */
   destruct : function() {
-    
+    this._disposeObjects("_listController", "_list");
+    qx.event.message.Bus.unsubscribe("parser.finished", this._onParserFinished, this);
   }
 });

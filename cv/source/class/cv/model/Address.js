@@ -31,11 +31,8 @@ qx.Class.define("cv.model.Address", {
    CONSTRUCTOR
    *****************************************************************************
    */
-  construct: function (item) {
+  construct: function () {
     this.base(arguments);
-    if (item) {
-      this.setItem(item);
-    }
   },
   /*
    *****************************************************************************
@@ -44,8 +41,7 @@ qx.Class.define("cv.model.Address", {
    */
   properties: {
     value :  {
-      check : "String",
-      init : "",
+      init : null,
       transform : "decodeValue",
       event : "changeValue"
     },

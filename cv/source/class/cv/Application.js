@@ -70,10 +70,10 @@ qx.Class.define("cv.Application",
       cv.Config.init();
       cv.Utils.init();
 
-      var bus = qx.event.message.Bus.getInstance();
-      bus.subscribe("*", function(msg) {
-        console.log("new bus message '%s': %o", msg.getName(), msg.getData());
-      }, this);
+      //var bus = qx.event.message.Bus.getInstance();
+      //bus.subscribe("*", function(msg) {
+      //  console.log("new bus message '%s': %o", msg.getName(), msg.getData());
+      //}, this);
       
       /*
       -------------------------------------------------------------------------

@@ -67,6 +67,7 @@ qx.Class.define("cv.client.Watchdog",
       if( now - this._last < this.getMaxConnectionAge() && this._client.getCurrentTransport().isRunning() ) {
         return;
       }
+      //console.log("%d - %d = %d < %d running(%s)", now, this._last, (now-this._last), this.getMaxConnectionAge(), this._client.getCurrentTransport().isRunning());
       this._client.getCurrentTransport().restart( now - this._hardLast > this.getMaxDataAge() );
       this._last = now;
     },

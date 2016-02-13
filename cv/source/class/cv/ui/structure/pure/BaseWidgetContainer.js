@@ -190,11 +190,6 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
       else if (this._getLayout() instanceof qx.ui.layout.Grid) {
         layoutProperties = this._getGridLayoutProperties(widget, layoutProperties);
         if (layoutProperties !== null) {
-          if (this instanceof cv.ui.structure.pure.Group) {
-            console.log(layoutProperties);
-            console.log(this._columns);
-            //console.log(widget);
-          }
           this.base(arguments, widget, layoutProperties);
         }
       } else if (this._getLayout() instanceof qx.ui.layout.Canvas) {

@@ -62,6 +62,9 @@ qx.Theme.define("cv.theme.pure.Appearance",
       }
     },
 
+    "navbar-list" : {},
+    "navbar-item" : {},
+
     "text" : {
       include : "cv-widget",
       alias : "cv-widget"
@@ -95,7 +98,9 @@ qx.Theme.define("cv.theme.pure.Appearance",
             decorator : null,
             iconPosition: "top",
             font : "subtext",
-            center : true
+            center : true,
+            iconSize: 50,
+            minWidth : 50
           }
         } else {
           return {};

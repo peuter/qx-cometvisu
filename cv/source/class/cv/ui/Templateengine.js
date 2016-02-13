@@ -389,30 +389,30 @@ qx.Class.define("cv.ui.Templateengine",
      * @param props {Map}
      */
     applyPageVisibilityProperties : function(props) {
-      var control;
-      for (var prop in props) {
-        if (prop === "showtopnavigation") {
-          control = this.getChildControl("breadcrumb");
-        } else if (prop === "showfooter") {
-          control = this.getChildControl("status-bar");
-        } else if (prop === "shownavbarLeft") {
-          control = this.getChildControl("navbar-left");
-        } else if (prop === "shownavbarRight") {
-          control = this.getChildControl("navbar-right");
-        } else if (prop === "shownavbarTop") {
-          control = this.getChildControl("navbar-top");
-        } else if (prop === "shownavbarBottom") {
-          control = this.getChildControl("navbar-bottom");
-        }
-        if (control) {
-          //noinspection JSUnfilteredForInLoop
-          if (props[prop] === true) {
-            control.show();
-          } else {
-            control.exclude();
-          }
-        }
-      }
+      //var control;
+      //for (var prop in props) {
+      //  if (prop === "showtopnavigation") {
+      //    control = this.getChildControl("breadcrumb");
+      //  } else if (prop === "showfooter") {
+      //    control = this.getChildControl("status-bar");
+      //  } else if (prop === "shownavbarLeft") {
+      //    control = this.getChildControl("navbar-left");
+      //  } else if (prop === "shownavbarRight") {
+      //    control = this.getChildControl("navbar-right");
+      //  } else if (prop === "shownavbarTop") {
+      //    control = this.getChildControl("navbar-top");
+      //  } else if (prop === "shownavbarBottom") {
+      //    control = this.getChildControl("navbar-bottom");
+      //  }
+      //  if (control) {
+      //    //noinspection JSUnfilteredForInLoop
+      //    if (props[prop] === true) {
+      //      control.show();
+      //    } else {
+      //      control.exclude();
+      //    }
+      //  }
+      //}
     },
     
     /**
@@ -491,16 +491,14 @@ qx.Class.define("cv.ui.Templateengine",
             if (req.getResponseHeader("X-CometVisu-Backend-Name")) {
               this.setBackendName(req.getResponseHeader("X-CometVisu-Backend-Name"));
             }
-            if (!this._parser) {
-              this._parser = new cv.config.Parser();
-            }
+            var parser = new cv.config.Parser();
 
             if (qx.core.Environment.get("qx.aspects") === true) {
               qx.dev.Profile.stop();
               qx.dev.Profile.start();
             }
-            this._parser.parseMeta(xml);
-            this._parser.parsePages(xml);
+            parser.parseMeta(xml);
+            parser.parsePages(xml);
             if (qx.core.Environment.get("qx.aspects") === true) {
               qx.dev.Profile.stop();
               qx.dev.Profile.showResults(50);

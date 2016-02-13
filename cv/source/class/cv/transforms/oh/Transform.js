@@ -36,27 +36,27 @@ qx.Class.define("cv.transforms.oh.Transform",
   statics :
   {
     transforms : {
-      'switch' : {
-        name : 'OH_Switch',
-        encode : function(phy) {
+      'switch': {
+        name: 'OH_Switch',
+        encode: function (phy) {
           return phy == 1 ? 'ON' : 'OFF';
         },
-        decode : function(string) {
+        decode: function (string) {
           return (string == "ON" || parseInt(string) > 0) ? 1 : 0;
         }
       },
-      'contact' : {
-        name : 'OH_Contact',
-        encode : function(phy) {
+      'contact': {
+        name: 'OH_Contact',
+        encode: function (phy) {
           return phy == 1 ? 'OPEN' : 'CLOSED';
         },
-        decode : function(string) {
+        decode: function (string) {
           return string == "OPEN" ? 1 : 0;
         }
       },
-      'rollershutter' : {
-        name : "OH_RollerShutter",
-        encode : function(phy) {
+      'rollershutter': {
+        name: "OH_RollerShutter",
+        encode: function (phy) {
           if (phy == 1) {
             return 'DOWN';
           }
@@ -67,14 +67,14 @@ qx.Class.define("cv.transforms.oh.Transform",
             return phy;
           }
         },
-        decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') {
+        decode: function (str) {
+          if (!str || str == "NaN" || str == 'Uninitialized') {
             return 0;
           }
-          else if (str=="UP") {
+          else if (str == "UP") {
             return 0;
           }
-          else if (str=="DOWN") {
+          else if (str == "DOWN") {
             return 1;
           }
           else {
@@ -82,19 +82,19 @@ qx.Class.define("cv.transforms.oh.Transform",
           }
         }
       },
-      'dimmer' : {
-        name : "OH_Dimmer",
-        encode : function(phy) {
+      'dimmer': {
+        name: "OH_Dimmer",
+        encode: function (phy) {
           return parseInt(phy);
         },
-        decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') {
+        decode: function (str) {
+          if (!str || str == "NaN" || str == 'Uninitialized') {
             return 0;
           }
-          else if (str=="ON") {
+          else if (str == "ON") {
             return 100;
           }
-          else if (str=="OFF") {
+          else if (str == "OFF") {
             return 0;
           }
           else {
@@ -102,64 +102,72 @@ qx.Class.define("cv.transforms.oh.Transform",
           }
         }
       },
-      'number' : {
-        name : "OH_Number",
-        encode : function(phy) {
+      'number': {
+        name: "OH_Number",
+        encode: function (phy) {
           return parseFloat(phy);
         },
-        decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') {
+        decode: function (str) {
+          if (!str || str == "NaN" || str == 'Uninitialized') {
             return 0;
           }
           return parseFloat(str);
         }
       },
-      'string' : {
-        name : "OH_String",
-        encode : function(phy) {
-          return phy;
+      'string': {
+        name: "OH_String",
+        encode: function (phy) {
+          if (!phy) {
+            return "";
+          } else {
+            return phy;
+          }
         },
-        decode : function(str) {
-          return str;
+        decode: function (str) {
+          if (!str) {
+            return "";
+          } else {
+            return str;
+          }
         }
       },
-      'datetime' : {
-        name : "OH_DateTime",
-        encode : function(phy) {
+      'datetime': {
+        name: "OH_DateTime",
+        encode: function (phy) {
           if (phy instanceof Date) {
             return phy.toLocaleDateString();
           } else {
             return phy;
           }
         },
-        decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') {
+        decode: function (str) {
+          if (!str || str == "NaN" || str == 'Uninitialized') {
             return '-';
           }
           return new Date(str);
         }
       },
-      'time' : {
-        name : "OH_Time",
-        encode : function(phy) {
+      'time': {
+        name: "OH_Time",
+        encode: function (phy) {
           if (phy instanceof Date) {
             return phy.toLocaleTimeString();
           } else {
             return phy;
           }
         },
-        decode : function(str) {
-          if (str=="NaN" || str=='Uninitialized') {
+        decode: function (str) {
+          if (!str || str == "NaN" || str == 'Uninitialized') {
             return '-';
           }
           return new Date(str);
         }
       },
-      'color' : {
-        name : "OH_Color",
-        encode : function(rgb) {
+      'color': {
+        name: "OH_Color",
+        encode: function (rgb) {
           var max, min, h, s, v, d;
-          var r = rgb[0]/255, g = rgb[1]/255, b = rgb[2]/255;
+          var r = rgb[0] / 255, g = rgb[1] / 255, b = rgb[2] / 255;
           max = Math.max(r, g, b);
           min = Math.min(r, g, b);
           v = max;
@@ -169,9 +177,15 @@ qx.Class.define("cv.transforms.oh.Transform",
             h = 0; // achromatic
           } else {
             switch (max) {
-              case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-              case g: h = (b - r) / d + 2; break;
-              case b: h = (r - g) / d + 4; break;
+              case r:
+                h = (g - b) / d + (g < b ? 6 : 0);
+                break;
+              case g:
+                h = (b - r) / d + 2;
+                break;
+              case b:
+                h = (r - g) / d + 4;
+                break;
             }
             h /= 6;
           }
@@ -181,13 +195,18 @@ qx.Class.define("cv.transforms.oh.Transform",
           v = v * 100;
           return [h, s, v];
         },
-        decode : function(hsbString) {
+        decode: function (hsbString) {
+          if (!hsbString) {
+            return [0,0,0];
+          }
           // decode HSV/HSB to RGB
           var hsb = hsbString.split(",");
           var h = hsb[0], s = hsb[1], v = hsb[2];
           var r, g, b, i, f, p, qq, t;
           // h = h / 360;
-          if (v === 0) { return [0, 0, 0]; }
+          if (v === 0) {
+            return [0, 0, 0];
+          }
           s = s / 100;
           v = v / 100;
           h = h / 60;
@@ -197,29 +216,41 @@ qx.Class.define("cv.transforms.oh.Transform",
           qq = v * (1 - (s * f));
           t = v * (1 - (s * (1 - f)));
           if (i === 0) {
-            r = v; g = t; b = p;
+            r = v;
+            g = t;
+            b = p;
           } else if (i === 1) {
-            r = q; g = v; b = p;
+            r = q;
+            g = v;
+            b = p;
           } else if (i === 2) {
-            r = p; g = v; b = t;
+            r = p;
+            g = v;
+            b = t;
           } else if (i === 3) {
-            r = p; g = q; b = v;
+            r = p;
+            g = q;
+            b = v;
           } else if (i === 4) {
-            r = t; g = p; b = v;
+            r = t;
+            g = p;
+            b = v;
           } else if (i === 5) {
-            r = v; g = p; b = qq;
+            r = v;
+            g = p;
+            b = qq;
           }
           r = Math.floor(r * 255);
           g = Math.floor(g * 255);
           b = Math.floor(b * 255);
           return [r, g, b];
         }
-      },
+      }
+    },
 
-      getTransform : function(type) {
-        if (cv.transforms.oh.Transform.transforms.hasOwnProperty(type)) {
-          return cv.transforms.oh.Transform.transforms[type];
-        }
+    getTransform : function(type) {
+      if (cv.transforms.oh.Transform.transforms.hasOwnProperty(type)) {
+        return cv.transforms.oh.Transform.transforms[type];
       }
     }
   }

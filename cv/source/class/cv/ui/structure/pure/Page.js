@@ -199,8 +199,9 @@ qx.Class.define("cv.ui.structure.pure.Page",
       if (node.nodeName !== "page") {
         return;
       }
+      var i;
       var children = node.children;
-      for(var i=0; i < children.length; i++) {
+      for(i=0; i < children.length; i++) {
         var childNode = children[i];
         if (childNode.nodeName !== "page") {
           continue;
@@ -211,10 +212,12 @@ qx.Class.define("cv.ui.structure.pure.Page",
         // add to childPages if available
         if (qx.Class.hasMixin(this.constructor, cv.mixin.MPages)) {
           this.addChildPage(childPage);
-
-          // parse address elements
-
         }
+      }
+      // parse address elements and generate the items
+      var addresses = node.querySelectorAll("address");
+      for (i=0; i < addresses.length; i++) {
+        cv.Model.getInstance().getItemByAddress(addresses[i].textContent);
       }
     },
     

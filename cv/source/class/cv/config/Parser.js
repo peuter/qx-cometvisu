@@ -37,25 +37,6 @@ qx.Class.define("cv.config.Parser",
     this.base(arguments);
     this._engine = cv.ui.Templateengine.getInstance();
   },
-  
-    /*
-   *****************************************************************************
-      EVENTS
-   *****************************************************************************
-   */
-  events : {
-    domloaded : "qx.event.type.Event",
-    loaded : "qx.event.type.Event"
-  },
-
-  /*
-   *****************************************************************************
-      PROPERTIES
-   *****************************************************************************
-   */
-  properties : {
-    
-  },
 
   /*
   *****************************************************************************
@@ -223,8 +204,8 @@ qx.Class.define("cv.config.Parser",
       
       this.createPages(page, 'id');
       //this._engine.design.getCreator('page').createFinal();
-      
-      this.fireEvent("domloaded");
+
+      qx.event.message.Bus.dispatchByName("parser.downloaded");
       
       var startpage = 'id_';
       if (cv.Config.startPage) {
@@ -290,8 +271,8 @@ qx.Class.define("cv.config.Parser",
         cv.client.Cometvisu.getInstance().subscribe(addressesToSubscribe);
       }
       xml = null; // not needed anymore - free the space
-            
-      this.fireEvent("loaded");
+
+      qx.event.message.Bus.dispatchByName("parser.finished");
     },
     
     /**

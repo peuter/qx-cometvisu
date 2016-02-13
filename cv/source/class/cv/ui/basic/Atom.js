@@ -49,6 +49,12 @@ qx.Class.define("cv.ui.basic.Atom",
       check : "Boolean",
       init : false,
       apply : "_applyWrap"
+    },
+
+    iconSize : {
+      check : "Number",
+      apply : "_applyIconSize",
+      themeable : true
     }
   },
 
@@ -59,11 +65,17 @@ qx.Class.define("cv.ui.basic.Atom",
   */
   members :
   {
+    //property apply
     _applyWrap : function(value) {
       var label = this.getChildControl("label");
       if (label) {
         label.setWrap(value);
       }
+    },
+
+    //property apply
+    _applyIconSize : function(value) {
+      this.getChildControl("icon").setSize(value);
     },
     
    // overridden

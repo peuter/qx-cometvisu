@@ -1,14 +1,10 @@
-/* QX-CometVisu - version master - 13-02-2016
- * This is a port of the CometVisu based on the qooxdoo framework
- * copyright (c) 2016 Tobias Bräutigam (Peuter) [tbraeutigam at gmail dot com]
- * 
- * based on the original cometvisu.js (c) 2010 by Christian Mayer (ChristianMayer) [CometVisu at ChristianMayer dot de]
- * 
+/* cometvisu.js (c) 2010 by Christian Mayer [CometVisu at ChristianMayer dot de]
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
  * Software Foundation; either version 3 of the License, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
@@ -21,33 +17,31 @@
 
 
 /**
- * Main item class. An item has one address but 1..n transform functions to transform the value
- *
+ * Simple widget container to be used in lists
  */
-qx.Class.define("cv.model.item.Item",
-{
-  extend : cv.model.AbstractItem,
+qx.Class.define("cv.ui.basic.WidgetContainer", {
 
-  /*
-   *****************************************************************************
-      CONSTRUCTOR
-   *****************************************************************************
-   */
-  construct : function(address, type) {
-    this.base(arguments, address);
+  extend: qx.ui.core.Widget,
+
+  construct : function() {
+    this.base(arguments);
+    this._setLayout(new qx.ui.layout.Grow());
   },
-  
+
   /*
    *****************************************************************************
       PROPERTIES
    *****************************************************************************
    */
   properties : {
-    
-    // the raw value of the item as it is delivered from the backend
-    value : {
-      init : null,
-      event : "changeValue"
+    appearance : {
+      init : "navbar-item",
+      refine : true
+    },
+
+    widget : {
+      check : "cv.ui.structure.IWidget",
+      apply : "_applyWidget"
     }
   },
 
@@ -58,6 +52,14 @@ qx.Class.define("cv.model.item.Item",
   */
   members :
   {
-
+    //property apply
+    _applyWidget : function(value, old) {
+      if (old && old !== value) {
+        this._remove(old);
+      }
+      if (value) {
+        this._add(value);
+      }
+    }
   }
 });
