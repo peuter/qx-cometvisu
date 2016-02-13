@@ -57,10 +57,12 @@ module.exports = function(grunt) {
             dest: 'source/class/cv/config/IconSet.js'
           }],
           autoHint : false
-        }
+        },
+        types : "ttf"
       }
     },
 
+    // license header adding
     usebanner: {
       dist: {
         options: {
@@ -72,6 +74,16 @@ module.exports = function(grunt) {
         files: {
           src: [ 'source/class/cv/**/*.js' ]
         }
+      }
+    },
+
+    // woff and eot generation is done with sfntool as it creates significantly smaller files
+    exec : {
+      make_woff : {
+        cmd : 'java -jar ../tools/sfnttool.jar -w source/resource/cv/font/CVIconFont.ttf source/resource/cv/font/CVIconFont.woff'
+      },
+      make_eot : {
+        cmd : 'java -jar ../tools/sfnttool.jar -e -x source/resource/cv/font/CVIconFont.ttf source/resource/cv/font/CVIconFont.eot'
       }
     }
   };
@@ -85,4 +97,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-webfont');
   grunt.loadNpmTasks('grunt-banner');
+  grunt.loadNpmTasks('grunt-exec');
+
+  // create a chained task for webfont generation
+  grunt.registerTask('generate-font', ['webfont', 'exec']);
 };
