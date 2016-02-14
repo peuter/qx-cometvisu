@@ -66,16 +66,19 @@ qx.Class.define("cv.config.meta.Mapping",
         var subNode = entries.item(i);
         var origin = subNode.childNodes;
         var value = [];
+        var index = 0;
         for (var j = 0; j < origin.length; j++) {
            var v = origin.item(j);
            if (v.nodeType === 3 && v.textContent.trim()!="") {
              // text node
-             value[j] = v.textContent.trim();
+             value[index] = v.textContent.trim();
+             index++;
            }
            else if (v.nodeType === 1 && v.matches('icon')) {
              var icon = new cv.ui.core.Icon(v.getAttribute("name"));
              icon.fromNode(v);
-             value[j] = icon;
+             value[index] = icon;
+             index++;
            }
         }
         // check for default entry

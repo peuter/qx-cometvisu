@@ -83,7 +83,7 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
           for (var i = 0; i < value.length; i++) {
             if (value[i] instanceof cv.ui.core.Icon) {
               // copy property values to Atoms icon
-              cv.Utils.copyProperties(value[i], widget.getChildControl("icon"));
+              widget.getChildControl("icon").fromOtherIcon(value[i]);
             } else if (value[i] instanceof qx.ui.basic.Label) {
               // copy value
               widget.getChildControl("label").setValue(value[i].getValue());
@@ -91,6 +91,14 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
               widget.getChildControl("label").setValue(value[i]);
             }
           }
+        }
+      } else if (value instanceof cv.ui.core.Icon) {
+        if (widget instanceof qx.ui.basic.Atom) {
+          widget.getChildControl("icon").fromOtherIcon(value);
+          widget.getChildControl("icon").show();
+          console.log(widget.getChildControl("icon"));
+        } else {
+          console.log(widget);
         }
       } else {
         widget.set(this.getValueProperty(), this.transformForDisplay(value));
@@ -126,7 +134,7 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
 
         case "right-container":
           control = new qx.ui.container.Composite(new qx.ui.layout.Grow());
-          this.getChildControl("widget").addAt(control, 1, {left: "50%", top: 0});
+          this.getChildControl("widget").addAt(control, 1, {left: 0, top: 0});
           break;
          
         case "actor":
@@ -140,6 +148,9 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
         case "label-container" :
           control = new qx.ui.container.Composite(new qx.ui.layout.Dock());
           control.setAnonymous(true);
+          // free space from right-container
+          this.getChildControl("right-container").setLayoutProperties({left: "50%", top: 0});
+          // add label-container
           this.getChildControl("widget").addAt(control, 0, { top: 0, left: 0, bottom: 0, width: "50%"});
           break;
           

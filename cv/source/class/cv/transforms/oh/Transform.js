@@ -75,7 +75,7 @@ qx.Class.define("cv.transforms.oh.Transform",
           }
         },
         decode: function (str) {
-          if (!str || str == "NaN" || str == 'Uninitialized') {
+          if (!str || str == "NaN" || str == 'Uninitialized' || str == 'Undefined') {
             return 0;
           }
           else if (str == "UP") {
@@ -95,7 +95,7 @@ qx.Class.define("cv.transforms.oh.Transform",
           return parseInt(phy);
         },
         decode: function (str) {
-          if (!str || str == "NaN" || str == 'Uninitialized') {
+          if (!str || str == "NaN" || str == 'Uninitialized' || str == 'Undefined') {
             return 0;
           }
           else if (str == "ON") {
@@ -115,7 +115,7 @@ qx.Class.define("cv.transforms.oh.Transform",
           return parseFloat(phy);
         },
         decode: function (str) {
-          if (!str || str == "NaN" || str == 'Uninitialized') {
+          if (!str || str == "NaN" || str == 'Uninitialized' || str == 'Undefined') {
             return 0;
           }
           return parseFloat(str);
@@ -148,7 +148,7 @@ qx.Class.define("cv.transforms.oh.Transform",
           }
         },
         decode: function (str) {
-          if (!str || str == "NaN" || str == 'Uninitialized') {
+          if (!str || str == "NaN" || str == 'Uninitialized' || str == 'Undefined') {
             return '-';
           }
           return new Date(str);
@@ -164,7 +164,7 @@ qx.Class.define("cv.transforms.oh.Transform",
           }
         },
         decode: function (str) {
-          if (!str || str == "NaN" || str == 'Uninitialized') {
+          if (!str || str == "NaN" || str == 'Uninitialized' || str == 'Undefined') {
             return '-';
           }
           return new Date(str);

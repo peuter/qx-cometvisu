@@ -60,6 +60,10 @@ qx.Class.define("cv.ui.core.Icon",
       font : qx.theme.manager.Font.getInstance().resolve("Icons"),
       rich : true
     });
+
+    this.addListener("changeVisibility", function(e) {
+      console.trace(this.toHashCode()+ " visibility of icon "+this.getName()+" changed to "+ e.getData());
+    }, this);
   },
 
   /*
@@ -99,7 +103,7 @@ qx.Class.define("cv.ui.core.Icon",
     },
     size : {
       check : "Number",
-      init : 16,
+      init : 36,
       apply : "_applySize",
       event : "changeSize",
       themeable : true
@@ -127,23 +131,50 @@ qx.Class.define("cv.ui.core.Icon",
   {
 
     /**
+     * A shortcut to {cv.ui.Templateengine.getInstance().getStylingByName}, to be used as transform
+     * @private
+     */
+    __getStylingByName : function(name) {
+      return cv.Utils.engine.getStylingByName(name);
+    },
+
+    /**
      * Apply property values from DOM node
      * @param node {Element}
      */
     fromNode : function(node) {
+      this.setName(node.getAttribute("name"));
       if (node.hasAttribute("color")) {
         this.setColor(node.getAttribute("color"));
       }
-      // Todo: handle type attribute
+      if (node.hasAttribute("type")) {
+        this.setSize(this.stringToNumber(node.getAttribute("type")));
+      }
       if (node.hasAttribute("flavour")) {
         this.setFlavour(node.getAttribute("flavour"));
       }
       if (node.hasAttribute(("class"))) {
-        this.setCssClass(this.getAttribute("class"));
+        this.setClass(this.getAttribute("class"));
       }
       if (node.hasAttribute("styling")) {
         this.setStyling(node.getAttribute("styling"));
       }
+    },
+
+    /**
+     * Apply property values from another icon
+     *
+     * @param other {cv.ui.core.Icon}
+     */
+    fromOtherIcon : function(other) {
+      this.set({
+        name : other.getName(),
+        color : other.getColor(),
+        size : other.getSize(),
+        flavour : other.getFlavour(),
+        "class" : other.getClass(),
+        styling : other.getStyling()
+      });
     },
 
     _transformColor : function(value) {

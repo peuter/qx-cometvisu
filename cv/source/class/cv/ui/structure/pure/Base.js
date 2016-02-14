@@ -229,7 +229,7 @@ qx.Class.define("cv.ui.structure.pure.Base",
      * @returns {Widget|null}
      */
     getAlignWidget : function() {
-      return this.getChildControl("label");
+      return this.getChildControl("label", true);
     },
     
     /**

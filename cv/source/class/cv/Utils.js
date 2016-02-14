@@ -75,11 +75,17 @@ qx.Class.define("cv.Utils",
      * @param to {qx.core.Object} target
      */
     copyProperties : function(from, to) {
+      if (from.classname !== to.classname) {
+        this.error("copying of properties is only allowed between objects from the same class ("+from.classname+" !== "+to.classname+")");
+        return;
+      }
       var props = {};
       var sourceProps = qx.Class.getProperties(from.constructor);
-      for(var i=0; i<sourceProps; i++) {
+      for(var i=0; i<sourceProps.length; i++) {
         props[sourceProps[i]] = from.get(sourceProps[i]);
       }
+      console.log(sourceProps);
+      console.log(props);
       to.set(props);
     },
 

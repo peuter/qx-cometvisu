@@ -165,7 +165,6 @@ qx.Theme.define("cv.theme.pure.Appearance",
           maxWidth : 200,
           allowGrowY : false,
           center : true,
-          show : "label",
           decorator : states.pressed ? "switch-pressed" : "switch"
         };
       }

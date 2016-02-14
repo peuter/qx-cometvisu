@@ -62,7 +62,11 @@ qx.Mixin.define("cv.util.MTransform",
      * @returns {Boolean}
      */
     stringToBool : function(value) {
-      return value === "true";
+      if (qx.lang.Type.isString(value)) {
+        return value === "true";
+      } else {
+        return value;
+      }
     },
 
     /**

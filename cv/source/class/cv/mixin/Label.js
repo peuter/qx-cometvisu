@@ -51,20 +51,18 @@ qx.Mixin.define("cv.mixin.Label",
      MEMBERS
   *****************************************************************************
   */
-  members :
-  {
+  members : {
     /**
      * Parse the label node
-     * 
-     * @param node {Element} label xml node 
+     *
+     * @param node {Element} label xml node
      */
-    _parseLabel : function(node) {
+    _parseLabel: function (node) {
       if (qx.core.Environment.get("qx.debug")) {
-        qx.core.Assert.assertEquals(node.nodeName, "label", "node name must be label but is "+node.nodeName);
+        qx.core.Assert.assertEquals(node.nodeName, "label", "node name must be label but is " + node.nodeName);
       }
-      if (node.nodeName === "label") {
+      if (node.nodeName === "label" && node.textContent.trim()!="") {
         var label = this.getChildControl("label");
-        
         if (label) {
           label.show();
           var icon;
@@ -79,27 +77,10 @@ qx.Mixin.define("cv.mixin.Label",
             }
           }
           if (icon) {
-            this.__parseIcon(iconNodeSet[0], icon);
+            icon.fromNode(iconNodeSet[0]);
           }
         }
-      } 
-    },
-
-    __parseIcon : function(iconNode, icon) {
-      icon.setName(iconNode.getAttribute("name"));
-      if (iconNode.hasAttribute("type")) {
-        icon.setSize(this.stringToNumber(iconNode.getAttribute("type")));
       }
-      if (iconNode.hasAttribute("color")) {
-        icon.setColor(iconNode.getAttribute("color"));
-      }
-      if (iconNode.hasAttribute("flavour")) {
-        icon.setColor(iconNode.getAttribute("flavour"));
-      }
-      if (iconNode.hasAttribute("class")) {
-        icon.setCssClass(iconNode.getAttribute("class"));
-      }
-      return icon;
     }
   }
 });
