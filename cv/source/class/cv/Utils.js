@@ -27,6 +27,7 @@
  */
 
 
+//noinspection JSUnusedGlobalSymbols
 /**
  *
  */
@@ -67,6 +68,12 @@ qx.Class.define("cv.Utils",
       cv.Utils.model = cv.Model.getInstance();
     },
 
+    /**
+     * Copy all property values from one object to another
+     *
+     * @param from {qx.core.Object} source
+     * @param to {qx.core.Object} target
+     */
     copyProperties : function(from, to) {
       var props = {};
       var sourceProps = qx.Class.getProperties(from.constructor);
@@ -74,6 +81,41 @@ qx.Class.define("cv.Utils",
         props[sourceProps[i]] = from.get(sourceProps[i]);
       }
       to.set(props);
+    },
+
+    /**
+     * For debugging purposes on console: prints all address objects related to widgets
+     */
+    printAddresses : function() {
+      var addresses = new qx.data.Array();
+
+      var traverse = function(page) {
+        var children = page.getChildren();
+        //console.log("traversing page %s with %d children", page.getName(), children.length);
+        for (var i=0; i<children.length; i++) {
+          var child = children[i];
+          if (child.getAddresses) {
+            addresses.append(child.getAddresses());
+          }
+
+          if (child instanceof cv.ui.structure.pure.BaseWidgetContainer) {
+            traverse(child);
+          }
+
+          // check for more pages to dig deeper
+          if (child.getChildPages && child.getChildPages()) {
+            //console.log("traverse deeper %d childPages from %s", child,getChildPages().length, child.classname);
+            child.getChildPages().forEach(traverse);
+          } else {
+            //console.log("%s has no childPages", child.classname);
+          }
+        }
+      }
+
+      var page = cv.Utils.engine.getRootPage();
+      traverse(page);
+
+      console.log(addresses.toArray());
     }
   }
 });

@@ -191,6 +191,14 @@ qx.Class.define("cv.ui.Templateengine",
     stylings : {
       check : "qx.data.Array",
       init : null
+    },
+
+    /**
+     * The root page
+     */
+    rootPage : {
+      check : "qx.Class.implementsInterface(value, cv.ui.structure.IWidget) && value.getDataType() === 'page'",
+      init: null
     }
   },
 

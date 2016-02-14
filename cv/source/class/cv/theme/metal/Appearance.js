@@ -48,6 +48,7 @@ qx.Theme.define("cv.theme.metal.Appearance",
 
     "group": {
       style : function(states) {
+        console.log(states);
         if (states.nowidget) {
           // a nowidget group has no special appearance
           return {};

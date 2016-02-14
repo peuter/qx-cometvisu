@@ -275,7 +275,7 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
       var bitMask = isShort ? 1 : 2;
 
       if (this.getChange() === "relative") {
-        var value = parseFloat(this.getValue());
+        var value = parseFloat(this.getIncomingValue());
         if( isNaN( value ) ) {
           value = 0; // anything is better than NaN...
         }
@@ -289,7 +289,7 @@ qx.Class.define("cv.ui.structure.pure.Infotrigger",
       }
       this.getAddresses().forEach(function(address) {
         if (address.isWritable() && address.getVariantBitmask() & bitMask) {
-          cv.Utils.client.write(address.getItem().getAddress(), writeValue);
+          cv.Utils.client.write(address.getItem().getAddress(), address.encodeValue(writeValue));
         }
       }, this);
       this._pointerDownTime = 0;

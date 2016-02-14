@@ -69,6 +69,8 @@ qx.Theme.define("cv.theme.pure.Appearance",
       }
     },
 
+    "info" : "cv-widget",
+
     "navbar-list" : {},
     "navbar-item" : {},
 
@@ -173,7 +175,9 @@ qx.Theme.define("cv.theme.pure.Appearance",
 
     "cv-widget/up" : "cv-widget/actor",
     "cv-widget/down" : "cv-widget/actor",
-    "cv-widget/info" :  {
+    "info/actor" :  {
+      alias : "cv-widget/actor",
+
       style : function()
       {
         return {

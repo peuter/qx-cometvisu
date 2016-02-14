@@ -169,8 +169,9 @@ qx.Class.define("cv.ui.structure.pure.Group",
           control.setAppearance("group-title");
           if (this.isNowidget()) {
             control.exclude();
+          } else {
+            this._add(control, {colSpan: 12});
           }
-          this._add(control, {colSpan:12});
           break;
       }
 

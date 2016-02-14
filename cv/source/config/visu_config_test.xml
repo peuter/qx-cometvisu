@@ -1,243 +1,397 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<pages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" lib_version="8" design="pure" xsi:noNamespaceSchemaLocation="../visu_config.xsd" max_mobile_screen_width="480">
+<pages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       design="metal" xsi:noNamespaceSchemaLocation="../visu_config.xsd" backend="oh"
+       scroll_speed="0" enable_column_adjustment="true" lib_version="7">
   <meta>
     <plugins>
-      <plugin name="colorchooser"/>
-      <plugin name="diagram"/>
-      <plugin name="strftime"/>
+      <plugin name="infoaction" />
     </plugins>
     <mappings>
-      <mapping name="Close_Open">
-        <entry value="0">zu</entry>
-        <entry value="1">offen</entry>
+      <mapping name="OpenClose">
+        <entry value="1">
+          <icon name="fts_window_1w_open" color="red" />
+        </entry>
+        <entry value="0">
+          <icon name="fts_window_1w" />
+        </entry>
       </mapping>
-      <mapping name="Open_Close">
-        <entry value="0">offen</entry>
-        <entry value="1">zu</entry>
+      <mapping name="DoorOpenClose">
+        <entry value="1">
+          <icon name="fts_door_open" color="red" />
+        </entry>
+        <entry value="0">
+          <icon name="fts_door" />
+        </entry>
       </mapping>
-      <mapping name="Open_Tilted_Close">
-        <entry value="0">offen</entry>
-        <entry value="1">gekippt</entry>
-        <entry value="2">zu</entry>
+      <mapping name="UpDown">
+        <entry value="0">
+          <icon name="control_up" />
+        </entry>
+        <entry value="1">
+          <icon name="conrol_down" />
+        </entry>
       </mapping>
-      <mapping name="Off_On">
-        <entry value="0">Aus</entry>
-        <entry value="1">An</entry>
+      <mapping name="DaWeg">
+        <entry value="0">Weg</entry>
+        <entry value="1">Da</entry>
       </mapping>
-      <mapping name="On_Off">
-        <entry value="0">An</entry>
-        <entry value="1">Aus</entry>
+      <mapping name="OnOff">
+        <entry value="0">O</entry>
+        <entry value="1">I</entry>
+      </mapping>
+      <mapping name="AudioMute">
+        <entry value="0">
+          <icon name="audio_audio" />
+        </entry>
+        <entry value="1">
+          <icon name="audio_volume_mute" />
+        </entry>
+      </mapping>
+      <mapping name="PlayStop">
+        <entry value="0">
+          <icon name="audio_stop" />
+        </entry>
+        <entry value="1">
+          <icon name="audio_play" />
+        </entry>
+      </mapping>
+      <mapping name="AudioNextPrev">
+        <entry value="0">
+          <icon name="audio_rew" />
+        </entry>
+        <entry value="1">
+          <icon name="audio_ff" />
+        </entry>
+      </mapping>
+      <mapping name="Socket">
+        <entry value="0">
+          <icon name="message_socket" />
+        </entry>
+        <entry value="1">
+          <icon name="message_socket" />
+        </entry>
+      </mapping>
+      <mapping name="Shutter">
+        <entry value="UP">&#8593;</entry>
+        <entry value="STOP">o</entry>
+        <entry value="DOWN">&#8595;</entry>
       </mapping>
       <mapping name="Sign">
         <entry range_min="-1e99" range_max="0">Negativ</entry>
         <entry value="0">Null</entry>
         <entry range_min="0" range_max="1e99">Positiv</entry>
       </mapping>
-      <mapping name="KonnexHVAC">
-        <entry value="auto"><icon name="status_automatic"/>Auto</entry>
-        <entry value="comfort"><icon name="status_comfort"/>Komfort</entry>
-        <entry value="standby"><icon name="status_standby"/>Stand By</entry>
-        <entry value="economy"><icon name="status_night"/>Economy</entry>
-        <entry value="building_protection"><icon name="status_frost"/>Haus-Schutz</entry>
+      <mapping name="IR_RECEIVER">
+        <entry value="ON">An</entry>
+        <entry value="OFF">Aus</entry>
+        <entry value="VOL_UP">Vol+</entry>
+        <entry value="VOL_DOWN">Vol-</entry>
+        <entry value="INP_VAUX">Multiroom</entry>
+        <entry value="INP_VCR">TV</entry>
       </mapping>
-      <mapping name="AudioSource">
-        <entry value="0">UKW</entry>
-        <entry value="1">Squeeze</entry>
-        <entry value="2">Denon</entry>
-        <entry value="3">iPod</entry>
-        <entry value="4">Sat</entry>
-        <entry value="5">Kino</entry>
+      <mapping name="AudioSinks">
+        <entry value="combined-music">Alle</entry>
+        <entry value="busmaster">Badezimmer</entry>
+        <entry value="raspberrypi">Schlafzimmer</entry>
+        <entry value="dockstar">Schlafzimmer</entry>
       </mapping>
-      <mapping name="One1000th">
-        <formula>y = x/1000;</formula>
+      <mapping name="RadioStations">
+        <entry value="0">Aus</entry>
+        <entry value="1">Hellweg Radio</entry>
+        <entry value="2">1Live</entry>
+        <entry value="3">WDR2</entry>
+        <entry value="4">Antenne Bayern</entry>
+        <entry value="5">MPD-Stream</entry>
       </mapping>
-      <mapping name="audio_mute">
-        <entry value="0"><icon name="audio_mute"/> Aus</entry>
+      <mapping name="RadioStationsShort">
+        <entry value="0">Aus</entry>
+        <entry value="1">Hellweg</entry>
+        <entry value="2">1Live</entry>
+        <entry value="3">WDR2</entry>
+        <entry value="4">Bayern</entry>
+        <entry value="5">MPD</entry>
+      </mapping>
+      <mapping name="Weather">
+        <entry value="Thunder">Gewitter</entry>
+        <entry value="Storm">Sturm</entry>
+        <entry value="Rain and snow">Regen und Schnee</entry>
+        <entry value="Rain and Sleet">Regen und Schneeregen</entry>
+        <entry value="Snow and Sleet">Schnee und Schneeregen</entry>
+        <entry value="Freezing Drizzle">Gefrierender Nieselregen</entry>
+        <entry value="Few Showers">Nieselregen</entry>
+        <entry value="Freezing Rain">Gefrierender Regen</entry>
+        <entry value="Light Freezing Rain">leicht gefrierender Regen</entry>
+        <entry value="Rain">Regen</entry>
+        <entry value="Snow Flurries">Schneegestöber</entry>
+        <entry value="Light Snow">Leichter Schneeschauer</entry>
+        <entry value="Blowing Snow">Schneetreiben</entry>
+        <entry value="Snow">Starker Schneefall</entry>
+        <entry value="Sleet">Schneeregen</entry>
+        <entry value="Dust">Staub</entry>
+        <entry value="Fog">Neblig</entry>
+        <entry value="Wind">Stürmisch</entry>
+        <entry value="Cold">Kalt</entry>
+        <entry value="Cloudy">Bewölkt</entry>
+        <entry value="Mostly Cloudy Night">Überwiegend Bewölkt (Nacht)</entry>
+        <entry value="Mostly Cloudy Day">Überwiegend Bewölkt</entry>
+        <entry value="Partly Cloudy Night">teilweise Bewölkt (Nacht)</entry>
+        <entry value="Partly Cloudy Day">teilweise Bewölkt</entry>
+        <entry value="Clear Night">Klare Nacht</entry>
+        <entry value="Sunny">Sonnig</entry>
+        <entry value="Hot">Heiß</entry>
+        <entry value="Scattered Thunder">Vereinzelte Gewitter</entry>
+        <entry value="Scattered Showers">Vereinzelt Niederschlag</entry>
+        <entry value="Thundershowers">Gewitterregen</entry>
+        <entry value="Snow-Showers">Schneefall</entry>
+        <entry value="Scattered Thundershowers">Vereinzelter Gewitterregen</entry>
+      </mapping>
+      <mapping name="Modus">
+        <entry value="0">
+          <icon name="scene_day" />Tag
+        </entry>
         <entry value="1">
-          <icon name="audio_audio"/>
+          <icon name="scene_night" color="orange" />Abend
+        </entry>
+        <entry value="2">
+          <icon name="scene_sleeping" color="blue" />Nacht
+        </entry>
+      </mapping>
+      <mapping name="Presence">
+        <entry value="Wohnzimmer">
+          <icon name="scene_livingroom"/>
+          Wohnen
+        </entry>
+        <entry value="Schlafzimmer">
+          <icon name="scene_sleeping"/>
+          Schlafen
+        </entry>
+        <entry value="Büro">
+          <icon name="scene_office"/>
+          Büro
+        </entry>
+        <entry value="Flur OG">
+          <icon name="scene_hall"/>
+          OG
+        </entry>
+        <entry value="Treppenhaus">
+          <icon name="scene_stairs"/>
+          DG
+        </entry>
+        <entry value="Badezimmer">
+          <icon name="scene_bathroom"/>
+          Bad
+        </entry>
+        <entry value="Küche">
+          <icon name="scene_kitchen"/>
+          Küche
         </entry>
       </mapping>
     </mappings>
     <stylings>
-      <styling name="Red_Green">
+      <styling name="RedGreen">
         <entry value="0">red</entry>
         <entry value="1">green</entry>
       </styling>
-      <styling name="Green_Red">
-        <entry value="0">green</entry>
+      <styling name="GreenRed">
         <entry value="1">red</entry>
+        <entry value="0">green</entry>
       </styling>
-      <styling name="Grey_Green">
+      <styling name="GreyGreen">
         <entry value="0">grey</entry>
         <entry value="1">green</entry>
       </styling>
-      <styling name="Grey_Red">
-        <entry value="0">grey</entry>
-        <entry value="1">red</entry>
+      <styling name="GreenGrey">
+        <entry value="1">grey</entry>
+        <entry value="0">green</entry>
       </styling>
-      <styling name="Grey_Blue">
-        <entry value="0">grey</entry>
-        <entry value="1">blue</entry>
+      <styling name="GreyGreenBg">
+        <entry value="0">grey_bg</entry>
+        <entry value="1">green_bg</entry>
       </styling>
-      <styling name="Brown_Purple">
-        <entry value="0">brown</entry>
-        <entry value="1">purple</entry>
-      </styling>
-      <styling name="Blue_Purple_Red">
+      <styling name="BluePurpleRed">
         <entry range_min="-100" range_max="0">blue</entry>
         <entry value="0">purple</entry>
         <entry range_min="0" range_max="100">red</entry>
       </styling>
-      <styling name="Blue_Lightblue_Green_Purple_Red">
-        <entry range_min="-10" range_max="-1">blue</entry>
-        <entry range_min="-1" range_max="10">lightblue</entry>
-        <entry range_min="10" range_max="18">green</entry>
-        <entry range_min="18" range_max="24">purple</entry>
-        <entry range_min="24" range_max="32">red</entry>
+      <styling name="BluePurpleRedTemp">
+        <entry range_min="0" range_max="18">blue</entry>
+        <entry range_min="18" range_max="21">purple</entry>
+        <entry range_min="21" range_max="100">red</entry>
       </styling>
-      <styling name="All_Colors">
-        <entry value="0">red</entry>
-        <entry value="1">white</entry>
-        <entry value="2">cyan</entry>
-        <entry value="3">silver</entry>
-        <entry value="4">blue</entry>
+      <styling name="RadioOff">
+        <entry value="0">grey</entry>
+      </styling>
+      <styling name="Radio1">
+        <entry value="1">grey</entry>
+      </styling>
+      <styling name="Radio2">
+        <entry value="2">grey</entry>
+      </styling>
+      <styling name="Radio3">
+        <entry value="3">grey</entry>
+      </styling>
+      <styling name="Radio4">
+        <entry value="4">grey</entry>
+      </styling>
+      <styling name="Radio5">
         <entry value="5">grey</entry>
-        <entry value="6">darkblue</entry>
-        <entry value="7">black</entry>
-        <entry value="8">lightblue</entry>
-        <entry value="9">orange</entry>
-        <entry value="10">purple</entry>
-        <entry value="11">brown</entry>
-        <entry value="12">yellow</entry>
-        <entry value="13">maroon</entry>
-        <entry value="14">lime</entry>
-        <entry value="15">green</entry>
-        <entry value="16">fuchsia</entry>
-        <entry value="17">olive</entry>
       </styling>
     </stylings>
-    <statusbar>
-      <status type="html"><![CDATA[
-          <img src="icon/comet_64_ff8000.png" alt="CometVisu" /> by <a href="http://www.cometvisu.org/">CometVisu.org</a>
-          - <a href="manager.php">Config-Manager</a>
-          - <a href=".?config=demo&forceReload=true">Reload</a>
-          - <a href=".">Default Config</a>
-        ]]></status>
-      <status type="html" condition="!edit" hrefextend="config"><![CDATA[
-          - <a href="editor/">Edit</a>
-        ]]></status>
-      <status type="html" hrefextend="config"><![CDATA[
-          - <a href="check_config.php">Check Config</a>
-          <div style="float:right;padding-right:0.5em">Version: Git</div>
-        ]]></status>
-    </statusbar>
   </meta>
-  <page name="CometVisu Widget Demo">
-    <navbar position="left" dynamic="true" width="200px">
-      <text>
-        <label>Test 1</label>
-      </text>
-      <line>
-        <layout colspan="12"/>
-      </line>
-      <pagejump target="Flavour: Lithium" name="Lithium">
-        <label>Flavour</label>
+  <page name="Übersicht" showtopnavigation="false" shownavbar-left="false" showfooter="false">
+    <navbar position="top" dynamic="true" width="200px">
+      <pagejump target="Übersicht">
+        <layout colspan="0" />
+        <label>
+          <icon name="control_building_empty" />
+          Übersicht
+        </label>
       </pagejump>
-      <pagejump target="Flavour: Potassium" name="Potassium">
-        <label>Flavour</label>
+      <line>
+        <layout colspan="0" />
+      </line>
+      <pagejump target="Wohnzimmer">
+        <layout colspan="0" />
+        <label>
+          <icon name="scene_livingroom" />
+          Wohnen
+        </label>
         <widgetinfo>
           <info format="%d">
-          <layout colspan="0" />
-            <address transform="DPT:9.001" variant="">12/7/9</address>
+            <layout colspan="0" />
+            <address transform="OH:number" mode="read" variant="">Temperature_FF_Living</address>
           </info>
         </widgetinfo>
       </pagejump>
-      <pagejump path="Flavour Test/Flavour: Boron" target="Subpage" name="Subpage">
-      <label>Flavour: Boron</label>
+      <pagejump target="Schlafzimmer">
+        <layout colspan="0" />
+        <label>
+          <icon name="scene_sleeping" />
+          Schlafen
+        </label>
+        <widgetinfo>
+          <info format="%d">
+            <layout colspan="0" />
+            <address transform="OH:number" mode="read" variant="">Temperature_SF_Bed</address>
+          </info>
+        </widgetinfo>
       </pagejump>
-      <pagejump target="2D fixed Bitmap" name="2D">
-        <!--
-        <label>2D</label>
-        -->
+      <pagejump target="Büro">
+        <layout colspan="0" />
+        <label>
+          <icon name="it_pc" />
+          Büro
+        </label>
+      </pagejump>
+      <pagejump target="Küche">
+        <layout colspan="0" />
+        <label>
+          <icon name="scene_dinner" />
+          Küche
+        </label>
+        <widgetinfo>
+          <info format="%d">
+            <layout colspan="0" />
+            <address transform="OH:number" mode="read" variant="">Temperature_FF_Kitchen</address>
+          </info>
+        </widgetinfo>
+      </pagejump>
+      <pagejump target="Bad">
+        <layout colspan="0" />
+        <label>
+          <icon name="scene_bath" />
+          Bad
+        </label>
+      </pagejump>
+      <pagejump target="Flure">
+        <layout colspan="0" />
+        <label>
+          <icon name="scene_hall" />
+          Flure
+        </label>
+      </pagejump>
+      <pagejump target="Garage">
+        <layout colspan="0" />
+        <label>
+          <icon name="fts_garage" />
+          Garage
+        </label>
+      </pagejump>
+      <line>
+        <layout colspan="0" />
+      </line>
+      <pagejump target="Multiroom">
+        <layout colspan="0" />
+        <label>
+          <icon name="audio_sound" />
+          Audio
+        </label>
+      </pagejump>
+      <pagejump target="Temperaturen">
+        <layout colspan="0" />
+        <label>
+          <icon name="temp_temperature" />
+          Temperatur
+        </label>
+      </pagejump>
+      <pagejump target="Netzwerk">
+        <layout colspan="0" />
+        <label>
+          <icon name="it_network" />
+          Netzwerk
+        </label>
       </pagejump>
     </navbar>
-    <text align="center">
-      <label>Herzlich willkommen bei dem CometVisu Widget Demo!</label>
-    </text>
-    <text>
-      <label>&lt;b&gt;Hinweis:&lt;/b&gt;&lt;br/&gt;Alle Widgets verwenden KNX-Addressen mit der Haupt- und Mittelgruppe 12/7,
-      </label>
-    </text>
-    <line>
-      <layout colspan="12"/>
-    </line>
-    <text>
-      <label>Für die CometVisu gibt es verschiedene Designs.</label>
-    </text>
-    <designtoggle>
-      <label>Wechsle Design</label>
-    </designtoggle>
-    <line>
-      <layout colspan="12"/>
-    </line>
-    <text align="center">
-      <label>&lt;b&gt;Standard-Widgets&lt;/b&gt;</label>
-    </text>
-    <break/>
-    <switch mapping="Off_On" styling="Red_Green">
-      <label>Switch</label>
-      <address transform="DPT:1.001" mode="readwrite">12/7/1</address>
-    </switch>
-    <break/>
-    <trigger value="0" mapping="Off_On">
-      <label>Trigger</label>
-      <address transform="DPT:1.001" mode="readwrite">12/7/1</address>
-    </trigger>
-    <trigger value="1" mapping="Off_On" bind_click_to_widget="true">
-      <label>Trigger (bind_click_to_widget="true")</label>
-      <address transform="DPT:1.001" mode="readwrite">12/7/1</address>
-    </trigger>
-    <break/>
-    <switch mapping="Off_On" styling="Red_Green">
-      <label>Switch</label>
-      <address transform="DPT:1.001" mode="readwrite">12/7/2</address>
-    </switch>
-    <break/>
-    <pushbutton downValue="1" upValue="0" mapping="On_Off">
-      <label>Pushbutton</label>
-      <address transform="DPT:1.001" mode="readwrite">12/7/2</address>
-    </pushbutton>
-    <break/>
-    <multitrigger button1label="Auto" button1value="auto" button2label="Komfort" button2value="comfort" button3label="Standy By" button3value="standby" button4label="Economy" button4value="economy" showstatus="true">
-      <label>Multitrigger: KONNEX Betriebsart</label>
-      <address transform="DPT:20.102" mode="readwrite">12/7/20</address>
-    </multitrigger>
-    <info mapping="KonnexHVAC">
-      <label>Info: Betriebsart</label>
-      <address transform="DPT:20.102" mode="readwrite">12/7/20</address>
-    </info>
-    <break/>
-    <toggle mapping="KonnexHVAC">
-      <label>Toggle: Betriebsart</label>
-      <address transform="DPT:20.102" mode="readwrite">12/7/20</address>
-    </toggle>
-    <break/>
-    <multitrigger button1label="An" button1value="0" button2label="Aus" button2value="1" button3label="Essen" button3value="2" button4label="Fernsehen" button4value="3">
-      <label>Multitrigger: Szenenaufruf</label>
-      <address transform="DPT:5.010" mode="readwrite">12/7/5</address>
-    </multitrigger>
-    <switch mapping="audio_mute">
-      <label><icon name="audio_sound"/> Switch Icon</label>
-      <address transform="DPT:1.001" mode="readwrite">12/7/1</address>
-    </switch>
-    <break/>
-    <infotrigger uplabel="wärmer" downlabel="kälter" upvalue="0.1" downvalue="-0.1" align="center" format="%.1f °C" change="absolute" min="7" max="24">
-      <label>Infotrigger: Sollwert</label>
-      <address transform="DPT:9" mode="readwrite">12/7/9</address>
-    </infotrigger>
-    <infotrigger uplabel="&gt;" downlabel="&lt;" upvalue="1" downvalue="-1" min="0" max="5" align="center" infoposition="middle" change="absolute" mapping="AudioSource">
-      <label>Infotrigger: Audioquelle</label>
-      <address transform="DPT:5.010" mode="readwrite">12/7/105</address>
-    </infotrigger>
+    <group name="Allgemein">
+      <layout colspan="6" />
+      <info align="center" mapping="Modus">
+        <layout colspan="2" />
+        <address transform="OH:number" variant="">Scene_General</address>
+      </info>
+      <info align="center" mapping="Presence">
+        <layout colspan="2" />
+        <address transform="OH:string" variant="">GLOB_Praesenz</address>
+      </info>
+      <info align="center">
+        <layout colspan="2" />
+        <address transform="OH:datetime" variant="">TimeOfArrival</address>
+      </info>
+      <switch mapping="OnOff" styling="GreyGreen">
+        <layout colspan="2" />
+        <label>Anwesend</label>
+        <address transform="OH:switch" variant="">Present</address>
+      </switch>
+      <switch mapping="OnOff" styling="GreyGreen">
+        <layout colspan="2" />
+        <label>Arbeitstag</label>
+        <address transform="OH:switch" variant="">Workday</address>
+      </switch>
+      <switch mapping="OnOff" styling="GreyGreen">
+        <layout colspan="2" />
+        <label>Wecker</label>
+        <address transform="OH:switch" variant="">GLOB_Wecker</address>
+      </switch>
+      <group nowidget="true">
+        <layout colspan="4" />
+        <text>
+          <layout colspan="2" />
+          <label><icon name="temp_outside" />Außen</label>
+        </text>
+        <info format="%.1f °C" class="bottom_label">
+          <layout colspan="1" />
+          <label>Aktuell</label>
+          <address transform="OH:number" variant="">Weather_Temperature</address>
+        </info>
+        <info format="%s °C" class="bottom_label">
+          <layout colspan="1" />
+          <label>Prognose</label>
+          <address transform="OH:string" variant="">Weather_Forecast_Temp</address>
+        </info>
+      </group>
+      <info mapping="Weather">
+        <layout colspan="2" />
+        <address transform="OH:string" variant="">Weather_Text</address>
+      </info>
+    </group>
   </page>
 </pages>

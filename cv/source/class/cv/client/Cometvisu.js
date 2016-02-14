@@ -363,7 +363,7 @@ qx.Class.define("cv.client.Cometvisu",
        */
       var now = new Date().getTime();
       var con = new qx.io.request.Xhr();
-      con.setUrl(this._initPath ? this._initPath : this.getResourcePath("login"));
+      con.setUrl(this._initPath ? this._initPath : this.getResourcePath("write"));
       con.setRequestData({
         s : this.getSessionId(),
         a : address,

@@ -53,10 +53,10 @@ qx.Class.define("cv.ui.structure.pure.Switch",
      */
     _action : function() {
       // toggle switch state
-      var writeValue = this.getValue() === this.getOnValue() ? this.getOffValue() : this.getOnValue();
+      var writeValue = this.getIncomingValue() === this.getOnValue() ? this.getOffValue() : this.getOnValue();
       this.getAddresses().forEach(function(address) {
         if (address.isWriteable()) {
-          cv.Utils.client.write(address.getItem().getAddress(), writeValue);
+          cv.Utils.client.write(address.getItem().getAddress(), address.encodeValue(writeValue));
         }
       }, this);
     },

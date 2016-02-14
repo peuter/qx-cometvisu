@@ -180,7 +180,7 @@ qx.Class.define("cv.ui.structure.pure.Multitrigger",
 
       this.getAddresses().forEach(function(address) {
         if (address.isWriteable()) {
-          cv.Utils.client.write(address.getItem().getAddress(), writeValue);
+          cv.Utils.client.write(address.getItem().getAddress(), address.encodeValue(writeValue));
         }
       }, this);
     }

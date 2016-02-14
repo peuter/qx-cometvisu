@@ -27,6 +27,7 @@
  */
 
 
+//noinspection JSUnusedLocalSymbols
 /**
  * 
  *
@@ -208,7 +209,7 @@ qx.Class.define("cv.config.Parser",
      */
     parsePages : function(xml) {
       var page = qx.xml.Element.selectSingleNode(xml, "//pages/page"); // only one page element allowed...
-      
+
       this.createPages(page, 'id');
       //this._engine.design.getCreator('page').createFinal();
 
@@ -292,7 +293,7 @@ qx.Class.define("cv.config.Parser",
      */
     createPages : function(page, path, flavour, type) {
       // create root page
-      cv.ui.structure.Factory.createWidget(page, path, true);
+      this._engine.setRootPage(cv.ui.structure.Factory.createWidget(page, path, true));
     }
   },
   

@@ -64,6 +64,12 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
       return "label";
     },
 
+    transformForDisplay : function(value) {
+      if (!qx.lang.Type.isString()) {
+        return qx.data.Conversion.toString(value);
+      }
+    },
+
     /**
      * Show the incoming value in the value widget
      *
@@ -71,13 +77,10 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
      */
     setDisplayValue : function(value) {
       var widget = this.getValueWidget();
-      if (!widget) {
-        debugger;
-      }
       if (qx.lang.Type.isArray(value)) {
         if (widget instanceof qx.ui.basic.Atom) {
           // check for icon and Label
-          for (var i=0; i<value.length; i++) {
+          for (var i = 0; i < value.length; i++) {
             if (value[i] instanceof cv.ui.core.Icon) {
               // copy property values to Atoms icon
               cv.Utils.copyProperties(value[i], widget.getChildControl("icon"));
@@ -90,7 +93,7 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
           }
         }
       } else {
-        widget.set(this.getValueProperty(), value !== undefined && value !== "" ? value : "-");
+        widget.set(this.getValueProperty(), this.transformForDisplay(value));
       }
     },
 
