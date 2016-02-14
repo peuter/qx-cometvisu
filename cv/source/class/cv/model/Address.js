@@ -144,7 +144,7 @@ qx.Class.define("cv.model.Address", {
         old.removeRelatedBindings(this);
       }
       if (value) {
-        value.bind("value", this, "value");
+        value.bind("rawValue", this, "value");
       }
     }
   },
