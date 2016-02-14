@@ -251,10 +251,10 @@ qx.Class.define("cv.client.Cometvisu",
       var transport;
       switch (this.getBackend().transport) {
         case "sse":
-          transport = new cv.client.transport.Sse();
+          transport = new cv.client.transport.Sse(this.getBackend());
           break;
         default:
-          transport = new cv.client.transport.LongPolling();
+          transport = new cv.client.transport.LongPolling(this.getBackend());
           break;
       }
       this.setCurrentTransport(transport);
@@ -333,6 +333,9 @@ qx.Class.define("cv.client.Cometvisu",
       if (json.c) {
         this.setBackend(json.c);
       }
+      if (json.s) {
+        this.setSessionId(json.s);
+      }
       this.getCurrentTransport().handleSession( e );
       
       // once the connection is set up, start the watchdog
@@ -385,7 +388,10 @@ qx.Class.define("cv.client.Cometvisu",
       if (!addresses) {
         addresses = this.getAddresses();
       }
-      var d = { a : addresses.toArray() };
+      var d = {
+        s : this.getSessionId(),
+        a : addresses.toArray()
+      };
       if (this.getFilters().length > 0) {
         d.f = this.getFilters().toArray();
       }

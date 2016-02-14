@@ -152,7 +152,6 @@ qx.Mixin.define("cv.mixin.Address",
       _applyIncomingValue : function(value) {
         // #1 incoming value is already transformed (done in Address mixin)
         if (value) {
-          console.trace();
           this.debug("new transformed value received '" + value + "'");
         }
         var mappedValue = this._processValue(value);

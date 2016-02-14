@@ -29,8 +29,6 @@
 
 /**
  * Base class for all transport protocol
- *
- * @asset(cv/*)
  */
 qx.Class.define("cv.client.transport.Base",
   {
@@ -42,8 +40,15 @@ qx.Class.define("cv.client.transport.Base",
      CONSTRUCTOR
      *****************************************************************************
      */
-    construct : function() {
+    construct : function(config) {
       this._client = cv.client.Cometvisu.getInstance();
+
+      if (config.headers) {
+        this._headers = config.headers;
+      }
+      if (config.resendHeaders) {
+        this._resendHeaders = config.resendHeaders;
+      }
     },
 
     /*
@@ -177,7 +182,7 @@ qx.Class.define("cv.client.transport.Base",
           //noinspection JSUnfilteredForInLoop
           if (this._headers[headerName] != undefined) {
             //noinspection JSUnfilteredForInLoop
-            con.setRequestHeader(headerName, this.headers[headerName]);
+            con.setRequestHeader(headerName, this._headers[headerName]);
           }
         }
       }
