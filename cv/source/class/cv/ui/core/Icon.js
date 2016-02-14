@@ -125,6 +125,27 @@ qx.Class.define("cv.ui.core.Icon",
   */
   members :
   {
+
+    /**
+     * Apply property values from DOM node
+     * @param node {Element}
+     */
+    fromNode : function(node) {
+      if (node.hasAttribute("color")) {
+        this.setColor(node.getAttribute("color"));
+      }
+      // Todo: handle type attribute
+      if (node.hasAttribute("flavour")) {
+        this.setFlavour(node.getAttribute("flavour"));
+      }
+      if (node.hasAttribute(("class"))) {
+        this.setCssClass(this.getAttribute("class"));
+      }
+      if (node.hasAttribute("styling")) {
+        this.setStyling(node.getAttribute("styling"));
+      }
+    },
+
     _transformColor : function(value) {
       var color = value;
       switch (value) {

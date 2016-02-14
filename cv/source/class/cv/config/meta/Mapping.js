@@ -68,19 +68,14 @@ qx.Class.define("cv.config.meta.Mapping",
         var value = [];
         for (var j = 0; j < origin.length; j++) {
            var v = origin.item(j);
-           if (v.nodeType === 3) {
+           if (v.nodeType === 3 && v.textContent.trim()!="") {
              // text node
-             value[j] = v.textContent;
+             value[j] = v.textContent.trim();
            }
            else if (v.nodeType === 1 && v.matches('icon')) {
-            value[j] = cv.ui.Templateengine.getInstance().getIconHandler().getIconElement(
-      				v.attributes.getNamedItem('name') ? v.attributes.getNamedItem('name').value : undefined, 
-      				v.attributes.getNamedItem('type') ? v.attributes.getNamedItem('type').value : undefined,
-      				v.attributes.getNamedItem('flavour') ? v.attributes.getNamedItem('flavour').value : undefined,
-      				v.attributes.getNamedItem('color') ? v.attributes.getNamedItem('color').value : undefined,
-      				v.attributes.getNamedItem('styling') ? v.attributes.getNamedItem('styling').value : undefined,
-      				v.attributes.getNamedItem('class') ? v.attributes.getNamedItem('class').value : undefined
-      			);
+             var icon = new cv.ui.core.Icon(v.getAttribute("name"));
+             icon.fromNode(v);
+             value[j] = icon;
            }
         }
         // check for default entry

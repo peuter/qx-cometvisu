@@ -210,7 +210,9 @@ qx.Theme.define("cv.theme.pure.Appearance",
       style : function()
       {
         return {
-          textAlign : "right"
+          textAlign : "right",
+          allowGrowY : true,
+          allowGrowX : true
         };
       }
     },

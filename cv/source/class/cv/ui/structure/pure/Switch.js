@@ -36,17 +36,6 @@ qx.Class.define("cv.ui.structure.pure.Switch",
   extend : cv.ui.structure.pure.BaseWidget,
 
   /*
-   *****************************************************************************
-   CONSTRUCTOR
-   *****************************************************************************
-   */
-  construct: function (node, path) {
-    this.base(arguments, node, path);
-    // initialize woth emtpy value
-    this.setValue("-");
-  },
-
-  /*
   *****************************************************************************
      MEMBERS
   *****************************************************************************

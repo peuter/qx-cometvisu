@@ -34,10 +34,6 @@
 qx.Mixin.define("cv.mixin.Address",
   {
 
-    construct : function() {
-      this.setAddresses(new qx.data.Array());
-    },
-
     /*
      *****************************************************************************
      PROPERTIES
@@ -53,10 +49,10 @@ qx.Mixin.define("cv.mixin.Address",
       /**
        * Incoming value from a readable address
        */
-      value : {
+      incomingValue : {
         init : "-",
-        apply : "_applyValue",
-        event : "changeValue"
+        apply : "_applyIncomingValue",
+        event : "changeIncomingValue"
       },
 
 
@@ -77,8 +73,7 @@ qx.Mixin.define("cv.mixin.Address",
      */
     members :
     {
-      _bid : null,
-      _readAddress : null,
+      _bids : null,
       _formatValueCache : null,
 
       /**
@@ -110,18 +105,20 @@ qx.Mixin.define("cv.mixin.Address",
 
         // listen to value changes @todo: Handle multiple read addresses (e.g. variants for r,g,b color)
         if (address.isReadable()) {
-          if (this._bid !== null) {
-            this.error("only one read address allowed, cannot bind to "+address.getItem().getAddress());
-          } else {
-            this._bid = address.bind("value", this, "value");
-            this._readAddress = address;
+          if (!this._bids) {
+            this._bids = [];
           }
+          this._bids.push([address.bind("value", this, "incomingValue"), address]);
         }
         if (address.isWriteable()) {
           // writable address
           this.setReadOnly(false);
         }
         this._formatValueCache = {};
+        if (!this.getAddresses()) {
+          this.setAddresses(new qx.data.Array());
+        }
+        this.getAddresses().push(address);
       },
 
       /**
@@ -152,15 +149,15 @@ qx.Mixin.define("cv.mixin.Address",
         return value;
       },
 
-      _applyValue : function(value) {
+      _applyIncomingValue : function(value) {
         // #1 incoming value is already transformed (done in Address mixin)
         if (value) {
           this.debug("new transformed value received '" + value + "'");
         }
-        value = this._processValue(value);
+        var mappedValue = this._processValue(value);
 
         // send value to the
-        this._setAndStyleProcessedValue(value);
+        this._setAndStyleProcessedValue(mappedValue);
       },
 
       /**
@@ -229,12 +226,10 @@ qx.Mixin.define("cv.mixin.Address",
      *****************************************************************************
      */
     destruct : function() {
-      if (this._readAddress) {
-        this._readAddress.removeBinding(this._bid);
-        this._disposeObjects("_readAddress");
-        this._readAddress = null;
-        this._bid = null;
-        this._formatValueCache = null;
+      for(var i=0; i < this._bids.length; i++) {
+        this._bids[i][1].removeBinding(this._bids[0]);
       }
+      this._disposeArray("_bids");
+      this._formatValueCache = null;
     }
   });

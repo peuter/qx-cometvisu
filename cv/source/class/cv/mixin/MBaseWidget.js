@@ -70,7 +70,28 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
      * @param value {String}
      */
     setDisplayValue : function(value) {
-      this.getValueWidget().set(this.getValueProperty(), value !== undefined && value !== "" ? value : "-");
+      var widget = this.getValueWidget();
+      if (!widget) {
+        debugger;
+      }
+      if (qx.lang.Type.isArray(value)) {
+        if (widget instanceof qx.ui.basic.Atom) {
+          // check for icon and Label
+          for (var i=0; i<value.length; i++) {
+            if (value[i] instanceof cv.ui.core.Icon) {
+              // copy property values to Atoms icon
+              cv.Utils.copyProperties(value[i], widget.getChildControl("icon"));
+            } else if (value[i] instanceof qx.ui.basic.Label) {
+              // copy value
+              widget.getChildControl("label").setValue(value[i].getValue());
+            } else if (qx.lang.Type.isString(value[i])) {
+              widget.getChildControl("label").setValue(value[i]);
+            }
+          }
+        }
+      } else {
+        widget.set(this.getValueProperty(), value !== undefined && value !== "" ? value : "-");
+      }
     },
 
     /**
@@ -116,14 +137,13 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
         case "label-container" :
           control = new qx.ui.container.Composite(new qx.ui.layout.Dock());
           control.setAnonymous(true);
-          this.getChildControl("widget").addAt(control, 0, { top: 0, left: 0, width: "50%"});
+          this.getChildControl("widget").addAt(control, 0, { top: 0, left: 0, bottom: 0, width: "50%"});
           break;
           
         case "label":
           control = new cv.ui.basic.Atom().set({
             rich : true,
-            wrap : true,
-            allowGrowX : false
+            wrap : true
           });
           var align = qx.Class.hasMixin(this.constructor, cv.mixin.Align) && this.getAlign() ? this.getAlign() : "right";
           var dock = align === "left" ? "west" : align === "right" ? "east" : "center";

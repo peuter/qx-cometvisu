@@ -65,6 +65,15 @@ qx.Class.define("cv.Utils",
       
       // model
       cv.Utils.model = cv.Model.getInstance();
+    },
+
+    copyProperties : function(from, to) {
+      var props = {};
+      var sourceProps = qx.Class.getProperties(from.constructor);
+      for(var i=0; i<sourceProps; i++) {
+        props[sourceProps[i]] = from.get(sourceProps[i]);
+      }
+      to.set(props);
     }
   }
 });
