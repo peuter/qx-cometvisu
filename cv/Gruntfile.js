@@ -52,8 +52,7 @@ module.exports = function(grunt) {
     webfont: {
       icons: {
         src: [
-          '../external/icons/raw_svg/*.svg',
-          'source/resource/cv/icons/*.svg'
+          'cache/icons/*.svg'
         ],
         dest: 'source/resource/cv/font',
         options: {
@@ -79,7 +78,7 @@ module.exports = function(grunt) {
           banner: '<%= banner %>'
         },
         files: {
-          src: [ 'source/class/cv/**/*.js' ]
+          src: [ 'source/class/cv/**/*.js', 'templates/*.jstemp' ]
         }
       }
     },
@@ -91,6 +90,12 @@ module.exports = function(grunt) {
       },
       make_eot : {
         cmd : 'java -jar ../tools/sfnttool.jar -e -x source/resource/cv/font/CVIconFont.ttf source/resource/cv/font/CVIconFont.eot'
+      },
+      svgmin_icons: {
+        cmd: 'svgo -q -f ../external/icons/raw_svg/ -o cache/icons/'
+      },
+      svgmin_cv: {
+        cmd: 'svgo -q -f source/resource/cv/icons/ -o cache/icons/'
       }
     }
   };
@@ -107,5 +112,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
 
   // create a chained task for webfont generation
-  grunt.registerTask('generate-font', ['webfont', 'exec']);
+  grunt.registerTask('generate-font', ['exec:svgmin_icons', 'exec:svgmin_cv', 'webfont', 'exec:make_woff', 'exec:make_eot']);
 };
