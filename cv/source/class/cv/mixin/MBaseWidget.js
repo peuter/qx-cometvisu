@@ -130,15 +130,18 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
             control.getContentElement().addClass(this.getFlavour());
           }
           this._add(control,{ flex: 1});
+          control.getContentElement().addClass("widget");
           break;
 
         case "right-container":
           control = new qx.ui.container.Composite(new qx.ui.layout.Grow());
+          control.getContentElement().addClass("right-container");
           this.getChildControl("widget").addAt(control, 1, {left: 0, top: 0});
           break;
          
         case "actor":
           control = new cv.ui.basic.Atom();
+          control.getContentElement().addClass("actor");
           if (this.getAlign && this.getAlign() === "center") {
             control.setCenter(true);
           }
@@ -149,6 +152,7 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
           control = new qx.ui.container.Composite(new qx.ui.layout.Dock());
           control.setAnonymous(true);
           // free space from right-container
+          control.getContentElement().addClass("label-container");
           this.getChildControl("right-container").setLayoutProperties({left: "50%", top: 0});
           // add label-container
           this.getChildControl("widget").addAt(control, 0, { top: 0, left: 0, bottom: 0, width: "50%"});
@@ -159,7 +163,8 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
             rich : true,
             wrap : true
           });
-          var align = qx.Class.hasMixin(this.constructor, cv.mixin.Align) && this.getAlign() ? this.getAlign() : "right";
+          control.getContentElement().addClass("label");
+          var align = qx.Class.hasMixin(this.constructor, cv.mixin.Align) && this.getAlign() ? this.getAlign() : "left";
           var dock = align === "left" ? "west" : align === "right" ? "east" : "center";
           this.getChildControl("label-container").add(control, {edge : dock});
           break;

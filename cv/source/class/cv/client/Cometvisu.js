@@ -355,8 +355,8 @@ qx.Class.define("cv.client.Cometvisu",
 
     /**
      * This function sends a value
-     * @param address
-     * @param value
+     * @param address {String}
+     * @param value {String}
      * @method write
      */
     write : function(address, value) {

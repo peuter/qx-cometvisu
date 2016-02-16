@@ -54,10 +54,7 @@ qx.Class.define("cv.ui.Templateengine",
         
     this.setConfigSuffix(cv.Config.configSuffix);
     this.setForceReload(cv.Config.forceReload);
-        
-    var iconHandler = new cv.config.IconHandler();
-    this.setIconHandler(iconHandler);
-    
+
     this.setMappings(new qx.data.Array());
     this.setStylings(new qx.data.Array());
     
@@ -176,11 +173,6 @@ qx.Class.define("cv.ui.Templateengine",
       check : "Number",
       init : 7,
       transform : "_transform"
-    },
-    
-    iconHandler : {
-      check : "cv.config.IconHandler",
-      init : null
     },
     
     mappings : {
@@ -514,7 +506,20 @@ qx.Class.define("cv.ui.Templateengine",
               qx.dev.Profile.start();
             }
             parser.parseMeta(xml);
-            parser.parsePages(xml);
+
+            if (parser.getPlugins().length>0) {
+              cv.PluginHandler.loadPlugins(parser.getPlugins()).then(function(e) {
+                console.log("part loading done %O", e);
+                parser.parsePages(xml);
+              }.bind(this), function() {
+                this.error("Error downloading plugins");
+              });
+            } else {
+              parser.parsePages(xml);
+            }
+
+
+
             if (qx.core.Environment.get("qx.aspects") === true) {
               qx.dev.Profile.stop();
               qx.dev.Profile.showResults(50);

@@ -50,6 +50,7 @@ qx.Class.define("cv.PluginHandler", {
      */
     registerWidgetPlugin : function(widgetname, plugin) {
       cv.PluginHandler._widgetPlugins[widgetname] = plugin;
+      qx.log.Logger.debug("plugin for "+widgetname+" has been registered");
     },
 
     /**
@@ -74,9 +75,8 @@ qx.Class.define("cv.PluginHandler", {
      * Load the given plugins
      *
      * @param plugins {qx.data.Array} part names ot the plugins to load
-     * @param callback {Function} callback function which is called after the loading has been done
      */
-    loadPlugins : function(plugins, callback) {
+    loadPlugins : function(plugins) {
       var loader = qx.io.PartLoader.getInstance();
       plugins = plugins.filter(function(plugin) {
         if (loader.hasPart(plugin)) {
@@ -86,7 +86,10 @@ qx.Class.define("cv.PluginHandler", {
           return false;
         }
       });
-      loader.require(plugins.toArray(), callback);
+      return new Promise(function(resolve, reject) {
+        loader.addListenerOnce("partLoadingError", reject);
+        loader.require(plugins.toArray(), resolve);
+      });
     }
   }
 });

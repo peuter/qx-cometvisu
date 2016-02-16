@@ -46,7 +46,8 @@ qx.Class.define("cv.ui.structure.Unknown",
    */
   construct : function(node, path) {
     this.base(arguments);
-    this._path = path;
+    this.setPath(path);
+    this.setName(node.nodeName);
   },
 
   
@@ -67,6 +68,15 @@ qx.Class.define("cv.ui.structure.Unknown",
       check : "cv.ui.structure.pure.Page",
       init : null,
       nullable : true
+    },
+
+    path : {
+      check : "String",
+      init : "id_"
+    },
+    dataType : {
+      check : "String",
+      init : "unknown"
     }
   },
 
@@ -77,16 +87,7 @@ qx.Class.define("cv.ui.structure.Unknown",
   */
   members :
   {
-    _path : null,
-    
-    getPath : function() {
-      return this._path;
-    },
-    
-    getDataType : function() {
-      return "unknown";
-    },
-    
+
     getLayoutOptions : function(map) {
       if (this.getAlign) {
         if (map && !map.alignX) {

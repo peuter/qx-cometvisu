@@ -49,6 +49,13 @@ qx.Theme.define("cv.theme.metal.Decoration",
       }
     },
 
+    "cv-nowidget" : {
+      style : {
+        gradientStart : ["main-gradient-start", 0],
+        gradientEnd : ["main-gradient-end", 100]
+      }
+    },
+
     "switch" : {
       style : {
         innerWidth : 1,

@@ -52,15 +52,16 @@ qx.Class.define("cv.ui.structure.Factory",
       var clazz = qx.Class.getByName("cv.ui.structure."+cv.Config.structure+"."+qx.lang.String.firstUp(node.nodeName));
       if (!clazz) {
         // try plugin
-        if (cv.PluginHandler.hasWidgetPlugin(node.nodename)) {
-          clazz = cv.PluginHandler.getWidgetPlugin(node.nodename);
+        console.log("lookup plugin for %s == %s", node.nodeName, cv.PluginHandler.hasWidgetPlugin(node.nodeName))
+        if (cv.PluginHandler.hasWidgetPlugin(node.nodeName)) {
+          clazz = cv.PluginHandler.getWidgetPlugin(node.nodeName);
         }
       }
       if (clazz) {
         return new clazz(node, path, root, parent);
       } else {
         qx.log.Logger.error("no class found: cv.ui.structure."+cv.Config.structure+"."+qx.lang.String.firstUp(node.nodeName));
-        return new cv.ui.structure.Unknown().set({name: node.nodeName});
+        return new cv.ui.structure.Unknown(node, path);
       }
     }
   }

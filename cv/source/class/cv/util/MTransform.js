@@ -45,8 +45,8 @@ qx.Mixin.define("cv.util.MTransform",
     /**
      * Convert undefined to null
      * 
-     * @param value {*} Any value
-     * @returns {*|null}
+     * @param value {var} Any value
+     * @returns {var|null}
      */
      transformUndefined : function(value) {
       if (value === undefined) {

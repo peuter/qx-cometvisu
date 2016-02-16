@@ -44,6 +44,7 @@ qx.Class.define("cv.config.Parser",
   construct : function() {
     this.base(arguments);
     this._engine = cv.ui.Templateengine.getInstance();
+    this._plugins = new qx.data.Array();
   },
 
   /*
@@ -54,6 +55,12 @@ qx.Class.define("cv.config.Parser",
   members :
   {
     _engine : null,
+    _plugins : null,
+
+    getPlugins : function() {
+
+      return this._plugins;
+    },
     
     /**
      * Parse meta part of the config (plugins, mappings, stylings, statusbar, ...)
@@ -116,91 +123,90 @@ qx.Class.define("cv.config.Parser",
       //require( getCSSlist, delaySetup('design') );
 
       // start with the plugins
-      var pluginsToLoad = new qx.data.Array();
       qx.xml.Element.selectNodes(xml, '//meta/plugins/plugin').forEach(function(node) {
         var name = node.getAttribute('name');
         if (name) {
-          if (!pluginsToLoad.contains("plugin-"+name)) {
-            pluginsToLoad.push( "plugin-"+name );
+          if (!this._plugins.contains("plugin-"+name)) {
+            this._plugins.push( "plugin-"+name );
           }
         }
-      });
+      }, this);
       /*
       if (0 == pluginsToLoadCount) {
         delete loadReady.plugins;
       }
       */
-      cv.PluginHandler.loadPlugins(pluginsToLoad);
-      
-      // then the icons
-      qx.xml.Element.selectNodes(xml, '//meta/icons/icon-definition').forEach(function(node) {
-        this._engine.getIconHandler().insert(
-          node.hasAttribute('name')    ? node.getAttribute('name')    : undefined,
-			    node.hasAttribute('type')    ? node.getAttribute('type')    : undefined,
-			    node.hasAttribute('flavour') ? node.getAttribute('flavour') : undefined,
-			    node.hasAttribute('color')   ? node.getAttribute('color')   : undefined,
-			    node.hasAttribute('styling') ? node.getAttribute('styling') : undefined,
-			    node.hasAttribute('class')   ? node.getAttribute('class')   : undefined,
-			    node.hasAttribute('dynamic') ? node.getAttribute('dynamic') : undefined
-        );
-      }, this);
 
-      // then the mappings
-      qx.xml.Element.selectNodes(xml, '//meta/mappings/mapping').forEach(function(node) {
-        this._engine.addMapping(new cv.config.meta.Mapping(node));
-      }, this);
 
-      // then the stylings
-      qx.xml.Element.selectNodes(xml, '//meta/stylings/styling').forEach(function(node) {
-        this._engine.addStyling(new cv.config.meta.Styling(node));
-      }, this);
+        // then the icons
+        qx.xml.Element.selectNodes(xml, '//meta/icons/icon-definition').forEach(function(node) {
+          this._engine.getIconHandler().insert(
+            node.hasAttribute('name')    ? node.getAttribute('name')    : undefined,
+            node.hasAttribute('type')    ? node.getAttribute('type')    : undefined,
+            node.hasAttribute('flavour') ? node.getAttribute('flavour') : undefined,
+            node.hasAttribute('color')   ? node.getAttribute('color')   : undefined,
+            node.hasAttribute('styling') ? node.getAttribute('styling') : undefined,
+            node.hasAttribute('class')   ? node.getAttribute('class')   : undefined,
+            node.hasAttribute('dynamic') ? node.getAttribute('dynamic') : undefined
+          );
+        }, this);
 
-      // then the status bar
-      qx.xml.Element.selectNodes(xml, '//meta/statusbar/status').forEach(function(node) {
-        //var type = node.getAttribute('type');
-        var condition = node.getAttribute('condition');
-        var extend = node.getAttribute('hrefextend');
-        var sPath = window.location.pathname;
-        var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
+        // then the mappings
+        qx.xml.Element.selectNodes(xml, '//meta/mappings/mapping').forEach(function(node) {
+          this._engine.addMapping(new cv.config.meta.Mapping(node));
+        }, this);
 
-        // @TODO: make this match once the new editor is finished-ish.
-        var editMode = 'edit_config.html' == sPage;
+        // then the stylings
+        qx.xml.Element.selectNodes(xml, '//meta/stylings/styling').forEach(function(node) {
+          this._engine.addStyling(new cv.config.meta.Styling(node));
+        }, this);
 
-        // skip this element if it's edit-only and we are non-edit, or the other
-        // way
-        // round
-        if (editMode && '!edit' == condition) {
-          return;
-        }
-        if (!editMode && 'edit' == condition) {
-          return;
-        }
-        var text = node.textContent;
-        var search;
-        switch (extend) {
-        case 'all': // append all parameters
-          search = window.location.search.replace(/\$/g, '$$$$');
-          text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
-          break;
-        case 'config': // append config file info
-          search = window.location.search.replace(/\$/g, '$$$$');
-          search = search.replace(/.*(config=[^&]*).*|.*/, '$1');
+        // then the status bar
+        qx.xml.Element.selectNodes(xml, '//meta/statusbar/status').forEach(function(node) {
+          //var type = node.getAttribute('type');
+          var condition = node.getAttribute('condition');
+          var extend = node.getAttribute('hrefextend');
+          var sPath = window.location.pathname;
+          var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
 
-          var middle = text.replace(/.*href="([^"]*)".*/g, '{$1}');
-          if( 0 < middle.indexOf('?') ) {
-            search = '&' + search;
+          // @TODO: make this match once the new editor is finished-ish.
+          var editMode = 'edit_config.html' == sPage;
+
+          // skip this element if it's edit-only and we are non-edit, or the other
+          // way
+          // round
+          if (editMode && '!edit' == condition) {
+            return;
           }
-          else {
-            search = '?' + search;
+          if (!editMode && 'edit' == condition) {
+            return;
           }
-          text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
-          break;
-        }
-        this._engine.getChildControl("status-bar").appendContent(text);
-      }, this);
+          var text = node.textContent;
+          var search;
+          switch (extend) {
+          case 'all': // append all parameters
+            search = window.location.search.replace(/\$/g, '$$$$');
+            text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
+            break;
+          case 'config': // append config file info
+            search = window.location.search.replace(/\$/g, '$$$$');
+            search = search.replace(/.*(config=[^&]*).*|.*/, '$1');
 
-      //delete loadReady.page;
-      //this._engine.setupPage();
+            var middle = text.replace(/.*href="([^"]*)".*/g, '{$1}');
+            if( 0 < middle.indexOf('?') ) {
+              search = '&' + search;
+            }
+            else {
+              search = '?' + search;
+            }
+            text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
+            break;
+          }
+          this._engine.getChildControl("status-bar").appendContent(text);
+        }, this);
+
+        //delete loadReady.page;
+        //this._engine.setupPage();
     },
     
     

@@ -29,22 +29,45 @@
 
 /**
  * Infoaction plugin combines an info widget with an action widget
- *
- * @todo: needs to extend ...pure.Base but the generator is complaining in that case -> find a solution
  */
 qx.Class.define("cv.plugin.infoaction.Infoaction", {
 
-  //extend: cv.ui.structure.pure.Base,
-  extend: qx.core.Object,
+  extend: qx.ui.core.Widget,
+
+  implement: cv.ui.structure.IWidget,
+  include: [
+    cv.mixin.Widgetinfo,
+    cv.mixin.Layout,
+    cv.mixin.Label,
+    qx.ui.core.MRemoteChildrenHandling
+  ],
 
   /*
    *****************************************************************************
    CONSTRUCTOR
    *****************************************************************************
    */
-  construct :function() {
+  construct : function(node, path, root, parent) {
     this.base(arguments);
 
+    this._setLayout(new qx.ui.layout.Canvas());
+
+    this.setPath(path);
+
+    if (parent) {
+      this.setParentPage(parent);
+    }
+
+    // add default CSS class
+    this.getContentElement().addClass("widget_container");
+
+    // override padding/margin
+    this.set( {
+      margin : 0,
+      padding: 0
+    });
+
+    this.map(node);
   },
 
   /*
@@ -52,8 +75,23 @@ qx.Class.define("cv.plugin.infoaction.Infoaction", {
    PROPERTIES
    *****************************************************************************
    */
-  properties :{
-
+  properties : {
+    appearance : {
+      init : "cv-widget",
+      refine: true
+    },
+    path : {
+      check : "String",
+      init : "id_"
+    },
+    dataType : {
+      check : "String",
+      init : ""
+    },
+    parentPage : {
+      check : "cv.ui.structure.pure.Page",
+      nullable : true
+    }
   },
 
   /*
@@ -62,6 +100,85 @@ qx.Class.define("cv.plugin.infoaction.Infoaction", {
    *****************************************************************************
    */
   members : {
+    __actionWidget : null,
 
+    /**
+     * Returs the layoutoptions of the action-child-widget if set
+     *
+     * @param map {Map}
+     * @returns {Map}
+     */
+    getLayoutOptions: function(map) {
+      if (this.__actionWidget) {
+        return this.__actionWidget.getLayoutOptions(map);
+      }
+    },
+
+    /**
+     * Parse the node and create the child widgets for info and action
+     *
+     * @param node {Element}
+     */
+    map : function(node) {
+      // parse layout first as it is needed when children are added
+      var layoutChild = node.querySelector("layout");
+      this._parseLayout(layoutChild);
+      this.fireEvent("layoutReady");
+
+      // the info widget
+      var widgetinfo = node.querySelector("widgetinfo");
+      var infoChild = this._parseWidgetinfo(widgetinfo);
+      // stretch content to full width
+      infoChild.getChildControl("right-container").setLayoutProperties({ edge: 0 });
+      infoChild.getChildControl("actor").setCenter(true);
+
+
+      var action = node.querySelector("widgetaction > *");
+      var actionChild = this.__actionWidget = cv.ui.structure.Factory.createWidget(action, this.getPath()+"_1");
+      actionChild.addState("nowidget");
+      actionChild.setParentPage(this.getParentPage());
+
+      this._add(actionChild, { edge: 0 });
+
+
+      var labelChild = node.querySelector("label");
+      if (labelChild) {
+        this._parseLabel(labelChild);
+      }
+    },
+
+    //overridden
+    getChildControl : function(id) {
+      switch (id) {
+        case "widget":
+          return this;
+        default:
+          return this.base(arguments, id);
+      }
+    },
+
+    // overridden
+    _createChildControlImpl : function(id, hash)
+    {
+      var control;
+
+      switch(id)
+      {
+        case "label":
+          control = new cv.ui.basic.Atom().set({
+            rich : true, // allow HTML conten
+            wrap : true // allow line wrapping
+          });
+          control.getContentElement().addClass("label");
+          this.__actionWidget.setLayoutProperties({ left: "50%", top: 0, bottom: 0})
+          this._add(control, { left: 0, top: 0, bottom: 0, width: "50%"});
+      }
+
+      return control || this.base(arguments, id);
+    }
+  },
+
+  destruct : function() {
+    this._disposeObjects("__actionWidget")
   }
 });

@@ -39,7 +39,6 @@ qx.Class.define("cv.ui.structure.pure.BaseWidgetContainer",
   type : "abstract",
 
   include : [
-    cv.mixin.Layout,
     cv.mixin.MPages
   ],
 

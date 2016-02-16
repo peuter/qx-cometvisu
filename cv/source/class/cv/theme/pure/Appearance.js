@@ -60,12 +60,18 @@ qx.Theme.define("cv.theme.pure.Appearance",
      * Widget stuff
      */
     "cv-widget" : {
-      style : function()
+      style : function(states)
       {
-        return {
-          padding : [3, 5],
-          decorator : "cv-widget"
-        };
+        if (states.nowidget) {
+          return {
+            decorator: "cv-nowidget"
+          };
+        } else {
+          return {
+            padding: [3, 5],
+            decorator: "cv-widget"
+          };
+        }
       }
     },
 
@@ -351,17 +357,19 @@ qx.Theme.define("cv.theme.pure.Appearance",
           return {
             decorator: "widgetinfo-topbottom",
             font: "widgetinfo",
-            textColor: "widgetinfo-text-color"
+            textColor: "widgetinfo-text-color",
+            zIndex: 100
           }
         } else {
           return {
-            height: 20,
+            height: 30,
             width: 30,
             maxWidth: 30,
             maxHeight: 30,
             decorator: "widgetinfo",
             font: "widgetinfo",
-            textColor: "widgetinfo-text-color"
+            textColor: "widgetinfo-text-color",
+            zIndex: 100
           }
         }
       }

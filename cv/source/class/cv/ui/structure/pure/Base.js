@@ -80,10 +80,6 @@ qx.Class.define("cv.ui.structure.pure.Base",
     propertyMapping : {}
   },
 
-  events : {
-    layoutReady : "qx.event.type.Event"
-  },
-
   /*
    *****************************************************************************
       PROPERTIES
@@ -337,9 +333,9 @@ qx.Class.define("cv.ui.structure.pure.Base",
           //this.getChildren().push(childWidget);
                       
           // parse layout child if available as it is needed before the widget is added
-          if (childNode.getElementsByTagName("layout").length === 1) {
-            childWidget._parseLayout(childNode.getElementsByTagName("layout")[0]);
-          }
+          //if (childNode.getElementsByTagName("layout").length === 1) {
+          //  childWidget._parseLayout(childNode.getElementsByTagName("layout")[0]);
+          //}
           
           // tell the widget on which page it is set
           childWidget.setParentPage(this._currentPage);

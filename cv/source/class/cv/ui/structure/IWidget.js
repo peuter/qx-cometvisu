@@ -31,35 +31,46 @@
  * Interface for all structure widgets
  */
 qx.Interface.define("cv.ui.structure.IWidget", {
+
   /*
    *****************************************************************************
-      MEMBERS
+   PROPERTIES
    *****************************************************************************
    */
+  properties: {
 
-   members :
-   {
-     
-     /**
-      * Return the data-type if this widget
-      * 
-      * @return {String} data-type
-      */
-     getDataType : function() {},
-     
-     /**
+    /**
+     * @type {String} path to this widget (e.g, 'id_0_6')
+     */
+    "path": {},
+
+    /**
+     * @type {String} the nodename of the widget in xml config
+     */
+    dataType: {}
+  },
+
+  /*
+   *****************************************************************************
+   EVENTS
+   *****************************************************************************
+   */
+  events: {
+    layoutReady: "qx.event.type.Event"
+  },
+
+  /*
+   *****************************************************************************
+   MEMBERS
+   *****************************************************************************
+   */
+  members: {
+
+    /**
      * Returns the layout options which should be applied when this item gets added to its parent
-     * 
+     *
      * @returns {Object|null}
      */
-     getLayoutOptions : function() {},
-     
-     
-     /**
-      * Returns the internal path of the widget in the structure
-      * 
-      * @returns {String} id*
-      */
-     getPath : function() {}
-   }
+    getLayoutOptions: function () {}
+  }
 });

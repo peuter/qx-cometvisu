@@ -62,6 +62,7 @@ qx.Mixin.define("cv.mixin.Widgetinfo",
         var infoWidget = cv.ui.structure.Factory.createWidget(infoNode, this.getPath()+"_0");
         infoWidget.setAppearance("widgetinfo");
         this.getChildControl("widget").add(infoWidget, { top: 0, right: 0});
+        return infoWidget;
       } 
     }
   }
