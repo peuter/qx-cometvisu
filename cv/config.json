@@ -103,8 +103,13 @@
         {
           "uri" : "resource/cv/font/FontLoader.css"
         }
-      ]
-	},
+      ],
+      "lint-check" : {
+        "allowed-globals" : [
+          "Promise"
+        ]
+      }
+    },
 		
 	"source" :
 	{
@@ -149,7 +154,6 @@
 		{
 			"paths" :
 			{
-				"gzip" : true,
 				"file" : "${BUILD_PATH}/script/${APPLICATION}-{engine.name}.js"
 			}
 		}

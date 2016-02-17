@@ -13,4 +13,4 @@ This is a port of the https://github.com/cometvisu/cometvisu based on the https:
 
 **Generation**
 1. goto cv/ subdirectory
-2. run `grunt webfont`
+2. run `grunt generate-font`
