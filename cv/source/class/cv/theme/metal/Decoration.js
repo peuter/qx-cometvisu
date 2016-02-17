@@ -59,7 +59,7 @@ qx.Theme.define("cv.theme.metal.Decoration",
     "switch" : {
       style : {
         innerWidth : 1,
-        width : 1,
+        width : [1, 2, 2, 1],
         radius : 12,
         color : [ "actor-border-top",  "actor-border-bottom", "actor-border-bottom", "actor-border-top"],
         innerColor : [ "actor-border-inner", "actor-border-top", "actor-border-top", "actor-border-inner"],
@@ -70,12 +70,39 @@ qx.Theme.define("cv.theme.metal.Decoration",
     "switch-pressed" : {
       style : {
         innerWidth : 1,
-        width : 1,
+        width : [2, 1, 1, 2],
         radius : 12,
         color : [ "actor-border-top",  "actor-border-inner", "actor-border-inner", "actor-border-top"],
         innerColor : [ "actor-border-bottom", "actor-border-top", "actor-border-top", "actor-border-bottom"],
         gradientStart : ["actor-gradient-end", 0],
         gradientEnd : ["actor-gradient-start", 100]
+      }
+    },
+    // just for inheritance, not directly used
+    "switch-styled": {
+      include : "switch",
+      style : {
+        backgroundPositionX : "center",
+        backgroundPositionY : "center",
+        backgroundRepeat : "no-repeat"
+      }
+    },
+    "switch-green": {
+      include : "switch-styled",
+      style : {
+        backgroundImage : "resource/cv/designs/metal/images/dot_green.png"
+      }
+    },
+    "switch-red": {
+      include : "switch-styled",
+      style : {
+        backgroundImage : "resource/cv/designs/metal/images/red.png"
+      }
+    },
+    "switch-grey": {
+      include : "switch-styled",
+      style : {
+        backgroundImage : "resource/cv/designs/metal/images/dot_grey.png"
       }
     },
 

@@ -154,69 +154,71 @@ qx.Mixin.define("cv.mixin.Address",
         if (value) {
           this.debug("new transformed value received '" + value + "'");
         }
+        // apply styling with the unmapped value
+        this._applyStyling(value);
+        // map value
         var mappedValue = this._processValue(value);
-
-        // send value to the
-        this._setAndStyleProcessedValue(mappedValue);
+        // display mapped value
+        this.setDisplayValue(mappedValue);
       },
 
-      /**
-       * Send the processed value to the value widget and apply the styling to it
-       * @param value {var}
-       */
-      _setAndStyleProcessedValue :function(value) {
-
+      _applyStyling : function(value) {
         // apply value to actor-label
-        var actor = this.getValueWidget();
-        this.setDisplayValue(value);
+        var widget = this.getValueWidget();
 
         // #4 style the value to be pretty
         var sty = this.getStyling();
         if (sty) {
-          var widget = actor instanceof qx.ui.basic.Atom ? actor.getChildControl("label") : actor;
 
           // remove only styling classes
           sty.getClassnames().forEach(function(classname) {
             widget.removeState(classname);
           });
 
-          var findValue = function(v, findExact) {
-            if (undefined === v) {
-              return false;
-            }
-            if (sty[v]) { // fixed value
-              widget.addState(sty[v]);
-              return true;
-            }
-            else {
-              var range = sty.getRange();
-              if (findExact && range[v]) {
-                widget.addState(range[v][1]);
-                return true;
-              }
-              var valueFloat = parseFloat(v);
-              for (var min in range) {
-                if (min > valueFloat) {
-                  continue;
-                }
-                //noinspection JSUnfilteredForInLoop
-                if (range[min][0] < valueFloat) {
-                  continue; // check max
-                }
-                //noinspection JSUnfilteredForInLoop
-                widget.addState(range[min][1]);
-                return true;
-              }
-            }
-            return false;
-          };
-
-          if (!findValue(value, false) && sty.getDefaultValue() !== undefined) {
-            findValue(sty.getDefaultValue(), true);
+          if (!this.__findValue(widget, sty, value, false) && sty.getDefaultValue() !== undefined) {
+            this.__findValue(widget, sty, sty.getDefaultValue(), true);
           }
 
         }
+      },
 
+      /**
+       * Find the correct styling for the given value and apply the corresponding state to the widget
+       *
+       * @param v {var}
+       * @param sty {cv.config.meta.Styling}
+       * @param findExact {Boolean}
+       * @param widget {qx.ui.core.Widget}
+       */
+      __findValue :function(widget, sty, v, findExact) {
+        if (undefined === v) {
+          return false;
+        }
+        if (sty.getValue()[v]) { // fixed value
+          widget.addState(sty.getValue()[v]);
+          return true;
+        }
+        else {
+          var range = sty.getRange();
+          if (findExact && range[v]) {
+            widget.addState(range[v][1]);
+            return true;
+          }
+          var valueFloat = parseFloat(v);
+          for (var min in range) {
+            if (min > valueFloat) {
+              continue;
+            }
+            //noinspection JSUnfilteredForInLoop
+            if (range[min][0] < valueFloat) {
+              continue; // check max
+            }
+            //noinspection JSUnfilteredForInLoop
+            widget.addState(range[min][1]);
+            return true;
+          }
+        }
+        return false;
       }
     },
 

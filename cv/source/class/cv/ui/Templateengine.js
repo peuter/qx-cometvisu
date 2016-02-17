@@ -397,7 +397,6 @@ qx.Class.define("cv.ui.Templateengine",
      */
     applyPageVisibilityProperties : function(props) {
       var control;
-      console.log(props);
       for (var prop in props) {
         if (prop === "showtopnavigation") {
           control = this.getChildControl("breadcrumb");
@@ -508,8 +507,8 @@ qx.Class.define("cv.ui.Templateengine",
             parser.parseMeta(xml);
 
             if (parser.getPlugins().length>0) {
-              cv.PluginHandler.loadPlugins(parser.getPlugins()).then(function(e) {
-                console.log("part loading done %O", e);
+              cv.PluginHandler.loadPlugins(parser.getPlugins()).then(function() {
+                this.debug("part loading done " + parser.getPlugins().join(", "));
                 parser.parsePages(xml);
               }.bind(this), function() {
                 this.error("Error downloading plugins");

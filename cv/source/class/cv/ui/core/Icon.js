@@ -60,10 +60,6 @@ qx.Class.define("cv.ui.core.Icon",
       font : qx.theme.manager.Font.getInstance().resolve("Icons"),
       rich : true
     });
-
-    this.addListener("changeVisibility", function(e) {
-      console.trace(this.toHashCode()+ " visibility of icon "+this.getName()+" changed to "+ e.getData());
-    }, this);
   },
 
   /*

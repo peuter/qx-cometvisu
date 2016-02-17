@@ -67,14 +67,50 @@ qx.Theme.define("cv.theme.metal.Appearance",
           // a nowidget group has no special appearance
           return {
             padding : [3, 5],
-            decorator: null
+            decorator: null,
+            minHeight: 60
           };
         } else {
           return {
             padding : [3, 5],
+            minHeight: 60,
             decorator : "cv-widget"
           };
         }
+      }
+    },
+
+    // main button styling
+    "cv-button" : {
+      style : function(states)
+      {
+        var dc = "switch";
+        var tc = "text-label";
+
+        if (states.pressed) {
+          dc+="-pressed";
+        }
+        if (states.green) {
+          dc+="-green";
+        } else if (states.red) {
+          dc+="-red";
+          tc = "grey";
+        } else if (states.grey) {
+          dc+="-grey"
+          tc = "grey";
+        }
+
+        return {
+          marginRight : 15,
+          padding : 3,
+          minWidth : 80,
+          maxWidth : 200,
+          minHeight: 43,
+          allowGrowY : true,
+          center : true,
+          decorator : dc,
+          textColor : tc
+        };
       }
     },
 

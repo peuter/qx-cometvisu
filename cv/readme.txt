@@ -17,19 +17,24 @@ TODO:
 * Automatische Generierung von Basis-Klassen für Widgets aus XSD?
 * DONE Struct-Widgets austauschbar machen
 * Syntax-Check der Config im Client?
-* Design-Kompabilität (evtl. Compability-Mode damit die DOM-Struktur gleich ist)
+* WONT DO: Design-Kompabilität (evtl. Compability-Mode damit die DOM-Struktur gleich ist)
 	* ggf. CSS Einbinden
-* Plugin-Kompabilität???
-* Plugins in Parts/Module packen, damit sie bei Bedarf nachgeladen werden können
+* WONT-DO Plugin-Kompabilität???
+* DONE Plugins in Parts/Module packen, damit sie bei Bedarf nachgeladen werden können
 * Replay/Logging für User-Aktionen (Debugging)
 * DONE Parse-Queue: Alle Pages, die nicht sichtbar sind erstmal in die Queue und erst parsen, wenn sie sichtbar werden (oder im Hintergrund durch Webworker???)
 * DONE Mapping
 * DONE Styling
-* User-Aktionen
-* Diverse Widgets fertigstellen
-* Basic-Design erstellen, welches alle Größen / Positionierungen enthält
+* DONE User-Aktionen
+* DONE Diverse Widgets fertigstellen
+* PARTLY DONE Basic-Design erstellen, welches alle Größen /tar Positionierungen enthält
   * Pure davon ableiten mit Farben, Gradienten, Border(-Radius) usw.
   * Metal ebenso portieren
+* Stylings
+* Ausblenden der Breadcrumps
+* Slider appearance
+* Plugins portieren: Diagram, rss, strftime, clock, colorchooser, gauge, link, rss, svg, timeout, upnpcontroller, calenderlist
+* Themes aufräumen
 
 
 Vorteile Qooxdoo:
@@ -47,8 +52,3 @@ denkbar wäre hier auch ein Kompabilitätsmodus für alte Designs und einen "nat
 - Plugin-Kompabilität wird wohl nicht möglich sein. Die müssten portiert werden. Dabei könnte man aber ein Plugin-Interface definieren, welches jedes Plugin implementieren muss => Saubere Schnittstelle
 - KNX-Iconset in Webfont konvertieren und so nutzen. Ist einfach umsetzbar, auch unabhängig von der Portierung. So kann man jedes Icon beliebig skalieren/färben (wie normalen Text halt)
 - Alles was mit PHP läuft in eine einheiliche REST-API packen (auch unabhängig vom Qooxdoo-Port)
-
-Was schon läuft:
-- Client mit Long-Polling
-- einzelne Widgets, Statusbar
-- nachladen der alten Designs (ohne den Javascript Teil)

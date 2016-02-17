@@ -43,6 +43,11 @@ qx.Theme.define("cv.theme.metal.Color",
     "group-title-start" : "#999999",
     "group-title-end" : "#666666",
 
+    "grey" : "#808080",
+
+    "actor-border-top" : "#444444",
+    "actor-border-bottom" : "#282828",
+    "actor-border-inner" : "#010101",
     "actor-gradient-start" : "#444444",
     "actor-gradient-end" : "#2d2d2d",
 

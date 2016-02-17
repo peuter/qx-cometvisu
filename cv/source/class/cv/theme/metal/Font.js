@@ -57,8 +57,9 @@ qx.Theme.define("cv.theme.metal.Font",
 
     "default" :
     {
-      size : 22,
+      size : 20,
       color : "white",
+      textShadow: "0 1px 1px #111111",
       family : [ 'Dosis','Helvetica','sans-serif' ]
     },
 

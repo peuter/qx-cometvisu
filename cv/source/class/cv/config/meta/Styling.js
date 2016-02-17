@@ -90,23 +90,19 @@ qx.Class.define("cv.config.meta.Styling",
         
         classnames.push(entry.textContent);
         // check for default entry
-        var isDefaultValue = entry.attributes.getNamedItem('default');
-        if (isDefaultValue) {
-          isDefaultValue = isDefaultValue.value === "true";
-        } else {
-          isDefaultValue = false;
-        }
+        var isDefaultValue = entry.getAttribute('default') === "true";
+
         // now set the mapped values
-        var val = entry.attributes.getNamedItem('value');
+        var val = entry.getAttribute('value');
         if (val) {
-          this.getValue()[val.value] = entry.textContent;
+          this.getValue()[val] = entry.textContent;
           if (isDefaultValue) {
-            this.setDefaulValue(val.value);
+            this.setDefaulValue(val);
           }
         }
         else {
-          var min = parseFloat(entry.attributes.getNamedItem('range_min').value);
-          var max = parseFloat(entry.attributes.getNamedItem('range_max').value);
+          var min = parseFloat(entry.getAttribute('range_min'));
+          var max = parseFloat(entry.getAttribute('range_max'));
           
           this.getRange().min = [ max, entry.textContent ];
           if (isDefaultValue) {

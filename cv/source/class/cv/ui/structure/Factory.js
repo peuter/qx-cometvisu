@@ -52,7 +52,6 @@ qx.Class.define("cv.ui.structure.Factory",
       var clazz = qx.Class.getByName("cv.ui.structure."+cv.Config.structure+"."+qx.lang.String.firstUp(node.nodeName));
       if (!clazz) {
         // try plugin
-        console.log("lookup plugin for %s == %s", node.nodeName, cv.PluginHandler.hasWidgetPlugin(node.nodeName))
         if (cv.PluginHandler.hasWidgetPlugin(node.nodeName)) {
           clazz = cv.PluginHandler.getWidgetPlugin(node.nodeName);
         }

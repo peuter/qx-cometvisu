@@ -96,9 +96,6 @@ qx.Mixin.define("cv.mixin.MBaseWidget",
         if (widget instanceof qx.ui.basic.Atom) {
           widget.getChildControl("icon").fromOtherIcon(value);
           widget.getChildControl("icon").show();
-          console.log(widget.getChildControl("icon"));
-        } else {
-          console.log(widget);
         }
       } else {
         widget.set(this.getValueProperty(), this.transformForDisplay(value));

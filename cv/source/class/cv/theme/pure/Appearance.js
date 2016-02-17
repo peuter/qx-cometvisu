@@ -175,7 +175,7 @@ qx.Theme.define("cv.theme.pure.Appearance",
         };
       }
     },
-    
+
     "cv-widget/actor" : "cv-button",
 
     "cv-widget/up" : "cv-widget/actor",
@@ -194,27 +194,27 @@ qx.Theme.define("cv.theme.pure.Appearance",
         };
       }
     },
-
-    "cv-widget/actor/label" : {
-      style : function(states)
-      {
-        // apply stylings to the widget
-        var tc = "text-label"; // default color
-        if (states.red) {
-          tc = "red";
-        } else if (states.green) {
-          tc = "green";
-        } else if (states.blue) {
-          tc = "blue";
-        } else if (states.purple) {
-          tc = "purple";
-        }
-
-        return {
-          textColor : tc
-        };
-      }
-    },
+    //
+    //"cv-widget/actor" : {
+    //  style : function(states)
+    //  {
+    //    // apply stylings to the widget
+    //    var tc = "text-label"; // default color
+    //    if (states.red) {
+    //      tc = "red";
+    //    } else if (states.green) {
+    //      tc = "green";
+    //    } else if (states.blue) {
+    //      tc = "blue";
+    //    } else if (states.purple) {
+    //      tc = "purple";
+    //    }
+    //
+    //    return {
+    //      textColor : tc
+    //    };
+    //  }
+    //},
     "cv-widget/label/label" : {
       style : function()
       {
