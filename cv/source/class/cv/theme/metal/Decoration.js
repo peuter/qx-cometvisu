@@ -87,6 +87,14 @@ qx.Theme.define("cv.theme.metal.Decoration",
         backgroundRepeat : "no-repeat"
       }
     },
+    "switch-pressed-styled": {
+      include : "switch-pressed",
+      style : {
+        backgroundPositionX : "center",
+        backgroundPositionY : "center",
+        backgroundRepeat : "no-repeat"
+      }
+    },
     "switch-green": {
       include : "switch-styled",
       style : {
@@ -101,6 +109,24 @@ qx.Theme.define("cv.theme.metal.Decoration",
     },
     "switch-grey": {
       include : "switch-styled",
+      style : {
+        backgroundImage : "resource/cv/designs/metal/images/dot_grey.png"
+      }
+    },
+    "switch-pressed-green": {
+      include : "switch-pressed-styled",
+      style : {
+        backgroundImage : "resource/cv/designs/metal/images/dot_green.png"
+      }
+    },
+    "switch-pressed-red": {
+      include : "switch-pressed-styled",
+      style : {
+        backgroundImage : "resource/cv/designs/metal/images/red.png"
+      }
+    },
+    "switch-pressed-grey": {
+      include : "switch-pressed-styled",
       style : {
         backgroundImage : "resource/cv/designs/metal/images/dot_grey.png"
       }

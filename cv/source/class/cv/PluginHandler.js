@@ -88,7 +88,12 @@ qx.Class.define("cv.PluginHandler", {
       });
       return new Promise(function(resolve, reject) {
         loader.addListenerOnce("partLoadingError", reject);
-        loader.require(plugins.toArray(), resolve);
+        if (plugins.length === 0) {
+          // no plugins to load
+          resolve();
+        } else {
+          loader.require(plugins.toArray(), resolve);
+        }
       });
     }
   }

@@ -101,7 +101,6 @@ qx.Class.define("cv.client.transport.LongPolling",
           return;
         }
         var json = e && e.getTarget() ? e.getTarget().getResponse() : null;
-        console.log(json);
 
         if (json && !this.isRestarting()) {
           var req = e.getTarget();

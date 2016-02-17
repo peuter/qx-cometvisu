@@ -27,6 +27,7 @@
  */
 
 
+//noinspection JSUnusedGlobalSymbols
 /**
  * Base item class
  *
@@ -50,7 +51,7 @@ qx.Class.define("cv.model.AbstractItem",
     // the raw value of the item as it is delivered from the backend
     rawValue : {
       check : "String",
-      init : null,
+      init : "",
       apply : "_applyRawValue",
       event : "changeRawValue"
     }

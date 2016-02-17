@@ -84,8 +84,6 @@ qx.Class.define("cv.Utils",
       for(var i=0; i<sourceProps.length; i++) {
         props[sourceProps[i]] = from.get(sourceProps[i]);
       }
-      console.log(sourceProps);
-      console.log(props);
       to.set(props);
     },
 
@@ -97,7 +95,6 @@ qx.Class.define("cv.Utils",
 
       var traverse = function(page) {
         var children = page.getChildren();
-        //console.log("traversing page %s with %d children", page.getName(), children.length);
         for (var i=0; i<children.length; i++) {
           var child = children[i];
           if (child.getAddresses) {
@@ -110,18 +107,13 @@ qx.Class.define("cv.Utils",
 
           // check for more pages to dig deeper
           if (child.getChildPages && child.getChildPages()) {
-            //console.log("traverse deeper %d childPages from %s", child,getChildPages().length, child.classname);
             child.getChildPages().forEach(traverse);
-          } else {
-            //console.log("%s has no childPages", child.classname);
           }
         }
       }
 
       var page = cv.Utils.engine.getRootPage();
       traverse(page);
-
-      console.log(addresses.toArray());
     }
   }
 });

@@ -29,114 +29,95 @@
 
 //noinspection JSUnusedLocalSymbols
 /**
- * 
+ *
  *
  */
 qx.Class.define("cv.config.Parser",
-{
-  extend : qx.core.Object,
-
-  /*
-   *****************************************************************************
-      CONSTRUCTOR
-   *****************************************************************************
-   */
-  construct : function() {
-    this.base(arguments);
-    this._engine = cv.ui.Templateengine.getInstance();
-    this._plugins = new qx.data.Array();
-  },
-
-  /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
-  members :
   {
-    _engine : null,
-    _plugins : null,
+    extend : qx.core.Object,
 
-    getPlugins : function() {
-
-      return this._plugins;
-    },
-    
-    /**
-     * Parse meta part of the config (plugins, mappings, stylings, statusbar, ...)
+    /*
+     *****************************************************************************
+     CONSTRUCTOR
+     *****************************************************************************
      */
-    parseMeta : function(xml) {
-      var pagesNode = qx.xml.Element.selectSingleNode(xml, "pages");
-      
-      var propertyNameMapping = {
+    construct : function() {
+      this.base(arguments);
+      this._engine = cv.ui.Templateengine.getInstance();
+      this._plugins = new qx.data.Array();
+    },
+
+    /*
+     *****************************************************************************
+     MEMBERS
+     *****************************************************************************
+     */
+    members :
+    {
+      _engine : null,
+      _plugins : null,
+
+      getPlugins : function() {
+
+        return this._plugins;
+      },
+
+      /**
+       * Parse meta part of the config (plugins, mappings, stylings, statusbar, ...)
+       */
+      parseMeta : function(xml) {
+        var pagesNode = qx.xml.Element.selectSingleNode(xml, "pages");
+
+        var propertyNameMapping = {
           max_mobile_screen_width : "maxMobileScreenWidth",
           lib_version : "libVersion"
-      };
-      
-      var pageAttributes = {};
-      var attr = pagesNode.attributes;
-      for (var i=attr.length-1; i >= 0; i--) {
-        if (attr[i].name === "xmlns:xsi" || attr[i].name === "xsi:noNamespaceSchemaLocation") {
-          continue;
-        }
-        var name = qx.lang.String.camelCase(attr[i].name.replace(/_/g, "-"));
-        if (propertyNameMapping.hasOwnProperty(name)) {
-          name = propertyNameMapping[name];
-        }
-        pageAttributes[name] = attr[i].value === "true" ? true : attr[i].value === "false" ? false : attr[i].value;
-      }
-      
-      if (!pageAttributes.enableColumnAdjustment && /(android|blackberry|iphone|ipod|series60|symbian|windows ce|palm)/i.test(navigator.userAgent.toLowerCase())) {
-        pageAttributes.enableColumnAdjustment = true;
-      }
-      
-      // design by url
-      if (cv.Config.clientDesign) {
-        pageAttributes.design = cv.Config.clientDesign;
-      }
-      // selection dialog
-      else if (!pageAttributes.design) {
-        var dialog = new cv.ui.dialog.DesignSelector(qx.locale.Manager.tr("Please select a design"));
-        dialog.addListener("designSelected", function(e) {
-          pageAttributes.design = e.getData();
-        }, this);
-        dialog.open();
-      }
-      
-      // apply all pages-settings to the templateengine properties
-      this._engine.set(pageAttributes);
-      
-      // init backend
-      this._engine.initBackendClient();
+        };
 
-//      var getCSSlist = [ 'css!designs/designglobals.css'];
-//      if (this._engine.clientDesign) {
-//        getCSSlist.push( 'css!designs/' + this._engine.clientDesign + '/basic.css' );
-//        if (!this._engine.forceNonMobile) {
-//          getCSSlist.push( 'css!designs/' + this._engine.clientDesign + '/mobile.css' );
-//        }
-//        getCSSlist.push( 'css!designs/' + this._engine.clientDesign + '/custom.css' );
-//        getCSSlist.push( 'designs/' + this._engine.clientDesign + '/design_setup' );
-//      }
-      
-      
-      //require( getCSSlist, delaySetup('design') );
-
-      // start with the plugins
-      qx.xml.Element.selectNodes(xml, '//meta/plugins/plugin').forEach(function(node) {
-        var name = node.getAttribute('name');
-        if (name) {
-          if (!this._plugins.contains("plugin-"+name)) {
-            this._plugins.push( "plugin-"+name );
+        var pageAttributes = {};
+        var attr = pagesNode.attributes;
+        for (var i=attr.length-1; i >= 0; i--) {
+          if (attr[i].name === "xmlns:xsi" || attr[i].name === "xsi:noNamespaceSchemaLocation") {
+            continue;
           }
+          var name = qx.lang.String.camelCase(attr[i].name.replace(/_/g, "-"));
+          if (propertyNameMapping.hasOwnProperty(name)) {
+            name = propertyNameMapping[name];
+          }
+          pageAttributes[name] = attr[i].value === "true" ? true : attr[i].value === "false" ? false : attr[i].value;
         }
-      }, this);
-      /*
-      if (0 == pluginsToLoadCount) {
-        delete loadReady.plugins;
-      }
-      */
 
+        if (!pageAttributes.enableColumnAdjustment && /(android|blackberry|iphone|ipod|series60|symbian|windows ce|palm)/i.test(navigator.userAgent.toLowerCase())) {
+          pageAttributes.enableColumnAdjustment = true;
+        }
+
+        // design by url
+        if (cv.Config.clientDesign) {
+          pageAttributes.design = cv.Config.clientDesign;
+        }
+        // selection dialog
+        else if (!pageAttributes.design) {
+          var dialog = new cv.ui.dialog.DesignSelector(qx.locale.Manager.tr("Please select a design"));
+          dialog.addListener("designSelected", function(e) {
+            pageAttributes.design = e.getData();
+          }, this);
+          dialog.open();
+        }
+
+        // apply all pages-settings to the templateengine properties
+        this._engine.set(pageAttributes);
+
+        // init backend
+        this._engine.initBackendClient();
+
+        // start with the plugins
+        qx.xml.Element.selectNodes(xml, '//meta/plugins/plugin').forEach(function(node) {
+          var name = node.getAttribute('name');
+          if (name) {
+            if (!this._plugins.contains("plugin-"+name)) {
+              this._plugins.push( "plugin-"+name );
+            }
+          }
+        }, this);
 
         // then the icons
         qx.xml.Element.selectNodes(xml, '//meta/icons/icon-definition').forEach(function(node) {
@@ -184,131 +165,128 @@ qx.Class.define("cv.config.Parser",
           var text = node.textContent;
           var search;
           switch (extend) {
-          case 'all': // append all parameters
-            search = window.location.search.replace(/\$/g, '$$$$');
-            text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
-            break;
-          case 'config': // append config file info
-            search = window.location.search.replace(/\$/g, '$$$$');
-            search = search.replace(/.*(config=[^&]*).*|.*/, '$1');
+            case 'all': // append all parameters
+              search = window.location.search.replace(/\$/g, '$$$$');
+              text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
+              break;
+            case 'config': // append config file info
+              search = window.location.search.replace(/\$/g, '$$$$');
+              search = search.replace(/.*(config=[^&]*).*|.*/, '$1');
 
-            var middle = text.replace(/.*href="([^"]*)".*/g, '{$1}');
-            if( 0 < middle.indexOf('?') ) {
-              search = '&' + search;
-            }
-            else {
-              search = '?' + search;
-            }
-            text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
-            break;
+              var middle = text.replace(/.*href="([^"]*)".*/g, '{$1}');
+              if( 0 < middle.indexOf('?') ) {
+                search = '&' + search;
+              }
+              else {
+                search = '?' + search;
+              }
+              text = text.replace(/(href="[^"]*)(")/g, '$1' + search + '$2');
+              break;
           }
           this._engine.getChildControl("status-bar").appendContent(text);
         }, this);
+      },
 
-        //delete loadReady.page;
-        //this._engine.setupPage();
-    },
-    
-    
-    /**
-     * Parse pages part of the config
-     */
-    parsePages : function(xml) {
-      var page = qx.xml.Element.selectSingleNode(xml, "//pages/page"); // only one page element allowed...
 
-      this.createPages(page, 'id');
-      //this._engine.design.getCreator('page').createFinal();
+      /**
+       * Parse pages part of the config
+       */
+      parsePages : function(xml) {
+        var page = qx.xml.Element.selectSingleNode(xml, "//pages/page"); // only one page element allowed...
 
-      qx.event.message.Bus.dispatchByName("parser.downloaded");
-      
-      var startpage = 'id_';
-      if (cv.Config.startPage) {
-        startpage = cv.Config.startPage;
-        
-        if ('remember' === startpage) {
-          startpage = qx.module.Storage.getLocalItem('lastpage');
-          cv.Config.rememberLastPage = true;
-          if ('string' !== typeof (startpage ) || 'id_' !== startpage.substr(0, 3)) {
-            startpage = 'id_'; // fix obvious wrong data
+        this.createPages(page, 'id');
+        //this._engine.design.getCreator('page').createFinal();
+
+        qx.event.message.Bus.dispatchByName("parser.downloaded");
+
+        var startpage = 'id_';
+        if (cv.Config.startPage) {
+          startpage = cv.Config.startPage;
+
+          if ('remember' === startpage) {
+            startpage = qx.module.Storage.getLocalItem('lastpage');
+            cv.Config.rememberLastPage = true;
+            if ('string' !== typeof (startpage ) || 'id_' !== startpage.substr(0, 3)) {
+              startpage = 'id_'; // fix obvious wrong data
+            }
+          } else if ('noremember' === startpage) {
+            qx.module.Storage.removeLocalItem('lastpage');
+            startpage = 'id_';
+            cv.Config.rememberLastPage = false;
           }
-        } else if ('noremember' === startpage) {
-          qx.module.Storage.removeLocalItem('lastpage');
-          startpage = 'id_';
-          cv.Config.rememberLastPage = false;
         }
-      }
 
-      this._engine.getChildControl("page-handler").setCurrentPage(startpage);
-      
-      // this._engine.adjustColumns();
-      // this._engine.applyColumnWidths();
-      
-      // setup the scrollable
-      // this._engine.main_scroll = $('#main').scrollable({
+        this._engine.getChildControl("page-handler").setCurrentPage(startpage);
+
+        // this._engine.adjustColumns();
+        // this._engine.applyColumnWidths();
+
+        // setup the scrollable
+        // this._engine.main_scroll = $('#main').scrollable({
         // keyboard : false,
         // touch : false
-      // }).data('scrollable');
-      // this._engine.main_scroll.onSeek( function(){
+        // }).data('scrollable');
+        // this._engine.main_scroll.onSeek( function(){
         // this._engine.pagePartsHandler.updateTopNavigation( this );
         // $('.activePage', '#pages').removeClass('activePage');
         // $('.pageActive', '#pages').removeClass('pageActive');
         // this._engine.currentPage.addClass('pageActive activePage');// show new page
         // $('#pages').css('left', 0 );
-      // });
-      // if (this._engine.scrollSpeed != undefined) {
+        // });
+        // if (this._engine.scrollSpeed != undefined) {
         // this._engine.main_scroll.getConf().speed = this._engine.scrollSpeed;
-      // }
-  
-      // $('.fast').bind('click', function() {
+        // }
+
+        // $('.fast').bind('click', function() {
         // this._engine.main_scroll.seekTo($(this).text());
-      // });
-  
-      // run the Trick-O-Matic scripts for great SVG backdrops
-      //$('embed').each(function() { this.onload =  Trick_O_Matic });
-      
-      // if (cv.Config.enableAddressQueue) {
+        // });
+
+        // run the Trick-O-Matic scripts for great SVG backdrops
+        //$('embed').each(function() { this.onload =  Trick_O_Matic });
+
+        // if (cv.Config.enableAddressQueue) {
         // // identify addresses on startpage
         // var startPageAddresses = {};
         // $('.actor','#'+startpage).each(function() {
-          // var $this = $(this),
-            // data  = $this.data();
-          // if( undefined === data.address ) data = $this.parent().data();
-            // for( var addr in data.address )
-            // {
-              // startPageAddresses[addr.substring(1)]=1;
-            // }
+        // var $this = $(this),
+        // data  = $this.data();
+        // if( undefined === data.address ) data = $this.parent().data();
+        // for( var addr in data.address )
+        // {
+        // startPageAddresses[addr.substring(1)]=1;
+        // }
         // });
         // this._engine.visu.setInitialAddresses(Object.keys(startPageAddresses));
-      // }
-      var addressesToSubscribe = cv.Model.getInstance().getAddresses();
-      if( 0 !== addressesToSubscribe.length ) {
-        cv.client.Cometvisu.getInstance().subscribe(addressesToSubscribe);
-      }
-      xml = null; // not needed anymore - free the space
+        // }
+        var addressesToSubscribe = cv.Model.getInstance().getAddresses();
+        if( 0 !== addressesToSubscribe.length ) {
+          cv.client.Cometvisu.getInstance().subscribe(addressesToSubscribe);
+        }
+        xml = null; // not needed anymore - free the space
 
-      qx.event.message.Bus.dispatchByName("parser.finished");
+        qx.event.message.Bus.dispatchByName("parser.finished");
+      },
+
+      /**
+       * Create a page from DOM page element
+       *
+       * @param page {Element} page element in config DOM
+       * @param path {String} internal path to this page
+       * @param flavour {String} Flavour of the page
+       * @param type {String} type of the page
+       */
+      createPages : function(page, path, flavour, type) {
+        // create root page
+        this._engine.setRootPage(cv.ui.structure.Factory.createWidget(page, path, true));
+      }
     },
-    
-    /**
-     * Create a page from DOM page element
-     * 
-     * @param page {Element} page element in config DOM
-     * @param path {String} internal path to this page
-     * @param flavour {String} Flavour of the page
-     * @param type {String} type of the page
+
+    /*
+     *****************************************************************************
+     DESTRUCTOR
+     *****************************************************************************
      */
-    createPages : function(page, path, flavour, type) {
-      // create root page
-      this._engine.setRootPage(cv.ui.structure.Factory.createWidget(page, path, true));
+    destruct : function() {
+      this._engine = null;
     }
-  },
-  
-  /*
-   *****************************************************************************
-      DESTRUCTOR
-   *****************************************************************************
-   */
-  destruct : function() {
-    this._engine = null;
-  }
-});
+  });

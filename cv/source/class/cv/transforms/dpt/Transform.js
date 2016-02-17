@@ -481,7 +481,14 @@ qx.Class.define("cv.transforms.dpt.Transform",
 
     getTransform : function(type) {
       if (cv.transforms.dpt.Transform.transforms.hasOwnProperty(type)) {
-        return cv.transforms.dpt.Transform.transforms[type];
+        var transform = cv.transforms.dpt.Transform.transforms[type];
+        if (transform.link) {
+          var linked = cv.transforms.dpt.Transform.transforms[transform.link];
+          qx.lang.Object.mergeWith(transform, linked, false);
+          // delete link as we have processed it
+          delete transform.link;
+        }
+        return transform;
       }
     }
   }

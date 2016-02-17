@@ -58,20 +58,6 @@ qx.Class.define("cv.ui.Templateengine",
     this.setMappings(new qx.data.Array());
     this.setStylings(new qx.data.Array());
     
-    // make sure that the child controls are added in the right order
-    // header
-    this._createChildControl("breadcrumb");
-    this._createChildControl("navbar-top");
-    
-    // content
-    this._createChildControl("navbar-left");
-    this._createChildControl("page-handler");
-    this._createChildControl("navbar-right");
-    
-    // footer
-    this._createChildControl("navbar-bottom");
-    this._createChildControl("status-bar");
-    
     this.setReady(true);
 
     // listen to browser back button
@@ -302,12 +288,8 @@ qx.Class.define("cv.ui.Templateengine",
       switch(id) {
         // main page parts
         case "header":
-          control = new qx.ui.container.Composite();
+          control = new qx.ui.container.Composite(new qx.ui.layout.VBox());
           control.getContentElement().setAttribute("id", "top");
-          control.setLayout(new qx.ui.layout.VBox());        
-          control.addAt(new qx.ui.core.Widget().set({
-            appearance : "line"
-          }), 2);
           this._add(control, {edge:"north", width: "100%"});
           break;
           
@@ -332,12 +314,9 @@ qx.Class.define("cv.ui.Templateengine",
           break;
           
         case "footer":
-          control = new qx.ui.container.Composite();
+          control = new qx.ui.container.Composite(new qx.ui.layout.VBox());
           control.getContentElement().setAttribute("id", "bottom");
-          control.setLayout(new qx.ui.layout.VBox());
-          control.add(new qx.ui.core.Widget().set({
-            appearance : "line"
-          }));
+          control.exclude();
           this._add(control,{edge:"south", width: "100%"});
           break;
         
@@ -397,19 +376,20 @@ qx.Class.define("cv.ui.Templateengine",
      */
     applyPageVisibilityProperties : function(props) {
       var control;
+
       for (var prop in props) {
         if (prop === "showtopnavigation") {
-          control = this.getChildControl("breadcrumb");
+          control = this.getChildControl("breadcrumb", true);
         } else if (prop === "showfooter") {
-          control = this.getChildControl("status-bar");
+          control = this.getChildControl("status-bar", true);
         } else if (prop === "shownavbarLeft") {
-          control = this.getChildControl("navbar-left");
+          control = this.getChildControl("navbar-left", true);
         } else if (prop === "shownavbarRight") {
-          control = this.getChildControl("navbar-right");
+          control = this.getChildControl("navbar-right", true);
         } else if (prop === "shownavbarTop") {
-          control = this.getChildControl("navbar-top");
+          control = this.getChildControl("navbar-top", true);
         } else if (prop === "shownavbarBottom") {
-          control = this.getChildControl("navbar-bottom");
+          control = this.getChildControl("navbar-bottom", true);
         }
         if (control) {
           //noinspection JSUnfilteredForInLoop
