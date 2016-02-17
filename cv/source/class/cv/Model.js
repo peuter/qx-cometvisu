@@ -49,7 +49,7 @@ qx.Class.define("cv.Model",
       // reset cached address list of all items in model
       this._addresses = null;
     }, this);
-    
+    this.__lookupCache = {};
   },
 
   /*
@@ -69,6 +69,7 @@ qx.Class.define("cv.Model",
   {
     _addresses : null, // cached address list of all items in model
     _items : null,
+    __lookupCache : null, // cache items by address
     
     /**
      * Get all items from model
@@ -87,9 +88,13 @@ qx.Class.define("cv.Model",
      */
     getItemByAddress : function(address) {
       var found = null;
+      if (this.__lookupCache[address]) {
+        return this.__lookupCache[address];
+      }
       this._items.some(function(item) {
         if (item.getAddress() === address) {
           found = item;
+          this.__lookupCache[address] = item;
           return true;
         }
       }, this);

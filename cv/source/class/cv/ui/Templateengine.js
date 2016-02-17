@@ -490,6 +490,10 @@ qx.Class.define("cv.ui.Templateengine",
               cv.PluginHandler.loadPlugins(parser.getPlugins()).then(function() {
                 this.debug("part loading done " + parser.getPlugins().join(", "));
                 parser.parsePages(xml);
+                if (qx.core.Environment.get("qx.aspects") === true) {
+                  qx.dev.Profile.stop();
+                  qx.dev.Profile.showResults(50);
+                }
               }.bind(this), function() {
                 this.error("Error downloading plugins");
               });
@@ -499,10 +503,7 @@ qx.Class.define("cv.ui.Templateengine",
 
 
 
-            if (qx.core.Environment.get("qx.aspects") === true) {
-              qx.dev.Profile.stop();
-              qx.dev.Profile.showResults(50);
-            }
+
           }
         }
       }, this);
