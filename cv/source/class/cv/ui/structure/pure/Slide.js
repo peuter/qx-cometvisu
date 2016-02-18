@@ -190,7 +190,7 @@ qx.Class.define("cv.ui.structure.pure.Slide",
           } else {
             control.addListener("changeValue", action, this);
           }
-          this.getChildControl("widget").add(control, { edge: 0 });
+          this.getChildControl("right-container").add(control, {flex: 1});
           break;
       }
       return control || this.base(arguments, id);

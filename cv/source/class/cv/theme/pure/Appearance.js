@@ -154,8 +154,7 @@ qx.Theme.define("cv.theme.pure.Appearance",
     "cv-widget/right-container" : {
       style : function() {
         return {
-          padding : 3,
-          marginLeft : 15
+          padding : 3
         }
       }
     },
@@ -263,10 +262,11 @@ qx.Theme.define("cv.theme.pure.Appearance",
           allowGrowX : true,
           allowGrowY : true,
           margin : [5, 0],
-          padding : 5,
+          padding : [10, 5],
           minWidth : 30,
           width : null,
-          height : null
+          height : null,
+          font : "subtext"
         };
       }
     },

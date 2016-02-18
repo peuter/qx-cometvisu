@@ -130,6 +130,7 @@ qx.Class.define("cv.plugin.infoaction.Infoaction", {
       var infoChild = this._parseWidgetinfo(widgetinfo);
       // stretch content to full width
       infoChild.getChildControl("right-container").setLayoutProperties({ edge: 0 });
+      infoChild.getChildControl("actor").setLayoutProperties({flex: 1});
       infoChild.getChildControl("actor").setCenter(true);
 
 
