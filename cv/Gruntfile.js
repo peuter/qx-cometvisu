@@ -83,6 +83,33 @@ module.exports = function(grunt) {
       }
     },
 
+    // appcache
+    manifest: {
+      generate: {
+        options: {
+          basePath: 'build/',
+          network: ['http://*', 'https://*'],
+          preferOnline: true,
+          headcomment: " <%= appConfig.info.name %> v<%= appConfig.info.version %>",
+          verbose: true,
+          timestamp: true,
+          hash: true,
+          master: ['index.html']
+          //process: function(path) {
+          //  return path.substring('build/'.length);
+          //}
+        },
+        src: [
+          'script/*.js',
+          'resource/cv/**/*.ttf',
+          'resource/cv/**/*.woff',
+          'resource/cv/**/*.eot',
+          'resource/cv/**/*.png'
+        ],
+        dest: 'build/manifest.appcache'
+      }
+    },
+
     // woff and eot generation is done with sfntool as it creates significantly smaller files
     exec : {
       make_woff : {
@@ -110,6 +137,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-webfont');
   grunt.loadNpmTasks('grunt-banner');
   grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-manifest');
 
   // create a chained task for webfont generation
   grunt.registerTask('generate-font', ['exec:svgmin_icons', 'exec:svgmin_cv', 'webfont', 'exec:make_woff', 'exec:make_eot']);
