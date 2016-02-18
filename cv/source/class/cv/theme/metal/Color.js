@@ -57,6 +57,8 @@ qx.Theme.define("cv.theme.metal.Color",
     "widgetinfo-bg-nav-text-color" : "#000000",
     "widgetinfo-text-color" : "#999999",
     "widget-info-bg-nav" : "#FFFFFF",
-    "widget-info-bg" : "#666666"
+    "widget-info-bg" : "#666666",
+    "slide-gradient-start" : "#121212",
+    "slide-gradient-end" : "#A4A4A4"
   }
 });

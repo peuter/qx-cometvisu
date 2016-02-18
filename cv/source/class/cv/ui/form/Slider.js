@@ -50,10 +50,6 @@ qx.Class.define("cv.ui.form.Slider",
      *****************************************************************************
      */
     properties: {
-      appearance : {
-        init : "cv-slider",
-        refine : true
-      },
 
       rangeMargin : {
         check : "Number",
@@ -79,7 +75,7 @@ qx.Class.define("cv.ui.form.Slider",
       //property apply
       _applyFormat : function(value) {
         if (value) {
-          var widget = this.getChildControl("knob-value");
+          var widget = this.getChildControl("label");
           if (this._bid) {
             // remove old binding first
             this.removeRelatedBindings(widget);
@@ -109,22 +105,24 @@ qx.Class.define("cv.ui.form.Slider",
         {
           case "range":
             control = new qx.ui.container.Composite(new qx.ui.layout.Canvas());
-            control.setAppearance("slider");
             control.setMargin([this.getRangeMargin(),0]);
             control.setZIndex(1);
             this._add(control, {edge: 0});
             break;
 
-          case "knob-value":
+          case "knob":
+            control = new qx.ui.container.Composite(new qx.ui.layout.Grow());
+
+            control.addListener("resize", this._onUpdate, this);
+            control.addListener("pointerover", this._onPointerOver);
+            control.addListener("pointerout", this._onPointerOut);
+            this._add(control);
+            break;
+
+          case "label":
             control = new qx.ui.basic.Label();
-            var format = this.getFormat();
-            if (format) {
-              this._bid = this.bind("value", control, "value", {
-                converter: function (data) {
-                  return cv.util.StringFormat.getInstance().sprintf(format, [data]);
-                }
-              });
-            }
+            this.getChildControl("knob").add(control);
+            break;
         }
 
         return control || this.base(arguments, id);

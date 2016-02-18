@@ -238,7 +238,7 @@ qx.Theme.define("cv.theme.pure.Appearance",
       style : function() {
         return {
           marginLeft: 15,
-          rangeMargin : 5
+          rangeMargin : 18
         };
       }
     },
@@ -260,7 +260,13 @@ qx.Theme.define("cv.theme.pure.Appearance",
       {
         return {
           decorator : "switch",
-          minWidth : 30
+          allowGrowX : true,
+          allowGrowY : true,
+          margin : [5, 0],
+          padding : 5,
+          minWidth : 30,
+          width : null,
+          height : null
         };
       }
     },

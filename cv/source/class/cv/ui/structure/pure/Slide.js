@@ -174,6 +174,7 @@ qx.Class.define("cv.ui.structure.pure.Slide",
           this.bind("min", control, "minimum");
           this.bind("max", control, "maximum");
           this.bind("step", control, "singleStep");
+          this.bind("format", control, "format");
           //do not allow changes when in readOnly mode
           this.bind("readOnly", control, "enabled", {
             converter : function(data) {
@@ -189,7 +190,7 @@ qx.Class.define("cv.ui.structure.pure.Slide",
           } else {
             control.addListener("changeValue", action, this);
           }
-          this.getChildControl("widget").add(control, {edge:0});
+          this.getChildControl("widget").add(control, { edge: 0 });
           break;
       }
       return control || this.base(arguments, id);

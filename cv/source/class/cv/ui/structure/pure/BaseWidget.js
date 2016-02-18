@@ -76,7 +76,8 @@ qx.Class.define("cv.ui.structure.pure.BaseWidget",
     },
     format : {
       check : "String",
-      nullable : true
+      nullable : true,
+      event : "changeFormat"
     },
     precision : {
       check : "Number",

@@ -114,6 +114,15 @@ qx.Theme.define("cv.theme.metal.Appearance",
       }
     },
 
+    "cv-widget/slider/range" : {
+      style : function()
+      {
+        return {
+          decorator : "slide"
+        };
+      }
+    },
+
     "group/title": {
       style : function() {
         return {

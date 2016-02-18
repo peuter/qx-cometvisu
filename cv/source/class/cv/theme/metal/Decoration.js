@@ -158,6 +158,17 @@ qx.Theme.define("cv.theme.metal.Decoration",
         gradientStart : ["navbar-top-end", 0],
         gradientEnd : ["navbar-top-start", 100]
       }
+    },
+
+    "slide" : {
+      style : {
+        width : 1,
+        radius : 4,
+        color:  ["#010101", "#282828", "#282828", "#010101" ],
+        orientation : "horizontal",
+        gradientStart : ["actor-gradient-start", 0],
+        gradientEnd : ["slide-gradient-end", 100]
+      }
     }
   }
 });
