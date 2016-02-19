@@ -5,4 +5,9 @@ before_install:
   - cd cv
   - npm install -g grunt-cli
 install: npm install
-before_script: grunt build
+before_script:
+  - cd external/qooxdoo
+  - npm install
+  - grunt setup
+  - cd ../../cv
+  - grunt build
