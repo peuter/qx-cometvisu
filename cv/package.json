@@ -1,11 +1,15 @@
 {
-  "name": "cv",
-  "version": "0.1.0",
+  "name": "Qometvisu",
+  "version": "0.0.1-SNAPSHOT",
   "repository": {},
+  "scripts": {
+    "lint": "grunt lint"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-banner": "^0.6.0",
     "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-compress": "^1.0.0",
     "grunt-manifest": "^0.4.4",
     "grunt-webfont": "^1.1.0"
   }

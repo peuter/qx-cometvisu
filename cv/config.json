@@ -97,7 +97,7 @@
 	{
 	  "copy-files" :
 	  {
-	  	"files" : [ "config/*" ]
+	  	"files" : [ "config/*", ".htaccess" ]
 	  },
       "add-css" : [
         {
@@ -108,6 +108,10 @@
         "allowed-globals" : [
           "Promise"
         ]
+      },
+      "environment" :
+      {
+        "qx.nativeScrollBars" : true
       }
     },
 		

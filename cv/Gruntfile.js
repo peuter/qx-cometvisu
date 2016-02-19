@@ -110,6 +110,21 @@ module.exports = function(grunt) {
       }
     },
 
+    // make a zipfile
+    compress: {
+      main: {
+        options: {
+          mode : 'tgz',
+          archive: function() {
+            return "Qometvisu-0.0.1-SNAPSHOT.tar.gz"
+          }
+        },
+        files: [
+          { expand: true, cwd: 'build', src: ['./**'], dest: 'qometvisu/' } // includes files in path
+        ]
+      }
+    },
+
     // woff and eot generation is done with sfntool as it creates significantly smaller files
     exec : {
       make_woff : {
@@ -123,6 +138,9 @@ module.exports = function(grunt) {
       },
       svgmin_cv: {
         cmd: 'svgo -q -f source/resource/cv/icons/ -o cache/icons/'
+      },
+      deploy : {
+        cmd : 'scp -r build/* tobiasb@home:/usr/share/openhab/webapps/qometvisu/'
       }
     }
   };
@@ -138,7 +156,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-banner');
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-manifest');
+  grunt.loadNpmTasks('grunt-contrib-compress');
 
   // create a chained task for webfont generation
   grunt.registerTask('generate-font', ['exec:svgmin_icons', 'exec:svgmin_cv', 'webfont', 'exec:make_woff', 'exec:make_eot']);
+  grunt.registerTask('build-release', ['build', 'manifest', 'compress']);
+  grunt.registerTask('install', ['build', 'manifest' ,'exec:deploy'])
 };
