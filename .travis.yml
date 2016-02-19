@@ -9,5 +9,7 @@ before_script:
   - cd ../external/qooxdoo
   - npm install
   - grunt setup
-  - cd ../../cv
+  - cd ../../
+  - ln -s external/ lib
+  - cd cv
   - grunt build
