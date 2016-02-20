@@ -68,6 +68,30 @@ module.exports = function(grunt) {
       }
     },
 
+    svgmin: {
+      options: {
+        plugins: [
+          {convertTransform: false}
+        ]
+      },
+      dist: {
+        files: [
+          {
+            expand: true,
+            cwd: '../external/icons/raw_svg/',
+            src: '*.svg',
+            dest: 'cache/icons/'
+          },
+          {
+            expand: true,
+            cwd: 'source/resource/cv/icons/',
+            src: '*.svg',
+            dest: 'cache/icons/'
+          }
+        ]
+      }
+    },
+
     // license header adding
     usebanner: {
       dist: {
@@ -133,15 +157,13 @@ module.exports = function(grunt) {
       make_eot : {
         cmd : 'java -jar ../tools/sfnttool.jar -e -x source/resource/cv/font/CVIconFont.ttf source/resource/cv/font/CVIconFont.eot'
       },
-      svgmin_icons: {
-        cmd: 'svgo -q -f ../external/icons/raw_svg/ -o cache/icons/'
-      },
-      svgmin_cv: {
-        cmd: 'svgo -q -f source/resource/cv/icons/ -o cache/icons/'
-      },
       deploy : {
         cmd : 'scp -r build/* tobiasb@home:/usr/share/openhab/webapps/qometvisu/'
       }
+    },
+
+    clean: {
+      cache : [ 'cache/*']
     }
   };
 
@@ -157,9 +179,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-manifest');
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-svgmin');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // create a chained task for webfont generation
-  grunt.registerTask('generate-font', ['exec:svgmin_icons', 'exec:svgmin_cv', 'webfont', 'exec:make_woff', 'exec:make_eot']);
+  grunt.registerTask('generate-font', ['svgmin', 'webfont', 'exec:make_woff', 'exec:make_eot']);
   grunt.registerTask('build-release', ['build', 'manifest', 'compress']);
   grunt.registerTask('install', ['build', 'manifest' ,'exec:deploy'])
 };
